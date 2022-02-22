@@ -16,7 +16,7 @@ const Layout = (props) => {
             <div className='header'>
                 
                 <nav className='navbar'>
-                    <h1 className='nav'>TxtHub</h1>
+                    <h1 className='nav'>TxTHub</h1>
                     <h1 className='nav game'>{props.Game}</h1>
                     
                     <ul >
