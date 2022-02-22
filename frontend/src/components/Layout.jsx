@@ -5,15 +5,19 @@ import './Layout.scss';
 
 import {UserContext} from '../UserContext';
 import logo from '../images/logo.svg';
-const Layout = () => {
+import { AiFillPropertySafety } from 'react-icons/ai';
+const Layout = (props) => {
     const {user, setUser} = useContext(UserContext);
 
     if(!user){
         return(
 
+            
             <div className='header'>
+                
                 <nav className='navbar'>
-                    <img  className = 'logo'/>
+                    <h1 className='nav'>TxtHub</h1>
+                    <h1 className='nav game'>{props.Game}</h1>
                     
                     <ul >
                         <li className ='nav-item'>

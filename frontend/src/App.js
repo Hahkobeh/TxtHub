@@ -32,7 +32,7 @@ function App() {
 
           <Route path='/wordle' element={<Wordle/>}/>
 
-          <Route path='/anagrams' elemetnt={<Anagrams/>}/>
+          <Route path='/anagrams' element={<Anagrams/>}/>
 
         </Routes>
       </UserContext.Provider>

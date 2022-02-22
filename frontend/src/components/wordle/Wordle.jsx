@@ -206,8 +206,8 @@ function Wordle(){
     return(
         <div>
             
-            <h1 className="game-name">Wordle <AiOutlineQuestionCircle className='help' onClick = {changeInstructions}/></h1>
-            <hr/>
+            <Layout Game={<h1 className="game-name">Wordle <AiOutlineQuestionCircle className='help' onClick = {changeInstructions}/></h1>}/>
+            
             
 
             {notEnoughLetters && <Message title='Not long enough.'/>}
@@ -229,42 +229,42 @@ function Wordle(){
             <div id="keyboard">
 
                 <div className='row'>
-                    <button onClick= { () => addLetter('q') }data-key='q' id='q'>q</button>
-                    <button onClick= { () => addLetter('w') }data-key='w' id='w'>w</button>
-                    <button onClick= { () => addLetter('e') }data-key='e' id='e'>e</button>
-                    <button onClick= { () => addLetter('r') }data-key='r' id='r'>r</button>
-                    <button onClick= { () => addLetter('t') }data-key='t' id='t'>t</button>
-                    <button onClick= { () => addLetter('y') }data-key='y' id='y'>y</button>
-                    <button onClick= { () => addLetter('u') }data-key='u' id='u'>u</button>
-                    <button onClick= { () => addLetter('i') }data-key='i' id='i'>i</button>
-                    <button onClick= { () => addLetter('o') }data-key='o' id='o'>o</button>
-                    <button onClick= { () => addLetter('p') }data-key='p' id='p'>p</button>
+                    <button className= 'keyboard-button' onClick= { () => addLetter('q') }data-key='q' id='q'>q</button>
+                    <button className= 'keyboard-button' onClick= { () => addLetter('w') }data-key='w' id='w'>w</button>
+                    <button className= 'keyboard-button' onClick= { () => addLetter('e') }data-key='e' id='e'>e</button>
+                    <button className= 'keyboard-button' onClick= { () => addLetter('r') }data-key='r' id='r'>r</button>
+                    <button className= 'keyboard-button' onClick= { () => addLetter('t') }data-key='t' id='t'>t</button>
+                    <button className= 'keyboard-button' onClick= { () => addLetter('y') }data-key='y' id='y'>y</button>
+                    <button className= 'keyboard-button' onClick= { () => addLetter('u') }data-key='u' id='u'>u</button>
+                    <button className= 'keyboard-button' onClick= { () => addLetter('i') }data-key='i' id='i'>i</button>
+                    <button className= 'keyboard-button' onClick= { () => addLetter('o') }data-key='o' id='o'>o</button>
+                    <button className= 'keyboard-button' onClick= { () => addLetter('p') }data-key='p' id='p'>p</button>
 
                 </div>
                 
                 <div className='row'>
-                    <button onClick= { () => addLetter('a') } data-key='a' id='a'>a</button>
-                    <button onClick= { () => addLetter('s') } data-key='s' id='s'>s</button>
-                    <button onClick= { () => addLetter('d') } data-key='d' id='d'>d</button>
-                    <button onClick= { () => addLetter('f') } data-key='f' id='f'>f</button>
-                    <button onClick= { () => addLetter('g') } data-key='g' id='g'>g</button>
-                    <button onClick= { () => addLetter('h') } data-key='h' id='h'>h</button>
-                    <button onClick= { () => addLetter('j') } data-key='j' id='j'>j</button>
-                    <button onClick= { () => addLetter('k') } data-key='k' id='k'>k</button>
-                    <button onClick= { () => addLetter('l') } data-key='l' id='l'>l</button>
+                    <button className= 'keyboard-button' onClick= { () => addLetter('a') } data-key='a' id='a'>a</button>
+                    <button className= 'keyboard-button' onClick= { () => addLetter('s') } data-key='s' id='s'>s</button>
+                    <button className= 'keyboard-button' onClick= { () => addLetter('d') } data-key='d' id='d'>d</button>
+                    <button className= 'keyboard-button' onClick= { () => addLetter('f') } data-key='f' id='f'>f</button>
+                    <button className= 'keyboard-button' onClick= { () => addLetter('g') } data-key='g' id='g'>g</button>
+                    <button className= 'keyboard-button' onClick= { () => addLetter('h') } data-key='h' id='h'>h</button>
+                    <button className= 'keyboard-button' onClick= { () => addLetter('j') } data-key='j' id='j'>j</button>
+                    <button className= 'keyboard-button' onClick= { () => addLetter('k') } data-key='k' id='k'>k</button>
+                    <button className= 'keyboard-button' onClick= { () => addLetter('l') } data-key='l' id='l'>l</button>
                     
                 </div>
                 
                 <div className='row'>
-                    <button onClick= { () => addWord() } data-key='enter' className='one-and-a-half'>enter</button>
-                    <button onClick= { () => addLetter('z') } data-key='z' id='z'>z</button>
-                    <button onClick= { () => addLetter('x') } data-key='x' id='x'>x</button>
-                    <button onClick= { () => addLetter('c') } data-key='c' id='c'>c</button>
-                    <button onClick= { () => addLetter('v') } data-key='v' id='v'>v</button>
-                    <button onClick= { () => addLetter('b') } data-key='b' id='b'>b</button>
-                    <button onClick= { () => addLetter('n') } data-key='n' id='n'>n</button>
-                    <button onClick= { () => addLetter('m') } data-key='m' id='m'>m</button>
-                    <button onClick= { () => removeLetter() } data-key='backspace' className='one-and-a-half'><FaBackspace size={20} /></button>
+                    <button onClick= { () => addWord() } data-key='enter' className='one-and-a-half keyboard-button'>enter</button>
+                    <button className= 'keyboard-button' onClick= { () => addLetter('z') } data-key='z' id='z'>z</button>
+                    <button className= 'keyboard-button' onClick= { () => addLetter('x') } data-key='x' id='x'>x</button>
+                    <button className= 'keyboard-button' onClick= { () => addLetter('c') } data-key='c' id='c'>c</button>
+                    <button className= 'keyboard-button' onClick= { () => addLetter('v') } data-key='v' id='v'>v</button>
+                    <button className= 'keyboard-button' onClick= { () => addLetter('b') } data-key='b' id='b'>b</button>
+                    <button className= 'keyboard-button' onClick= { () => addLetter('n') } data-key='n' id='n'>n</button>
+                    <button className= 'keyboard-button' onClick= { () => addLetter('m') } data-key='m' id='m'>m</button>
+                    <button onClick= { () => removeLetter() } data-key='backspace' className='one-and-a-half keyboard-button'><FaBackspace size={20} /></button>
                 </div>
             </div>
                 
