@@ -1,6 +1,6 @@
 import React, {useRef, useState} from 'react';
 import { useNavigate} from 'react-router-dom';
-
+import Layout from '../../components/Layout';
 
 import './LoginPage.scss';
 
@@ -67,7 +67,7 @@ function SignupPage(){
     
     return(
         <div className="card-container">
-            
+             <Layout/>
             <a href='/'>
                 <img  className = 'logo'/>
             </a>

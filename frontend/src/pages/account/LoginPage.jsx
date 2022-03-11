@@ -3,7 +3,7 @@ import { Link, useNavigate} from 'react-router-dom';
 
 
 import { UserContext }  from '../../UserContext';
-
+import Layout from '../../components/Layout';
 import './LoginPage.scss';
 
 function LoginPage(){
@@ -69,8 +69,9 @@ function LoginPage(){
 
     
     return(
+       
         <div className="card-container">
-            
+             <Layout/>
             <a href='/'>
                 <img className = 'logo'/>
             </a>
