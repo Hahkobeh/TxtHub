@@ -1,9 +1,10 @@
 import './Anagrams.scss';
 import React, {useState} from 'react';
 import {FaBackspace, FaRedo} from 'react-icons/fa';
-import {AiFillPlaySquare} from 'react-icons/ai';
+import {AiOutlineQuestionCircle} from 'react-icons/ai';
 import axios from "axios";
 
+import Layout from '../Layout';
 
 
 var letterList = ['r', 'a', 't', 'e', 's'];
@@ -12,6 +13,7 @@ var wordsList = ['rat', 'rate', 'ate', 'rates', 'seat', 'tears', 'tea'];
 var currentScore = 0; 
 
 function Anagrams(){
+    const [instructions, setInstructions] = useState(true);
 
     function startGame(){
         //add functionality to alter letterList elements to something from the list
@@ -60,17 +62,26 @@ function Anagrams(){
     var wordsGuessed = new Array(wordsList.length).fill(null);
     var letterCombo = new Array(5).fill(null);
 
+    const changeInstructions = () => setInstructions(!instructions);
+
+
     return(
         <div>
-            <h1 className="game-name">Anagrams</h1>
-            <hr/>
-            <div id ='top-container'>
+
+            <Layout Game={<h1 className="game-name">Anagrams <AiOutlineQuestionCircle className='help' onClick = {changeInstructions}/></h1>}/>
+            
+            <div className ='top-container'>
                 <div className='startButton' onClick={startGame} id = 'startButton'>
                     <h1>Start Game</h1>
                 </div>
                 <div className='timer' id = 'timer'></div>
             </div>
             
+            {/*<div className='top-container'>
+                <button className = 'button' onClick={startGame} id = 'startButton'>Start Game</button>
+
+                <div className ='timer' id = 'timer'/>
+            </div>*/}
             
             <div id='guessList-container'>
             <div id='guessList'> 

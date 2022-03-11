@@ -7,7 +7,7 @@ import LoginPage from './pages/account/LoginPage';
 import SignupPage from './pages/account/SignupPage';
 import PResetPage from './pages/account/PResetPage';
 import Wordle from './components/wordle/Wordle';
-import Anagrams from './components/Anagrams';
+import Anagrams from './components/anagrams/Anagrams';
 import { UserContext } from './/UserContext';
 function App() {
 
