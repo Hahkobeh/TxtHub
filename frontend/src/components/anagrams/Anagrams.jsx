@@ -14,20 +14,29 @@ var currentScore = 0;
 
 function Anagrams(){
     const [instructions, setInstructions] = useState(true);
+    const [playingGame, setPlayingGame] = useState(false);
+    const [timer, setTimer] = React.useState(0);
+
+    React.useEffect(() => {
+        timer > 0 && setTimeout(()=> setTimer(timer - 1), 1000);
+    }, [timer]);
 
     function startGame(){
         //add functionality to alter letterList elements to something from the list
         //begin the game timer
-        startTimer(); 
+        
+        setPlayingGame(true);
+        setTimer(60);
+        /*startTimer(); 
         for (let i = -1; i >= -5; i-=1)
         {
             document.getElementById(i).textContent = letterList[(i * -1) -1]; 
-        }
-        document.getElementById('startButton').style.visibility = "hidden";
+        }*/
+        
         
     }
 
-    function startTimer(){
+    async function startTimer(){
         var start = Date.now();
         var timer = document.getElementById('timer');
         (
@@ -70,17 +79,14 @@ function Anagrams(){
 
             <Layout Game={<h1 className="game-name">Anagrams <AiOutlineQuestionCircle className='help' onClick = {changeInstructions}/></h1>}/>
             
-            {/*<div className ='top-container'>
-                <div className='startButton' onClick={startGame} id = 'startButton'>
-                    <h1>Start Game</h1>
-                </div>
-                <div className='timer' id = 'timer'></div>
-            </div>*/}
-            
-            <div className='top-container'>
-                <button className = 'button' onClick={startGame} id = 'startButton'>Start Game</button>
+            <div className = 'a-game'>
 
-                <div className ='timer' id = 'timer'/>
+           
+            <div className='top-container'>
+                
+            {!playingGame && <button className = 'stateButton' onClick={startGame} id = 'startButton'>Start Game</button>}
+            {playingGame && <button className = 'stateButton' id = 'cancelButton'>Cancel Game</button>}
+            {playingGame && timer}
             </div>
             
             <div id='guessList-container'>
@@ -117,6 +123,7 @@ function Anagrams(){
             </div>
                 
 
+            </div>
         </div>
     )
 }
