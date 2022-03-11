@@ -22,38 +22,13 @@ function Anagrams(){
     }, [timer]);
 
     function startGame(){
-        //add functionality to alter letterList elements to something from the list
-        //begin the game timer
+      
         
         setPlayingGame(true);
         setTimer(60);
-        /*startTimer(); 
-        for (let i = -1; i >= -5; i-=1)
-        {
-            document.getElementById(i).textContent = letterList[(i * -1) -1]; 
-        }*/
+     
         
         
-    }
-
-    async function startTimer(){
-        var start = Date.now();
-        var timer = document.getElementById('timer');
-        (
-            function f(){
-            var diff=Date.now()-start
-            var nanoSec=(((6e4-diff)/1e3)>>0)
-            var min=(nanoSec/60)>>0
-            var sec=nanoSec-min*60;
-            timer.textContent=min + ':' +((''+sec).length>1?'':'0')+sec;
-            if(diff>6e4){
-                start=Date.now();
-                timer.textContent = "Times UP!";
-                return; 
-            }
-        setTimeout(f,1e3);
-        })
-        ();
     }
 
     function enterWord(){
