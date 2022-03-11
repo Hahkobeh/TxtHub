@@ -70,18 +70,18 @@ function Anagrams(){
 
             <Layout Game={<h1 className="game-name">Anagrams <AiOutlineQuestionCircle className='help' onClick = {changeInstructions}/></h1>}/>
             
-            <div className ='top-container'>
+            {/*<div className ='top-container'>
                 <div className='startButton' onClick={startGame} id = 'startButton'>
                     <h1>Start Game</h1>
                 </div>
                 <div className='timer' id = 'timer'></div>
-            </div>
+            </div>*/}
             
-            {/*<div className='top-container'>
+            <div className='top-container'>
                 <button className = 'button' onClick={startGame} id = 'startButton'>Start Game</button>
 
                 <div className ='timer' id = 'timer'/>
-            </div>*/}
+            </div>
             
             <div id='guessList-container'>
             <div id='guessList'> 
