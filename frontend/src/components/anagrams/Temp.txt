@@ -1,0 +1,54 @@
+ <div id='guessList-container'>
+            <div id='guessList'> 
+                    {wordsGuessed.map(function(arr, index){
+                        return <div class="wordBox" id={index}></div>
+                    })}
+                    
+                
+                </div>
+            </div>
+
+            <div id='currentGuess-container'>
+            <div id='currentGuess'> 
+                    {letterCombo.map(function(arr, comboIndex){
+                        return <div class="letterSquare" id={comboIndex}></div>
+                    })}
+                    
+                
+                </div>
+            </div>
+            
+            <div id="letterSet">
+            <div className='letterSetRow'>
+                    <button_Anagrams onClick= { () => letterClick(1) }id='-1'></button_Anagrams>
+                    <button_Anagrams onClick= { () => letterClick(2) }id='-2'></button_Anagrams>
+                    <button_Anagrams onClick= { () => letterClick(3) }id='-3'></button_Anagrams>
+                    <button_Anagrams onClick= { () => letterClick(4) }id='-4'></button_Anagrams>
+                    <button_Anagrams onClick= { () => letterClick(5) }id='-5'></button_Anagrams>
+                    <button_Anagrams onClick= { () => removeLetter() }id='-6'><FaBackspace size={20} /></button_Anagrams>
+                    <button_Anagrams onClick= { () => enterWord() }id='-7' >↵</button_Anagrams>
+                </div>
+                
+            </div>
+                
+
+
+.top-container .timer{
+  font-family: var(--main-font);
+  margin: auto;
+  display: block;
+  font-size: 30px;
+  width:100%;
+  padding-left: 47.5%;
+}
+
+.top-container .stateB{
+
+  margin-left: 2.5%;
+  font-size: 120%;
+  font-family: var(--main-font);
+  color: var(--navbar-link-color);
+  width: 95%;
+  height: 500px;
+  border: 2px dashed green;
+}

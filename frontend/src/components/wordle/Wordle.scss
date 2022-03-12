@@ -62,11 +62,10 @@
     display: flex;
     width: 100%;
     margin: 0 auto 8px;
-    /* https://stackoverflow.com/questions/46167604/ios-html-disable-double-tap-to-zoom */
     touch-action: manipulation;
   }
   
-  .keyboard-button, button {
+  .keyboard-button, .keyboard-button {
     font-family: inherit;
     font-weight: bold;
     border: 0;

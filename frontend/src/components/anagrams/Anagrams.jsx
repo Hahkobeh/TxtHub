@@ -23,12 +23,9 @@ function Anagrams(){
 
     function startGame(){
       
-        
         setPlayingGame(true);
         setTimer(60);
      
-        
-        
     }
 
     function enterWord(){
@@ -54,51 +51,19 @@ function Anagrams(){
 
             <Layout Game={<h1 className="game-name">Anagrams <AiOutlineQuestionCircle className='help' onClick = {changeInstructions}/></h1>}/>
             
-            <div className = 'a-game'>
+            {playingGame && <button className = 'stateB' id = 'quitButton'>Quit Game</button>}
+            {!playingGame && <button className = 'stateB' onClick={startGame} id = 'startButton'>Start Game</button>}
 
+            <div id ='anagram-option-container'>
+                <div id = 'anagram-menu'>
+                    {playingGame && <p className='timer'>{timer}</p>}
+                    {playingGame && <button className = 'stateB' id = 'skipButton'>Skip (-5s)</button>}
+                </div>
+                
+            </div>
+            
            
-            <div className='top-container'>
-                
-            {!playingGame && <button className = 'stateButton' onClick={startGame} id = 'startButton'>Start Game</button>}
-            {playingGame && <button className = 'stateButton' id = 'cancelButton'>Cancel Game</button>}
-            {playingGame && timer}
-            </div>
-            
-            <div id='guessList-container'>
-            <div id='guessList'> 
-                    {wordsGuessed.map(function(arr, index){
-                        return <div class="wordBox" id={index}></div>
-                    })}
-                    
-                
-                </div>
-            </div>
 
-            <div id='currentGuess-container'>
-            <div id='currentGuess'> 
-                    {letterCombo.map(function(arr, comboIndex){
-                        return <div class="letterSquare" id={comboIndex}></div>
-                    })}
-                    
-                
-                </div>
-            </div>
-            
-            <div id="letterSet">
-            <div className='letterSetRow'>
-                    <button_Anagrams onClick= { () => letterClick(1) }id='-1'></button_Anagrams>
-                    <button_Anagrams onClick= { () => letterClick(2) }id='-2'></button_Anagrams>
-                    <button_Anagrams onClick= { () => letterClick(3) }id='-3'></button_Anagrams>
-                    <button_Anagrams onClick= { () => letterClick(4) }id='-4'></button_Anagrams>
-                    <button_Anagrams onClick= { () => letterClick(5) }id='-5'></button_Anagrams>
-                    <button_Anagrams onClick= { () => removeLetter() }id='-6'><FaBackspace size={20} /></button_Anagrams>
-                    <button_Anagrams onClick= { () => enterWord() }id='-7' >↵</button_Anagrams>
-                </div>
-                
-            </div>
-                
-
-            </div>
         </div>
     )
 }

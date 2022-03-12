@@ -1,33 +1,33 @@
+@import '../../Variables.css';
 
-.a-game{
-  display: flex;
-  justify-content: center;
-  align-items:center;
-  margin-top: 15vh;
 
-  border: 2px solid red;
+.help{
+  margin-top: 10px;
 }
 
-.top-container{
-
-}
-
-.timer{
-  font-family: inherit;
-  font-weight: bold;
-  font-size: 50px;
-  margin: 0 6px 0 0;
-  border-radius: 4px;
-  cursor: pointer;
-  user-select: none;
-  background-color: #ffffff;
-  color: #0e0d0d;
-  flex: 1;
+#anagram-option-container{
   display: flex;
   justify-content: center;
   align-items: center;
-  text-transform: uppercase;
-  -webkit-tap-highlight-color: rgba(0,0,0,0.3);
+  flex-grow: 1;
+  overflow: hidden;
+  margin: 5rem auto;
+  margin-top: 15vh;
+  width: 13cm;
+  max-width: 40rem;
+  border: 2px solid red;
+}
+
+#anagram-menu{
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-gap: 5px;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.stateB{
+  height: 1.1cm;
 }
 
 /*
