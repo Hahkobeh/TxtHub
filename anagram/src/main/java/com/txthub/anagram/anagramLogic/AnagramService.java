@@ -1,5 +1,4 @@
-package com.txthub.wordle.wordlelogic;
-
+package com.txthub.anagram.anagramLogic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -8,18 +7,20 @@ import java.io.FileNotFoundException;
 import java.util.Random;
 import java.util.Scanner;
 
-@Service
-public class WordleService {
 
-    private File wordleFile;
-    private int fileLength;
+@Service
+public class AnagramService {
+
+    private File anagramFile;
+    private int fileLength; 
+
 
     @Autowired
-    WordleService(){
+    AnagramService(){
         try {
-            this.wordleFile = new File("wordleWords.txt");
-            System.out.println(wordleFile.getAbsolutePath());
-            assert (this.wordleFile.setReadOnly());
+            this.anagramFile = new File("words.txt");
+            System.out.println(anagramFile.getAbsolutePath());
+            assert (this.anagramFile.setReadOnly());
             this.fileLength = getLineCount();
 
 
@@ -29,10 +30,11 @@ public class WordleService {
         }
     }
 
-    private int getLineCount(){
+
+    private int getLineCount() {
         int count = 0;
         try {
-            Scanner scanner = new Scanner(this.wordleFile);
+            Scanner scanner = new Scanner(this.anagramFile);
             while(scanner.hasNext()){
                 count++;
                 scanner.next();
@@ -45,9 +47,10 @@ public class WordleService {
         return count;
     }
 
+
     public String getWord(){
         try {
-            Scanner scanner = new Scanner(this.wordleFile);
+            Scanner scanner = new Scanner(this.anagramFile);
 
             int count = 0;
             int num = getRandomNumber();
@@ -69,14 +72,16 @@ public class WordleService {
         return null;
     }
 
+
     private int getRandomNumber(){
         Random rand = new Random();
         return rand.nextInt(this.fileLength);
     }
 
+
     public boolean checkIfValid(String word){
         try{
-            Scanner scanner = new Scanner(this.wordleFile);
+            Scanner scanner = new Scanner(this.anagramFile);
             while(scanner.hasNext()){
                 String temp = scanner.next();
                 if(temp.equals(word)){
@@ -91,6 +96,14 @@ public class WordleService {
         }
         return false;
     }
+
+
+
+
+
+
+
+
 
 
 }
