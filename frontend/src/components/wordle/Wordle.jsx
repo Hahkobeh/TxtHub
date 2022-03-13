@@ -39,8 +39,6 @@ function Wordle(){
     useEffect(() => {
         window.addEventListener('keydown' , e => {
             
-            var str = e.key;
-            console.log(str);
             
             if(e.key === 'Delete' || e.key === 'Backspace'){
                 removeLetter();

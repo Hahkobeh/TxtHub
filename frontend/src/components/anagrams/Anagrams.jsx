@@ -1,5 +1,5 @@
 import './Anagrams.scss';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {FaBackspace, FaRedo} from 'react-icons/fa';
 import {GiCancel} from 'react-icons/gi';
 import {AiOutlineQuestionCircle} from 'react-icons/ai';
@@ -48,6 +48,34 @@ function Anagrams(){
         scramWord();
      
     }
+
+    useEffect(() => {
+        window.addEventListener('keydown' , e => {
+            
+            
+            if(e.key === 'Delete' || e.key === 'Backspace'){
+                removeLetter();
+            }else if(word.includes(e.key)){
+
+                var id = 1;
+                for(let i = -1; i > -6; i--){
+                    const box = document.getElementById(i);
+                    if(!lastClickedButton.includes(i) && word[ (i + 1) * -1] === e.key){
+                        id = i;
+                        break;
+                    }
+                }
+                if(id === 1){
+                    return;
+                }
+                letterClick(e.key, id);
+                
+            }else if(e.key === 'Enter' ){
+                
+                enterWord();
+            }
+        });
+    }, []);
 
     function scramWord(){
         var arr = word.split('');           
