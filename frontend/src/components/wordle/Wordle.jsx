@@ -15,15 +15,15 @@ import Message from './Message';
 var guessPosition = 0; 
 var currentWord = [];
 var guessedWords = [];
-var answer = 'ready' //setWord(); // just declare answer don't set it to anything tho
+var answer = setWord(); // just declare answer don't set it to anything tho
 
-/*async function setWord(){
+async function setWord(){
     await axios.get('http://localhost:8082/wordle/api/v1/getword')
         .then(res => {
             answer = res.data
             console.log(res.data)
         });
-}*/
+}
 
 
 
@@ -100,7 +100,7 @@ function Wordle(){
             return;
         }
 
-       /* let test
+       let test
         let request = 'http://localhost:8082/wordle/api/v1/testword/' + currentWord.join("")
         console.log(request)
         await axios.get(request)
@@ -112,7 +112,7 @@ function Wordle(){
         if(test === false){
             setNotWord(true);
             return;
-        }*/
+        }
 
 
 
@@ -219,7 +219,7 @@ function Wordle(){
         setNotEnoughLetters(false);
         setNotWord(false);
         
-        //setWord();
+        setWord();
     }
     
     const changeInstructions = () => setInstructions(!instructions);
