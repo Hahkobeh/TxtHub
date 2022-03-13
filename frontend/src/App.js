@@ -8,7 +8,9 @@ import SignupPage from './pages/account/SignupPage';
 import PResetPage from './pages/account/PResetPage';
 import Wordle from './components/wordle/Wordle';
 import Anagrams from './components/anagrams/Anagrams';
-import { UserContext } from './/UserContext';
+import { UserContext } from './UserContext';
+import TBA from './components/TBA/TBA'
+
 function App() {
 
   const [user, setUser] = useState(null);
@@ -33,6 +35,8 @@ function App() {
           <Route path='/wordle' element={<Wordle/>}/>
 
           <Route path='/anagrams' element={<Anagrams/>}/>
+
+          <Route path='/tba' element={<TBA/>}/>
 
         </Routes>
       </UserContext.Provider>
