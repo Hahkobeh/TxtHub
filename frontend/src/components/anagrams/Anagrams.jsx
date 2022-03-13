@@ -165,6 +165,19 @@ function Anagrams(){
         setTimer(timer - 5);
     }
 
+    function quitGame(){
+
+        
+        setPlayingGame(false);
+        setNotWord(false);
+        setNotEnoughLetters(false);
+        setTimer(0);
+        currentGuess = [];
+        currentScore = 0; 
+        guessPosition = 0; 
+        lastClickedButton = [];
+    }
+
     var letterCombo = new Array(5).fill(null);
 
     const changeInstructions = () => setInstructions(!instructions);
@@ -182,7 +195,7 @@ function Anagrams(){
 
 
             <div className = 'quit-div'>
-                {playingGame && <button className = 'stateB' id = 'quitButton' >Quit Game</button>}
+                {playingGame && <button className = 'stateB' onClick={quitGame} id = 'quitButton' >Quit Game</button>}
             </div>
             
             <div className = 'start-anagrams'>

@@ -1,5 +1,5 @@
 import './Wordle.scss';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Layout from '../Layout';
 import {FaBackspace, FaRedo} from 'react-icons/fa';
 import {GiCancel} from 'react-icons/gi';
@@ -15,15 +15,17 @@ import Message from './Message';
 var guessPosition = 0; 
 var currentWord = [];
 var guessedWords = [];
-var answer = setWord(); // just declare answer don't set it to anything tho
+var answer = 'ready' //setWord(); // just declare answer don't set it to anything tho
 
-async function setWord(){
+/*async function setWord(){
     await axios.get('http://localhost:8082/wordle/api/v1/getword')
         .then(res => {
             answer = res.data
             console.log(res.data)
         });
-}
+}*/
+
+
 
 
 function Wordle(){
@@ -33,6 +35,24 @@ function Wordle(){
     const [finishedSuccessfully, setFinishedSuccessfully] = useState(false);
     const [finishedWrong, setFinishedWrong] = useState(false);
     const [instructions, setInstructions] = useState(true);
+
+    useEffect(() => {
+        window.addEventListener('keydown' , e => {
+            
+            var str = e.key;
+            console.log(str);
+            
+            if(e.key === 'Delete' || e.key === 'Backspace'){
+                removeLetter();
+            }else if(e.key >= 'a' && e.key <= 'z'){
+                addLetter(e.key);
+                
+            }else if(e.key === 'Enter' ){
+                
+                addWord();
+            }
+        });
+    }, []);
 
     function addLetter(a)
     {   
@@ -80,7 +100,7 @@ function Wordle(){
             return;
         }
 
-        let test
+       /* let test
         let request = 'http://localhost:8082/wordle/api/v1/testword/' + currentWord.join("")
         console.log(request)
         await axios.get(request)
@@ -92,7 +112,7 @@ function Wordle(){
         if(test === false){
             setNotWord(true);
             return;
-        }
+        }*/
 
 
 
@@ -183,11 +203,12 @@ function Wordle(){
             }
         }
         
-
+        guessPosition = 29;
         while(guessPosition > -1){
+            
             let b = ''; 
             const box = document.getElementById(guessPosition);
-            box.textContent = b;
+            box.textContent = '';
             box.style.backgroundColor = 'white';
             guessPosition--;
         }
@@ -198,7 +219,7 @@ function Wordle(){
         setNotEnoughLetters(false);
         setNotWord(false);
         
-        setWord();
+        //setWord();
     }
     
     const changeInstructions = () => setInstructions(!instructions);
