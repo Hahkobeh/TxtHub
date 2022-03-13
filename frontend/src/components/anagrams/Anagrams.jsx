@@ -223,7 +223,7 @@ function Anagrams(){
 
 
             <div className = 'quit-div'>
-                {playingGame && <button className = 'stateB' onClick={quitGame} id = 'quitButton' >Quit Game</button>}
+                {playingGame && <button className = 'stateB' onClick={quitGame} id = 'quitButton' >Quit Round</button>}
             </div>
             
             <div className = 'start-anagrams'>
