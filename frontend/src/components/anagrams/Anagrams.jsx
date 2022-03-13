@@ -15,7 +15,7 @@ import Message from '../wordle/Message';
 
 var currentGuess = [];
 var currentScore = 0; 
-var word = 'otter'; // use setWord wen hooked up to API
+var word = 'otter'; //setWord() // use setWord wen hooked up to API
 var guessPosition = 0; 
 var lastClickedButton = [];
 
@@ -43,7 +43,7 @@ function Anagrams(){
     function startGame(){
       
         setPlayingGame(true);
-        setTimer(30);
+        setTimer(60);
 
         scramWord();
      
@@ -90,7 +90,7 @@ function Anagrams(){
         }
 
         word = arr.join('');
-        console.log(word);
+        
     }
 
     function enterWord(){
@@ -117,7 +117,7 @@ function Anagrams(){
             return;
         }*/
 
-        word = 'ready';
+        word = 'ready'; //setWord();
         scramWord();
         nextWord();
     }
