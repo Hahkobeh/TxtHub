@@ -16,7 +16,7 @@ import Message from '../wordle/Message';
 var currentGuess = [];
 var currentScore = 0; 
 var word = 'otter'; //setWord() // use setWord wen hooked up to API
-var guessPosition = 0; 
+var guessPos = 0; 
 var lastClickedButton = [];
 
 /*async function setWord(){
@@ -50,7 +50,7 @@ function Anagrams(){
     }
 
     useEffect(() => {
-        window.addEventListener('keydown' , e => {
+        document.addEventListener('keydown' , e => {
             
             
             if(e.key === 'Delete' || e.key === 'Backspace'){
@@ -133,7 +133,7 @@ function Anagrams(){
             const box = document.getElementById(i);
             box.textContent = '';
         }
-        guessPosition = 0;
+        guessPos = 0;
         lastClickedButton = [];
         currentGuess = [];
     }
@@ -147,9 +147,9 @@ function Anagrams(){
             return;
         }
         currentGuess.push(a);
-        const box = document.getElementById(guessPosition);
+        const box = document.getElementById(guessPos);
         box.textContent = a;
-        guessPosition++;
+        guessPos++;
 
         const box2 = document.getElementById(id);
         box2.style.backgroundColor = 'grey';
@@ -163,16 +163,16 @@ function Anagrams(){
         setNotEnoughLetters(false);
         setNotWord(false);
 
-        if(guessPosition === 0){
+        if(guessPos === 0){
             return;
         }
-        if (guessPosition > 0){
-            guessPosition--;
+        if (guessPos > 0){
+            guessPos--;
         }
         
         let b = '';
         currentGuess.pop();
-        const box = document.getElementById(guessPosition);
+        const box = document.getElementById(guessPos);
         box.textContent = b;
         
         var last  = lastClickedButton[lastClickedButton.length -1];
@@ -202,7 +202,7 @@ function Anagrams(){
         setTimer(0);
         currentGuess = [];
         currentScore = 0; 
-        guessPosition = 0; 
+        guessPos = 0; 
         lastClickedButton = [];
     }
 

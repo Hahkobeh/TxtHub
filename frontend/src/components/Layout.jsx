@@ -9,6 +9,9 @@ import { AiFillPropertySafety } from 'react-icons/ai';
 const Layout = (props) => {
     const {user, setUser} = useContext(UserContext);
 
+    function removeListener(){
+        document.removeEventListener('keydown');
+    }
     if(!user){
         return(
 
@@ -21,13 +24,13 @@ const Layout = (props) => {
                     
                     <ul >
                         <li className ='nav-item'>
-                            <Link to ='/'>Games</Link>
+                            <Link onClick={removeListener} to ='/'>Games</Link>
                         </li>
                         <li className ='nav-item'>
-                            <Link to ='/signup'>Sign up</Link>
+                            <Link onClick={removeListener} to ='/signup'>Sign up</Link>
                         </li>
                         <li className ='nav-item'>
-                            <Link to ='/login'>Login</Link>
+                            <Link onClick={removeListener} to ='/login'>Login</Link>
                         </li>
                     </ul>
     
