@@ -19,6 +19,15 @@ var word = 'otter'; // use setWord wen hooked up to API
 var guessPosition = 0; 
 var lastClickedButton = [];
 
+/*async function setWord(){
+    await axios.get('http://localhost:8082/wordle/api/v1/getword')
+        .then(res => {
+            answer = res.data
+            console.log(res.data)
+        });
+}
+*/
+
 
 function Anagrams(){
     const [instructions, setInstructions] = useState(true);
@@ -57,10 +66,54 @@ function Anagrams(){
     }
 
     function enterWord(){
+        setNotEnoughLetters(false);
+        setNotWord(false);
 
+        if(currentGuess.length < 5){
+
+            setNotEnoughLetters(true);
+            return;
+        }
+
+        /*let test
+        let request = 'http://localhost:8082/wordle/api/v1/testword/' + currentWord.join("")
+        console.log(request)
+        await axios.get(request)
+            .then(res => {
+                console.log(res.data)
+                test =  res.data
+        })
+        console.log(test)
+        if(test === false){
+            setNotWord(true);
+            return;
+        }*/
+
+        word = 'ready';
+        scramWord();
+        nextWord();
+    }
+
+    function nextWord(){
+
+
+        for(let i = 0; i < 5; i++){
+            var temp = lastClickedButton[i];
+            const box2 = document.getElementById(temp);
+            box2.style.backgroundColor = '#d3d6da';
+
+            const box = document.getElementById(i);
+            box.textContent = '';
+        }
+        guessPosition = 0;
+        lastClickedButton = [];
+        currentGuess = [];
     }
 
     function letterClick(a, id){
+
+        setNotEnoughLetters(false);
+        setNotWord(false);
 
         if(lastClickedButton.includes(id)){
             return;
@@ -78,6 +131,10 @@ function Anagrams(){
     }
 
     function removeLetter(){
+
+        setNotEnoughLetters(false);
+        setNotWord(false);
+
         if(guessPosition === 0){
             return;
         }
@@ -85,7 +142,6 @@ function Anagrams(){
             guessPosition--;
         }
         
-        console.log(last);
         let b = '';
         currentGuess.pop();
         const box = document.getElementById(guessPosition);
