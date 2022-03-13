@@ -23,6 +23,10 @@ function HomePage(){
         
     }
 
+    function tbaHandler() {
+        navigate('/tba')
+    }
+
 
     return(
         <div className='games-page'>
@@ -36,6 +40,9 @@ function HomePage(){
                         </div>
                         <div className='card' onClick={anagramsHandler}>
                             <h1>Play Anagrams!</h1>
+                        </div>
+                        <div className='card' onClick={tbaHandler}>
+                            <h1>Play Text Based Adventure!</h1>
                         </div>
                     </li>
                 </ul>
