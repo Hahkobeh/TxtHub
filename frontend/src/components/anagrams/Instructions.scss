@@ -1,0 +1,62 @@
+.instructions{
+    
+    
+    margin: 3rem auto;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    border-radius: .95rem;
+    z-index: 10;
+    position: fixed;
+    top: 10vh;
+    text-align:left;
+    background: white;
+    align-self: center;
+    
+    max-width: 500px;
+    margin-left:calc(50% - 250px);
+    
+}
+
+
+.instr-top {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 0;
+    height: 100%;
+    padding: 0;
+    padding-left: 24%;
+    
+}
+.instr-top h3{
+    padding: 0;
+    margin: 0;
+    margin-bottom: 2px;
+    margin-top: 10px;
+}
+
+.instr{
+    margin: 0;
+    text-align: center;
+}
+
+.body{
+    padding-left:5%;
+    padding-right: 5%;
+}
+
+#letters{
+    max-width: 90%;
+}
+
+@media screen and (max-width: 600px){
+    .instructions{
+        
+        top: 2vh;
+        max-width: 90%;
+        margin-left: 5%;
+        padding: 0;
+    }
+    .instructions img{
+        width: 90%;
+    }
+}

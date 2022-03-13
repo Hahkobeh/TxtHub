@@ -1,43 +1,175 @@
 @import '../../Variables.css';
 
-
 .help{
   margin-top: 10px;
-}
-
-#anagram-option-container{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-grow: 1;
-  overflow: hidden;
-  margin: 5rem auto;
-  margin-top: 15vh;
-  width: 13cm;
-  max-width: 40rem;
-  border: 2px solid red;
-}
-
-#anagram-menu{
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  grid-gap: 5px;
-  padding: 10px;
-  box-sizing: border-box;
 }
 
 .stateB{
   height: 1.1cm;
 }
+.start-anagrams{
+  font-family: var(--main-font);
+  width: 25vw;
+  margin-top: 35vh;
+  margin-left: calc(50% - 12.5vw);
+  max-width: 40vw;
+  
+  overflow: hidden;
+}
+
+#startButton{
+  color: White;
+  background-color: black;
+  font-size: 50px;
+  width: 90%;
+  margin-left: 5%;
+  height: 2cm;
+}
+
+.quit-div{
+  font-family: var(--main-font);
+  width: 10vw;
+  margin-top: 12vh;
+  padding-left: 90%;
+  overflow: hidden;
+}
+
+#anagram-option-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+  overflow: hidden;
+  margin: 5rem auto;
+  margin-top: -35vh;
+  width: 25vw;
+  max-width: 40rem;
+  z-index: 13;
+}
+
+#anagram-menu{
+  overflow: hidden;
+  text-align: center;
+  
+}
+
+.timer{
+  margin: 0;
+  font-size: 8em;
+}
+
+#currentGuess-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+  overflow: hidden;
+  margin-top: 8vh;
+}
+
+#currentGuess{
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-gap: 15px;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.letterSquare {
+  border: 2px solid rgb(58, 58, 60);
+  width: 60px;
+  height: 60px;
+  font-size: 50px;
+  font-weight: bold;
+  color: black;
+  text-transform: uppercase;
+  
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+//keyboard settings
+
+:host {
+  height: 200px;
+
+}
+#letterSet {
+  margin: 0 8px;
+  user-select: none;
+  width: 100%;
+  max-width: 90vw;
+  margin-top: 40px;
+  margin: 3rem auto;
+}
+
+.letterSetRow {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-gap: 10px;
+  padding: 10px;
+  width: 40%;
+  margin: 0 auto 8px;
+  
+}
+
+button_Anagrams {
+  font-family: inherit;
+  font-weight: bold;
+  font-size: 50px;
+  border: 0;
+  margin: 0 6px 0 0;
+  height: 70px;
+  width: 70px;
+  border-radius: 4px;
+  cursor: pointer;
+  user-select: none;
+  background-color: #d3d6da;
+  color: #000000;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-transform: uppercase;
+  -webkit-tap-highlight-color: rgba(0,0,0,0.3);
+}
+
+button_Anagrams:focus {
+  outline: none;
+}
+
+button_Anagrams.fade {
+  transition: background-color 0.1s ease, color 0.1s ease;
+}
+
+button_Anagrams:last-of-type {
+  margin: 0;
+}
+
+.half_Anagrams {
+  flex: 0.5;
+}
+
+.one_Anagrams {
+  flex: 1;
+}
+
+.one-and-a-half_Anagrams {
+  flex: 1.5;
+  font-size: 12px;
+}
+
+.two_Anagrams {
+  flex: 2;
+}
+
 
 /*
 .top-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-grow: 1;
-    overflow: hidden;
-    margin-top: 8vh;
+   
 }
 
 #startButton{
@@ -169,10 +301,9 @@
     padding: 10px;
     width: 50%;
     margin: 0 auto 8px;
-    /* https://stackoverflow.com/questions/46167604/ios-html-disable-double-tap-to-zoom */
-    //touch-action: manipulation;
-  //}
-  /*
+    
+  }
+  
   button_Anagrams {
     font-family: inherit;
     font-weight: bold;
