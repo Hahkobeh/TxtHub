@@ -155,7 +155,14 @@ function Anagrams(){
     }
 
     async function minusFive(){
-       setTimer(timer - 5);
+        setNotEnoughLetters(false);
+        setNotWord(false);
+
+        word = 'ready';
+        scramWord();
+        nextWord();
+        
+        setTimer(timer - 5);
     }
 
     var letterCombo = new Array(5).fill(null);
