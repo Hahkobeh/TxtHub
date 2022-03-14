@@ -15,18 +15,18 @@ import Message from '../wordle/Message';
 
 var currentGuess = [];
 var currentScore = 0; 
-var word = 'otter'; //setWord() // use setWord wen hooked up to API
-var guessPos = 0; 
+var word = setWord(); //setWord() // use setWord wen hooked up to API
+var guessPos = 0;
 var lastClickedButton = [];
 
-/*async function setWord(){
-    await axios.get('http://localhost:8082/wordle/api/v1/getword')
+async function setWord(){
+    await axios.get('http://localhost:8084/anagram/api/v1/getword')
         .then(res => {
-            answer = res.data
+            word = res.data
             console.log(res.data)
         });
 }
-*/
+
 
 
 function Anagrams(){
@@ -78,6 +78,7 @@ function Anagrams(){
     }, []);
 
     function scramWord(){
+        console.log('the word is :' + word + ':')
         var arr = word.split('');           
         var n = arr.length;              
         
@@ -93,7 +94,7 @@ function Anagrams(){
         
     }
 
-    function enterWord(){
+    async function enterWord(){
         setNotEnoughLetters(false);
         setNotWord(false);
 
@@ -102,10 +103,9 @@ function Anagrams(){
             setNotEnoughLetters(true);
             return;
         }
-
-        /*let test
-        let request = 'http://localhost:8082/wordle/api/v1/testword/' + currentWord.join("")
-        console.log(request)
+        let test
+        let request = 'http://localhost:8084/anagram/api/v1/testword/' + currentGuess.join("")
+        console.log(currentGuess)
         await axios.get(request)
             .then(res => {
                 console.log(res.data)
@@ -115,11 +115,12 @@ function Anagrams(){
         if(test === false){
             setNotWord(true);
             return;
-        }*/
+        }
 
-        word = 'ready'; //setWord();
-        scramWord();
         nextWord();
+        word = setWord(); //setWord();
+        scramWord();
+
     }
 
     function nextWord(){
