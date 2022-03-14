@@ -25,8 +25,24 @@ async function setWord(){
             word = res.data
             console.log(res.data)
         });
+    scramWord();
 }
 
+function scramWord(){
+    var arr = word.split('');
+    var n = arr.length;
+
+    for(var i=0 ; i<n-1 ; ++i) {
+        var j = Math.floor(Math.random() * n);
+
+        var temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+
+    word = arr.join('');
+
+}
 
 
 function Anagrams(){
@@ -77,22 +93,6 @@ function Anagrams(){
         });
     }, []);
 
-    function scramWord(){
-        console.log('the word is :' + word + ':')
-        var arr = word.split('');           
-        var n = arr.length;              
-        
-        for(var i=0 ; i<n-1 ; ++i) {
-          var j = Math.floor(Math.random() * n);     
-          
-          var temp = arr[i];             
-          arr[i] = arr[j];
-          arr[j] = temp;
-        }
-
-        word = arr.join('');
-        
-    }
 
     async function enterWord(){
         setNotEnoughLetters(false);
@@ -119,7 +119,8 @@ function Anagrams(){
 
         nextWord();
         word = setWord(); //setWord();
-        scramWord();
+
+
 
     }
 
@@ -183,15 +184,15 @@ function Anagrams(){
         
     }
 
-    async function minusFive(){
+    function minusFive(){
         setNotEnoughLetters(false);
         setNotWord(false);
 
-        word = 'ready';
-        scramWord();
         nextWord();
+        word = setWord();
+
         
-        setTimer(timer - 5);
+
     }
 
     function quitGame(){
@@ -271,4 +272,4 @@ function Anagrams(){
     )
 }
 
-export default Anagrams; 
+export default Anagrams;
