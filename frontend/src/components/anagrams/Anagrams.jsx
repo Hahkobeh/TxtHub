@@ -27,17 +27,17 @@ var lastClickedButton = [];
 async function setWord(){
 
     let b;
-    await axios.get('http://localhost:8084/anagrams/api/v1/getword')
+    await axios.get('http://localhost:8084/anagram/api/v1/getword')
         .then(res => {
             b = res.data
             console.log(res.data)
     });
-    
+
     return b;
 }
 
 function populateWordList(){
-    
+
     for(let i = 0; i < 60; i++){
         let temp = setWord();
         temp = scramWord(temp);
@@ -101,7 +101,7 @@ function Anagrams(){
     }, []);
 
     function scramWord(wordToBeScrambled){
-        var arr = wordToBeScrambled.split('');           
+        var arr = wordToBeScrambled.split('');
         var n = arr.length;              
         
         for(var i=0 ; i<n-1 ; ++i) {
@@ -126,10 +126,9 @@ function Anagrams(){
             setNotEnoughLetters(true);
             return;
         }
-
         let test
-        let request = 'http://localhost:8084/anagrams/api/v1/testword/' + currentWord.join("")
-        console.log(request)
+        let request = 'http://localhost:8084/anagram/api/v1/testword/' + currentGuess.join("")
+        console.log(currentGuess)
         await axios.get(request)
             .then(res => {
                 console.log(res.data)
@@ -140,7 +139,7 @@ function Anagrams(){
             setNotWord(true);
             return;
         }
-        
+
         currentScore+=100;
         nextWord();
     }
@@ -150,7 +149,7 @@ function Anagrams(){
         //await setWord();
         word = wordList[place];
         place++;
-        
+
         for(let i = 0; i < 5; i++){
             var temp = lastClickedButton[i];
             const box2 = document.getElementById(temp);
@@ -163,7 +162,6 @@ function Anagrams(){
         guessPos = 0;
         lastClickedButton = [];
         currentGuess = [];
-        
     }
 
     function letterClick(a, id){
@@ -216,7 +214,8 @@ function Anagrams(){
 
         nextWord();
         currentScore -=25;
-        
+
+        setTimer(timer - 5);
     }
 
     function quitMatch(){
