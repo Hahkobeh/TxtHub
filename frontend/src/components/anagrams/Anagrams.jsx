@@ -3,30 +3,48 @@ import React, {useState, useEffect} from 'react';
 import {FaBackspace, FaRedo} from 'react-icons/fa';
 import {GiCancel} from 'react-icons/gi';
 import {AiOutlineQuestionCircle} from 'react-icons/ai';
+import {MdExitToApp} from 'react-icons/md';
+import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 
 import Layout from '../Layout';
-import { InputGroup } from 'react-bootstrap';
+
 
 import Instructions from './Instructions';
 import Backdrop from '../wordle/Backdrop';
 import Message from '../wordle/Message';
+import ScoreCard from '../ScoreCard';
 
 
 var currentGuess = [];
 var currentScore = 0; 
-var word = 'otter'; //setWord() // use setWord wen hooked up to API
+var word = setWord(); // use setWord wen hooked up to API
+var wordList = [];
+var place  = 0;
 var guessPos = 0; 
 var lastClickedButton = [];
 
-/*async function setWord(){
-    await axios.get('http://localhost:8082/wordle/api/v1/getword')
+async function setWord(){
+
+    let b;
+    await axios.get('http://localhost:8084/anagrams/api/v1/getword')
         .then(res => {
-            answer = res.data
+            b = res.data
             console.log(res.data)
-        });
+    });
+    
+    return b;
 }
-*/
+
+function populateWordList(){
+    
+    for(let i = 0; i < 60; i++){
+        let temp = setWord();
+        temp = scramWord(temp);
+        wordList.push(temp);
+    }
+}
+
 
 
 function Anagrams(){
@@ -36,6 +54,9 @@ function Anagrams(){
     const [notEnoughLetters, setNotEnoughLetters] = useState(false);
     const [timer, setTimer] = React.useState(0);
 
+    let navigate = useNavigate();
+
+
     React.useEffect(() => {
         timer > 0 && setTimeout(()=> setTimer(timer - 1), 1000);
     }, [timer]);
@@ -43,9 +64,11 @@ function Anagrams(){
     function startGame(){
       
         setPlayingGame(true);
-        setTimer(60);
+        setTimer(20);
+        currentScore =0;
 
-        scramWord();
+        word = scramWord(word);
+        populateWordList();
      
     }
 
@@ -77,8 +100,8 @@ function Anagrams(){
         });
     }, []);
 
-    function scramWord(){
-        var arr = word.split('');           
+    function scramWord(wordToBeScrambled){
+        var arr = wordToBeScrambled.split('');           
         var n = arr.length;              
         
         for(var i=0 ; i<n-1 ; ++i) {
@@ -89,7 +112,8 @@ function Anagrams(){
           arr[j] = temp;
         }
 
-        word = arr.join('');
+        wordToBeScrambled = arr.join('');
+        return wordToBeScrambled;
         
     }
 
@@ -103,8 +127,8 @@ function Anagrams(){
             return;
         }
 
-        /*let test
-        let request = 'http://localhost:8082/wordle/api/v1/testword/' + currentWord.join("")
+        let test
+        let request = 'http://localhost:8084/anagrams/api/v1/testword/' + currentWord.join("")
         console.log(request)
         await axios.get(request)
             .then(res => {
@@ -115,20 +139,23 @@ function Anagrams(){
         if(test === false){
             setNotWord(true);
             return;
-        }*/
-
-        word = 'ready'; //setWord();
-        scramWord();
+        }
+        
+        currentScore+=100;
         nextWord();
     }
 
-    function nextWord(){
+    async function nextWord(){
 
-
+        //await setWord();
+        word = wordList[place];
+        place++;
+        
         for(let i = 0; i < 5; i++){
             var temp = lastClickedButton[i];
             const box2 = document.getElementById(temp);
             box2.style.backgroundColor = '#d3d6da';
+            box2.textContent = word[i];
 
             const box = document.getElementById(i);
             box.textContent = '';
@@ -136,6 +163,7 @@ function Anagrams(){
         guessPos = 0;
         lastClickedButton = [];
         currentGuess = [];
+        
     }
 
     function letterClick(a, id){
@@ -182,18 +210,16 @@ function Anagrams(){
         
     }
 
-    async function minusFive(){
+    async function skipPressed(){
         setNotEnoughLetters(false);
         setNotWord(false);
 
-        word = 'ready';
-        scramWord();
         nextWord();
+        currentScore -=25;
         
-        setTimer(timer - 5);
     }
 
-    function quitGame(){
+    function quitMatch(){
 
         
         setPlayingGame(false);
@@ -204,6 +230,16 @@ function Anagrams(){
         currentScore = 0; 
         guessPos = 0; 
         lastClickedButton = [];
+    }
+
+    function playAgain(){
+
+        quitMatch();
+
+    }
+
+    function quitGame(){
+        navigate('/');
     }
 
     var letterCombo = new Array(5).fill(null);
@@ -220,21 +256,21 @@ function Anagrams(){
             {notWord && <Message title = 'Not in word list.'/>}
             {instructions && <Instructions button={<GiCancel/>} handler={changeInstructions}/>}
             {instructions && <Backdrop onCancel={changeInstructions}/>}
-
+            {!instructions && timer === 0 && <ScoreCard title='Game Over.' data={currentScore} score='You got a score of: ' quitHandler ={quitGame} quitButton={<MdExitToApp/>} playHandler={playAgain} playButton={<FaRedo size = {20}/> }/>}
 
             <div className = 'quit-div'>
-                {playingGame && <button className = 'stateB' onClick={quitGame} id = 'quitButton' >Quit Round</button>}
+                {playingGame && <button className = 'stateB' onClick={quitMatch} id = 'quitButton' >Quit Round</button>}
             </div>
             
             <div className = 'start-anagrams'>
-                {!playingGame && <button className = 'stateB' onClick={startGame} id = 'startButton'>Start Game</button>}
+                {!playingGame && <button className = 'stateB' onClick={startGame} id = 'startButton'>Start</button>}
             </div>
             
 
             <div id ='anagram-option-container'>
                 <div id = 'anagram-menu'>
                     {playingGame && <p className='timer'>{timer}</p>}
-                    {playingGame && <button className = 'stateB' id = 'skipButton' onClick={minusFive}>Skip (-5s)</button>}
+                    {playingGame && <button className = 'stateB' id = 'skipButton' onClick={skipPressed}>Skip (-25)</button>}
                 </div>
                 
             </div>
