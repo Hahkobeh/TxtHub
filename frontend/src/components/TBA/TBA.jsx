@@ -19,10 +19,8 @@ class TBA extends Component {
     
 
     tbaNav = () => {
-        console.log(this.state.screen)
         switch (this.state.screen){
             case 0:
-                console.log(this.state.screen)
                 return (
                     <div className='main-menu'>
                         <div className='card-2' onClick={()=> this.setState({screen:1})}>
