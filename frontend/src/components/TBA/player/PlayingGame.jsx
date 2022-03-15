@@ -24,7 +24,7 @@ export default class PlayingGame extends Component {
         return (
             <div>
                 <h1>{this.state.id}</h1>
-                <button onClick={this.props.return}>Return to menu</button>
+                <button onClick={this.props.return}>Return to menu!!</button>
             </div>
         )
     }
