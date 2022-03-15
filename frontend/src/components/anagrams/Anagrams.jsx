@@ -3,45 +3,47 @@ import React, {useState, useEffect} from 'react';
 import {FaBackspace, FaRedo} from 'react-icons/fa';
 import {GiCancel} from 'react-icons/gi';
 import {AiOutlineQuestionCircle} from 'react-icons/ai';
+import {MdExitToApp} from 'react-icons/md';
+import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 
 import Layout from '../Layout';
-import { InputGroup } from 'react-bootstrap';
+
 
 import Instructions from './Instructions';
 import Backdrop from '../wordle/Backdrop';
 import Message from '../wordle/Message';
+import ScoreCard from '../ScoreCard';
 
 
 var currentGuess = [];
 var currentScore = 0; 
-var word = setWord(); //setWord() // use setWord wen hooked up to API
-var guessPos = 0;
+
+var word = setWord(); // use setWord wen hooked up to API
+var wordList = [];
+var place  = 0;
+var guessPos = 0; 
 var lastClickedButton = [];
 
 async function setWord(){
-    await axios.get('http://localhost:8084/anagram/api/v1/getword')
+
+    let b;
+    await axios.get('http://localhost:8084/anagrams/api/v1/getword')
         .then(res => {
-            word = res.data
+            b = res.data
             console.log(res.data)
-        });
-    scramWord();
+    });
+    
+    return b;
 }
 
-function scramWord(){
-    var arr = word.split('');
-    var n = arr.length;
-
-    for(var i=0 ; i<n-1 ; ++i) {
-        var j = Math.floor(Math.random() * n);
-
-        var temp = arr[i];
-        arr[i] = arr[j];
-        arr[j] = temp;
+function populateWordList(){
+    
+    for(let i = 0; i < 60; i++){
+        let temp = setWord();
+        temp = scramWord(temp);
+        wordList.push(temp);
     }
-
-    word = arr.join('');
-
 }
 
 
@@ -52,6 +54,9 @@ function Anagrams(){
     const [notEnoughLetters, setNotEnoughLetters] = useState(false);
     const [timer, setTimer] = React.useState(0);
 
+    let navigate = useNavigate();
+
+
     React.useEffect(() => {
         timer > 0 && setTimeout(()=> setTimer(timer - 1), 1000);
     }, [timer]);
@@ -59,9 +64,11 @@ function Anagrams(){
     function startGame(){
       
         setPlayingGame(true);
-        setTimer(60);
+        setTimer(20);
+        currentScore =0;
 
-        scramWord();
+        word = scramWord(word);
+        populateWordList();
      
     }
 
@@ -94,7 +101,24 @@ function Anagrams(){
     }, []);
 
 
-    async function enterWord(){
+    function scramWord(wordToBeScrambled){
+        var arr = wordToBeScrambled.split('');           
+        var n = arr.length;              
+        
+        for(var i=0 ; i<n-1 ; ++i) {
+          var j = Math.floor(Math.random() * n);     
+          
+          var temp = arr[i];             
+          arr[i] = arr[j];
+          arr[j] = temp;
+        }
+
+        wordToBeScrambled = arr.join('');
+        return wordToBeScrambled;
+        
+    }
+
+    function enterWord(){
         setNotEnoughLetters(false);
         setNotWord(false);
 
@@ -103,9 +127,11 @@ function Anagrams(){
             setNotEnoughLetters(true);
             return;
         }
+
+
         let test
-        let request = 'http://localhost:8084/anagram/api/v1/testword/' + currentGuess.join("")
-        console.log(currentGuess)
+        let request = 'http://localhost:8084/anagrams/api/v1/testword/' + currentWord.join("")
+        console.log(request)
         await axios.get(request)
             .then(res => {
                 console.log(res.data)
@@ -117,6 +143,8 @@ function Anagrams(){
             return;
         }
 
+        
+        currentScore+=100;
         nextWord();
         word = setWord(); //setWord();
 
@@ -124,13 +152,17 @@ function Anagrams(){
 
     }
 
-    function nextWord(){
+    async function nextWord(){
 
-
+        //await setWord();
+        word = wordList[place];
+        place++;
+        
         for(let i = 0; i < 5; i++){
             var temp = lastClickedButton[i];
             const box2 = document.getElementById(temp);
             box2.style.backgroundColor = '#d3d6da';
+            box2.textContent = word[i];
 
             const box = document.getElementById(i);
             box.textContent = '';
@@ -138,6 +170,7 @@ function Anagrams(){
         guessPos = 0;
         lastClickedButton = [];
         currentGuess = [];
+        
     }
 
     function letterClick(a, id){
@@ -184,18 +217,18 @@ function Anagrams(){
         
     }
 
-    function minusFive(){
+
+    async function skipPressed(){
         setNotEnoughLetters(false);
         setNotWord(false);
 
         nextWord();
-        word = setWord();
 
-        
+        currentScore -=25;
 
     }
 
-    function quitGame(){
+    function quitMatch(){
 
         
         setPlayingGame(false);
@@ -206,6 +239,16 @@ function Anagrams(){
         currentScore = 0; 
         guessPos = 0; 
         lastClickedButton = [];
+    }
+
+    function playAgain(){
+
+        quitMatch();
+
+    }
+
+    function quitGame(){
+        navigate('/');
     }
 
     var letterCombo = new Array(5).fill(null);
@@ -222,21 +265,21 @@ function Anagrams(){
             {notWord && <Message title = 'Not in word list.'/>}
             {instructions && <Instructions button={<GiCancel/>} handler={changeInstructions}/>}
             {instructions && <Backdrop onCancel={changeInstructions}/>}
-
+            {!instructions && timer === 0 && <ScoreCard title='Game Over.' data={currentScore} score='You got a score of: ' quitHandler ={quitGame} quitButton={<MdExitToApp/>} playHandler={playAgain} playButton={<FaRedo size = {20}/> }/>}
 
             <div className = 'quit-div'>
-                {playingGame && <button className = 'stateB' onClick={quitGame} id = 'quitButton' >Quit Round</button>}
+                {playingGame && <button className = 'stateB' onClick={quitMatch} id = 'quitButton' >Quit Round</button>}
             </div>
             
             <div className = 'start-anagrams'>
-                {!playingGame && <button className = 'stateB' onClick={startGame} id = 'startButton'>Start Game</button>}
+                {!playingGame && <button className = 'stateB' onClick={startGame} id = 'startButton'>Start</button>}
             </div>
             
 
             <div id ='anagram-option-container'>
                 <div id = 'anagram-menu'>
                     {playingGame && <p className='timer'>{timer}</p>}
-                    {playingGame && <button className = 'stateB' id = 'skipButton' onClick={minusFive}>Skip (-5s)</button>}
+                    {playingGame && <button className = 'stateB' id = 'skipButton' onClick={skipPressed}>Skip (-25)</button>}
                 </div>
                 
             </div>
