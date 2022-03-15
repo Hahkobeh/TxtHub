@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Layout from "../Layout";
-import CreatorMenu from './creator/creatorMenu';
-import PlayerMenu from './player/playerMenu';
+import CreatorMenu from './creator/CreatorMenu';
+import PlayerMenu from './player/PlayerMenu';
 import './TBA.scss'
 
 class TBA extends Component {
