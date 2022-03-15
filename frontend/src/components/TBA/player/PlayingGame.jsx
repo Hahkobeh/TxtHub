@@ -5,7 +5,7 @@ export default class PlayingGame extends Component {
     constructor(props){
         super(props)
         this.state = {
-            id: '',
+            id: this.props.storyId,
             nodes: []
         }
     }
@@ -13,7 +13,6 @@ export default class PlayingGame extends Component {
         axios.get('http://localhost:8083/tba/api/v1/getstories/' + this.props.storyId)
             .then(res => {
                 this.setState({
-                    id: this.props.storyId,
                     nodes: res.data
                 })
             })
@@ -24,7 +23,7 @@ export default class PlayingGame extends Component {
     render() {
         return (
             <div>
-                <h1>{this.state.storyId}</h1>
+                <h1>{this.state.id}</h1>
                 <button onClick={this.props.return}>Return to menu</button>
             </div>
         )
