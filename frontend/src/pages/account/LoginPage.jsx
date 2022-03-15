@@ -5,10 +5,11 @@ import { Link, useNavigate} from 'react-router-dom';
 import { UserContext }  from '../../UserContext';
 import Layout from '../../components/Layout';
 import './LoginPage.scss';
+import axios from "axios";
 
 function LoginPage(){
 
-    const {user,  setUser} = useContext(UserContext);
+    const {user, setUser} = useContext(UserContext);
 
     let navigate = useNavigate();
 
@@ -25,6 +26,8 @@ function LoginPage(){
     const [passwordError, setPasswordError] = useState(false);
 
 
+
+
     function emailErrorHandler(){
         
         setEmailError(true);
@@ -34,6 +37,8 @@ function LoginPage(){
         
         setPasswordError(true);
     }
+
+
 
     async function submitHandler(e){
         e.preventDefault();
@@ -53,12 +58,36 @@ function LoginPage(){
             return;
         }
 
+        console.log('happened!')
         try{
 
             //query data base and if user is exists log in if password and email matches
             //set user to the user found in database
             //const user = await login();
-            setUser("jim");
+
+
+            let returnValue
+            let request = 'http://localhost:8081/user/api/v1/login'
+
+            let userData = {
+                username: emailRef.current.value,
+                password: passwordRef.current.value
+            }
+            await axios.post(request, userData)
+                .then(res => {
+                        console.log(res.data.toString() + 'happened!')
+                        returnValue = res.data
+                    }
+
+                )
+            console.log(returnValue)
+            if(returnValue === ''){
+                setError(true)
+                return
+            }
+            setUser(returnValue)
+
+
             navigate('/profile');
             
         }catch(err){
@@ -82,8 +111,8 @@ function LoginPage(){
               <hr/>
                 <div className ="control">
                  
-                    <input placeholder="Email" type ='text' id='email' ref={emailRef}/>
-                    {emailError && <p className='error'> You need to enter an email.</p>}
+                    <input placeholder="Username" type ='text' id='email' ref={emailRef}/>
+                    {emailError && <p className='error'> You need to enter a username.</p>}
                   
                 </div>
                 <div className ="control">

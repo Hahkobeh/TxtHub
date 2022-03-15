@@ -23,9 +23,15 @@ const Layout = (props) => {
                     <h1 className='nav game'>{props.Game}</h1>
                     
                     <ul >
+                        
                         <li className ='nav-item'>
                             <Link onClick={removeListener} to ='/'>Games</Link>
                         </li>
+
+                        <li className='nav-item'>
+                            <Link onClick={removeListener} to='/scoreboard'>Leader Board</Link>
+                        </li>
+                        
                         <li className ='nav-item'>
                             <Link onClick={removeListener} to ='/signup'>Sign up</Link>
                         </li>
@@ -47,13 +53,15 @@ const Layout = (props) => {
                     
                     <ul >
                         <li className ='nav-item'>
-                            <Link to ='/'>Games</Link>
+                            <Link onClick={removeListener} to ='/'>Games</Link>
                         </li>
-                        <li className ='nav-item'>
-                            <Link to ='/scores'>Scores</Link>
+
+                        <li className='nav-item'>
+                            <Link onClick={removeListener} to='/scoreboard'>Leader Board</Link>
                         </li>
+
                         <li className ='nav-item'>
-                            <Link to ='/'>Logout</Link>
+                            <Link onClick={removeListener} to ='/'>Logout</Link>
                         </li>
                     </ul>
     

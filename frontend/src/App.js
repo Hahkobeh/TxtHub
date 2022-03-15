@@ -8,6 +8,7 @@ import SignupPage from './pages/account/SignupPage';
 import PResetPage from './pages/account/PResetPage';
 import Wordle from './components/wordle/Wordle';
 import Anagrams from './components/anagrams/Anagrams';
+import ScoreBoard from './pages/ScoreBoard';
 import { UserContext } from './UserContext';
 import TBA from './components/TBA/TBA'
 
@@ -23,6 +24,8 @@ function App() {
         <Routes>
 
           <Route path='/' element={<HomePage/>}/>
+
+          <Route path='/scoreboard' element={<ScoreBoard/>}/>
           
           <Route path='/login' element={<LoginPage/>}/>
 

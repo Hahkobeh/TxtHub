@@ -3,6 +3,7 @@ import { useNavigate} from 'react-router-dom';
 import Layout from '../../components/Layout';
 
 import './LoginPage.scss';
+import axios from "axios";
 
 
 function SignupPage(){
@@ -25,6 +26,7 @@ function SignupPage(){
     const [emailError, setEmailError] = useState(false);
     const [passwordError, setPasswordError] = useState(false);
     const [secondPasswordError, setSecondPasswordError] = useState(false);
+    const [userExists, setUserExists] = useState(false);
 
     function emailErrorHandler(){
         setEmailError(true);
@@ -61,6 +63,30 @@ function SignupPage(){
             return; 
         }
 
+        let returnValue
+        let request = 'http://localhost:8081/user/api/v1/register'
+
+        let userData = {
+            username: emailRef.current.value,
+            password: passwordRef.current.value
+        }
+        await axios.post(request, userData)
+            .then(res => {
+                    console.log(res.data.toString() + 'happened!')
+                    returnValue = res.data
+                }
+
+            )
+        console.log(returnValue)
+        if(returnValue === true) {
+            navigate('/login')
+        }else{
+            setUserExists(true);
+            return
+        }
+
+
+
       
     }
 
@@ -75,8 +101,8 @@ function SignupPage(){
             
             <form className = "form" onSubmit = {submitHandler}>
             <div className="control">
-                    <label className="label" htmlFor="email">Enter an email address:</label>
-                    <input type='text' id='email' placeholder= 'e.g johnysins@gmail.com' oninvalid="" ref={emailRef} />
+                    <label className="label" htmlFor="email">Enter a username:</label>
+                    <input type='text' id='email' placeholder= 'e.g johnyboy12' oninvalid="" ref={emailRef} />
                     {emailError && <p className="error"> You need to enter an email.</p>}
                    
                 </div>
@@ -90,6 +116,7 @@ function SignupPage(){
                     <label className="label"  htmlFor="pwordConfirm">Confirm your password:</label>
                     <input type='password' id="pwordConfirm" placeholder= 'Re-enter your password' ref={confirmPasswordRef}/>
                     {secondPasswordError && <p className="error">Passwords don't match.</p>}
+                    {userExists && <p className="error">Username is taken try another.</p>}
                     
                 </div>
                 <div className ="control">

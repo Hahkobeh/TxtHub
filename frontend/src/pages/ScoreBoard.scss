@@ -1,0 +1,58 @@
+
+.score-header{
+    margin-top: 13vh;
+    text-align: center;
+}
+
+.leaderboard-container{
+    list-style: none;
+    display: grid;
+    grid-template-rows: repeat(auto-fit, minmax(100px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-gap: 10px;
+    padding-left: 0;
+    
+}
+
+.wordle-leaderboard{
+    text-align: center;
+}
+
+
+
+.anagram-leaderboard{
+
+    text-align: center;
+    
+}
+
+.tba-leaderboard{
+ 
+    text-align: center;
+    
+}
+
+.labels ul{
+    list-style: none;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin: 0;
+    padding:0;
+
+    
+}
+
+.labels li{
+    margin-left: 3rem;
+    margin-right: 3rem;
+    
+}
+
+.labels .user-score{
+    margin-left: 1rem;
+    margin-right: 1rem;
+    
+}
+
+//the score table does not scale
