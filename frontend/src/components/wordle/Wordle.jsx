@@ -4,12 +4,15 @@ import Layout from '../Layout';
 import {FaBackspace, FaRedo} from 'react-icons/fa';
 import {GiCancel} from 'react-icons/gi';
 import {AiOutlineQuestionCircle} from 'react-icons/ai';
+import {MdExitToApp} from 'react-icons/md';
+import { useNavigate } from 'react-router-dom';
 
 import axios from "axios";
 
 import Instructions from './Instructions';
 import Backdrop from './Backdrop';
 import Message from './Message';
+import ScoreCard from '../ScoreCard';
 
 
 var guessPosition = 0; 
@@ -29,6 +32,7 @@ async function setWord(){
 
 
 function Wordle(){
+    let navigate = useNavigate();
 
     const [notEnoughLetters, setNotEnoughLetters] = useState(false);
     const [notWord, setNotWord] = useState(false);
@@ -219,6 +223,10 @@ function Wordle(){
         
         setWord();
     }
+
+    function quitGame(){
+        navigate('/');
+    }
     
     const changeInstructions = () => setInstructions(!instructions);
     var arr = new Array(30).fill(null);
@@ -231,8 +239,13 @@ function Wordle(){
 
             {notEnoughLetters && <Message title='Not long enough.'/>}
             {notWord && <Message title = 'Not in word list.'/>}
-            {finishedSuccessfully && <Message title= 'Good Job!' again='Play again?'  handler={playAgain} button={<FaRedo size = {20}/> }/>}
-            {finishedWrong && <Message title= 'Nice Try :(' again='Play again?' handler={playAgain} button={<FaRedo size = {20}/> }/>}
+            {/**{finishedSuccessfully && <Message title= 'Good Job!' again='Play again?'  handler={playAgain} button={<FaRedo size = {20}/> }/>}
+            {finishedWrong && <Message title= 'Nice Try :(' again='Play again?' handler={playAgain} button={<FaRedo size = {20}/> }/>}*/}
+            {finishedSuccessfully && <ScoreCard title = 'Good Job!' score = 'You finished in ' data = {guessedWords.length} guesses =' Guesses' 
+            quitHandler ={quitGame} quitButton={<MdExitToApp/>} playHandler={playAgain} playButton={<FaRedo size = {20}/>} />}
+
+            {finishedWrong && <ScoreCard title = 'Nice Try :(' score = "You couldn't finish so you get a score of " data = {8}
+            quitHandler ={quitGame} quitButton={<MdExitToApp/>} playHandler={playAgain} playButton={<FaRedo size = {20}/>} />}  
             {instructions && <Instructions button={<GiCancel/>} handler={changeInstructions}/>}
             {instructions && <Backdrop onCancel={changeInstructions}/>}
 
