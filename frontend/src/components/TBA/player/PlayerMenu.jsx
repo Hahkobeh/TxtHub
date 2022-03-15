@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-export default class playerMenu extends Component {
+export default class PlayerMenu extends Component {
     constructor(props){
         super(props)
     }
