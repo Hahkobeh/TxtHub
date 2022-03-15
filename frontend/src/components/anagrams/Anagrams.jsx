@@ -18,6 +18,7 @@ import ScoreCard from '../ScoreCard';
 
 var currentGuess = [];
 var currentScore = 0; 
+
 var word = setWord(); // use setWord wen hooked up to API
 var wordList = [];
 var place  = 0;
@@ -44,7 +45,6 @@ function populateWordList(){
         wordList.push(temp);
     }
 }
-
 
 
 function Anagrams(){
@@ -100,6 +100,7 @@ function Anagrams(){
         });
     }, []);
 
+
     function scramWord(wordToBeScrambled){
         var arr = wordToBeScrambled.split('');           
         var n = arr.length;              
@@ -127,6 +128,7 @@ function Anagrams(){
             return;
         }
 
+
         let test
         let request = 'http://localhost:8084/anagrams/api/v1/testword/' + currentWord.join("")
         console.log(request)
@@ -140,9 +142,14 @@ function Anagrams(){
             setNotWord(true);
             return;
         }
+
         
         currentScore+=100;
         nextWord();
+        word = setWord(); //setWord();
+
+
+
     }
 
     async function nextWord(){
@@ -210,13 +217,15 @@ function Anagrams(){
         
     }
 
+
     async function skipPressed(){
         setNotEnoughLetters(false);
         setNotWord(false);
 
         nextWord();
+
         currentScore -=25;
-        
+
     }
 
     function quitMatch(){
@@ -306,4 +315,4 @@ function Anagrams(){
     )
 }
 
-export default Anagrams; 
+export default Anagrams;
