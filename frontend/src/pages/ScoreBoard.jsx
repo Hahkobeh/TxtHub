@@ -2,6 +2,10 @@ import React from 'react';
 import Layout from '../components/Layout';
 import './ScoreBoard.scss';
 
+
+var wordleRankings = [ ["Colin" ,"40" ] , ["Jacob" ,"5" ] ];
+var anagramRankings = [ ["Colin" ,"40" ] , ["Jacob" ,"5" ] ];
+var tbaRankings = [ ["Colin" ,"3.4" ] , ["Jacob" ,"5" ] ];
 function ScoreBoard(){
 
 
@@ -23,15 +27,20 @@ function ScoreBoard(){
                     <div className ='labels'>
                         <ul>
                             <li><h3>Rank</h3></li>
-                            <li><h3>Name</h3></li>
+                            <li><h3>Username</h3></li>
                             <li><h3>Rating</h3></li>
                         </ul>
-                        <ul className = 'user-score'>
-                            <li>1</li>
-                            <li>Colin_c</li>
-                            <li>3.4</li>
-                        </ul>
                         
+                            {wordleRankings.map(function(wordleRanking, index){
+                                return <div>
+                                    <ul className = 'user-score'>
+                                        <li>{index + 1}</li>
+                                        <li>{wordleRanking[0]}</li>
+                                        <li>{wordleRanking[1]}</li>
+                                    </ul>
+                                </div>
+                            })}
+                            
                     </div>
                 </li >
 
@@ -44,7 +53,33 @@ function ScoreBoard(){
                     <div className ='labels'>
                         <ul>
                             <li><h3>Rank</h3></li>
-                            <li><h3>Name</h3></li>
+                            <li><h3>Username</h3></li>
+                            <li><h3>Rating</h3></li>
+                        </ul>
+                        {anagramRankings.map(function(anagramRanking, index){
+                                return <div>
+                                    <ul className = 'user-score'>
+                                        <li>{index + 1}</li>
+                                        <li>{anagramRanking[0]}</li>
+                                        <li>{anagramRanking[1]}</li>
+                                    </ul>
+                                </div>
+                            })}
+                       
+                    </div>
+                    
+                </li>
+
+                <li className ='tba-leaderboard'>
+                    
+                    <h1 className='tba-header'>TBA</h1>
+                    <hr/>
+                    
+
+                    <div className ='labels'>
+                        <ul>
+                            <li><h3>Rank</h3></li>
+                            <li><h3>Story Name</h3></li>
                             <li><h3>Rating</h3></li>
                         </ul>
                         <ul className = 'user-score'>
