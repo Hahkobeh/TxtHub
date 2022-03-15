@@ -261,7 +261,7 @@ function Anagrams(){
             {notWord && <Message title = 'Not in word list.'/>}
             {instructions && <Instructions button={<GiCancel/>} handler={changeInstructions}/>}
             {instructions && <Backdrop onCancel={changeInstructions}/>}
-            {playingGame && timer === 0 && <ScoreCard title='Game Over.' data={currentScore} score='You got a score of: ' quitHandler ={quitGame} quitButton={<MdExitToApp/>} playHandler={playAgain} playButton={<FaRedo size = {20}/> }/>}
+            {playingGame && timer === 0 && <ScoreCard title='Game Over.' data={currentScore} score='Final Score: ' quitHandler ={quitGame} quitButton={<MdExitToApp/>} playHandler={playAgain} playButton={<FaRedo size = {20}/> }/>}
 
             <div className = 'quit-div'>
                 {playingGame && <button className = 'stateB' onClick={quitMatch} id = 'quitButton' >Quit Round</button>}
