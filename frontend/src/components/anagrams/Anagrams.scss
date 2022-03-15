@@ -57,7 +57,7 @@
   flex-grow: 1;
   overflow: hidden;
   margin: 5rem auto;
-  margin-top: -35vh;
+  margin-top: -40vh;
   
   max-width: 40rem;
   z-index: 13;
@@ -73,6 +73,12 @@
 .timer{
   margin: 0;
   font-size: 8em;
+}
+
+.display-score{
+  font-size: 2em;
+  margin: 0;
+  padding-bottom: 10px;
 }
 
 #currentGuess-container {
