@@ -6,6 +6,18 @@ import './ScoreBoard.scss';
 var wordleRankings = [ ["Colin" ,"40" ] , ["Jacob" ,"5" ] ];
 var anagramRankings = [ ["Colin" ,"40" ] , ["Jacob" ,"5" ] ];
 var tbaRankings = [ ["Colin" ,"3.4" ] , ["Jacob" ,"5" ] ];
+
+async function setWordleRankings(){
+
+}
+
+async function setAnagramRankings(){
+    
+}
+
+async function setTbaRankings(){
+    
+}
 function ScoreBoard(){
 
 
@@ -38,6 +50,7 @@ function ScoreBoard(){
                                         <li>{wordleRanking[0]}</li>
                                         <li>{wordleRanking[1]}</li>
                                     </ul>
+                                    <hr/>
                                 </div>
                             })}
                             
@@ -63,6 +76,7 @@ function ScoreBoard(){
                                         <li>{anagramRanking[0]}</li>
                                         <li>{anagramRanking[1]}</li>
                                     </ul>
+                                    <hr/>
                                 </div>
                             })}
                        
@@ -82,11 +96,16 @@ function ScoreBoard(){
                             <li><h3>Story Name</h3></li>
                             <li><h3>Rating</h3></li>
                         </ul>
-                        <ul className = 'user-score'>
-                            <li>1</li>
-                            <li>Colin_c</li>
-                            <li>400</li>
-                        </ul>
+                        {tbaRankings.map(function(tbaRanking, index){
+                                return <div>
+                                    <ul className = 'user-score'>
+                                        <li>{index + 1}</li>
+                                        <li>{tbaRanking[0]}</li>
+                                        <li>{tbaRanking[1]}</li>
+                                    </ul>
+                                    <hr/>
+                                </div>
+                            })}
                        
                     </div>
                     
