@@ -3,6 +3,7 @@ import { useNavigate} from 'react-router-dom';
 import Layout from '../../components/Layout';
 
 import './LoginPage.scss';
+import axios from "axios";
 
 
 function SignupPage(){
@@ -60,6 +61,29 @@ function SignupPage(){
           
             return; 
         }
+
+        let returnValue
+        let request = 'http://localhost:8081/user/api/v1/register'
+
+        let userData = {
+            username: emailRef.current.value,
+            password: passwordRef.current.value
+        }
+        await axios.post(request, userData)
+            .then(res => {
+                    console.log(res.data.toString() + 'happened!')
+                    returnValue = res.data
+                }
+
+            )
+        console.log(returnValue)
+        if(returnValue === true) {
+            navigate('/login')
+        }else{
+            return
+        }
+
+
 
       
     }

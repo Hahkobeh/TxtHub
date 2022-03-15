@@ -27,7 +27,7 @@ public class UserController {
 
 
     //Returns all user info on successful login, otherwise null (nothing)
-    @GetMapping("/login")
+    @PostMapping("/login")
     @ResponseBody
     public User login(@RequestBody UserForm userForm){
         System.out.println("Login request received");
