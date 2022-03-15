@@ -111,8 +111,8 @@ function LoginPage(){
               <hr/>
                 <div className ="control">
                  
-                    <input placeholder="Email" type ='text' id='email' ref={emailRef}/>
-                    {emailError && <p className='error'> You need to enter an email.</p>}
+                    <input placeholder="Username" type ='text' id='email' ref={emailRef}/>
+                    {emailError && <p className='error'> You need to enter a username.</p>}
                   
                 </div>
                 <div className ="control">
