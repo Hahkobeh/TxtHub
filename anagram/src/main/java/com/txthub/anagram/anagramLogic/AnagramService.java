@@ -16,7 +16,7 @@ public class AnagramService {
 
 
     @Autowired
-    AnagramService(){
+    public AnagramService(){
         try {
             this.anagramFile = new File("words.txt");
             System.out.println(anagramFile.getAbsolutePath());
