@@ -34,24 +34,30 @@
 
 .labels ul{
     list-style: none;
-    display: flex;
+    display: grid;
     align-items: baseline;
-    justify-content: space-between;
+    grid-template-columns: repeat(3, 1fr);
     margin: 0;
     padding:0;
 
     
 }
 
+.labels hr, .hr{
+    width: 85%;
+}
+
 .labels li{
-    margin-left: 3rem;
-    margin-right: 3rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    text-align: center;
     
 }
 
 .labels .user-score{
     margin-left: 1rem;
     margin-right: 1rem;
+    text-align: center;
     
 }
 

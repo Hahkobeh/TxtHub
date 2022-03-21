@@ -1,0 +1,52 @@
+.challenge-header{
+    margin-top: 13vh;
+    text-align: center;
+}
+
+hr{
+    width: 100%;
+}
+
+.challenge-container{
+    width: 40vw;
+    min-width: 300px;
+    margin: 2vh auto;
+}
+
+.challenge-container .labels{
+    list-style: none;
+    display: grid;
+    align-items: baseline;
+    grid-template-columns: repeat(4, 1fr);
+    margin: 0;
+    padding:0;
+}
+
+.challenge-container .labels li{
+    margin-left: 3rem;
+    margin-right: 3rem;
+    text-align: center;
+    
+}
+
+.challenge{
+    list-style: none;
+    display: grid;
+    align-items: baseline;
+    grid-template-columns: repeat(4, 1fr);
+    margin: 10px 0;
+    padding:0;
+    border-radius: .3rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+    padding: 5px 0;
+}
+
+.challenge:hover{
+    transform: scale(1.02);
+}
+
+.challenge li{
+    margin-left: 3rem;
+    margin-right: 3rem;
+    text-align: center;
+}

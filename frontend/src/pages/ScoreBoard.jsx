@@ -34,7 +34,7 @@ function ScoreBoard(){
                 <li className ='wordle-leaderboard'>
                     
                     <h1 className='wordle-header'>Wordle</h1>
-                    <hr/>
+                    <hr className="hr"/>
                     
                     <div className ='labels'>
                         <ul>
@@ -60,7 +60,7 @@ function ScoreBoard(){
                 <li className ='anagram-leaderboard'>
                     
                     <h1 className='anagram-header'>Anagram</h1>
-                    <hr/>
+                    <hr className="hr"/>
                     
 
                     <div className ='labels'>
@@ -87,7 +87,7 @@ function ScoreBoard(){
                 <li className ='tba-leaderboard'>
                     
                     <h1 className='tba-header'>TBA</h1>
-                    <hr/>
+                    <hr className="hr"/>
                     
 
                     <div className ='labels'>
