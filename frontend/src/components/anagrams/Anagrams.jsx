@@ -52,9 +52,6 @@ async function setWord(){
 }
 
 
-
-
-
 function Anagrams(){
     const [instructions, setInstructions] = useState(true);
     const [playingGame, setPlayingGame] = useState(false);
@@ -71,7 +68,7 @@ function Anagrams(){
     }, [timer]);
 
     function startGame(){
-
+        
         setPlayingGame(true);
         setTimer(60);
         currentScore =0;
@@ -219,6 +216,7 @@ function Anagrams(){
         currentScore = 0;
         guessPos = 0;
         lastClickedButton = [];
+        
     }
 
     function playAgain(){
@@ -245,7 +243,7 @@ function Anagrams(){
             {notWord && <Message title = 'Not in word list.'/>}
             {instructions && <Instructions button={<GiCancel/>} handler={changeInstructions}/>}
             {instructions && <Backdrop onCancel={changeInstructions}/>}
-            {playingGame && timer === 0 && <ScoreCard title='Game Over.' data={currentScore} score='You got a score of: ' quitHandler ={quitGame} quitButton={<MdExitToApp/>} playHandler={playAgain} playButton={<FaRedo size = {20}/> }/>}
+            {playingGame && timer === 0 && <ScoreCard title='Game Over.' data={currentScore} score='Final Score: ' quitHandler ={quitGame} quitButton={<MdExitToApp/>} playHandler={playAgain} playButton={<FaRedo size = {20}/> }/>}
 
             <div className = 'quit-div'>
                 {playingGame && <button className = 'stateB' onClick={quitMatch} id = 'quitButton' >Quit Round</button>}
@@ -259,6 +257,7 @@ function Anagrams(){
             <div id ='anagram-option-container'>
                 <div id = 'anagram-menu'>
                     {playingGame && <p className='timer'>{timer}</p>}
+                    {playingGame && <p className='display-score'>Score: {currentScore}</p>}
                     {playingGame && <button className = 'stateB' id = 'skipButton' onClick={skipPressed}>Skip (-25)</button>}
                 </div>
 

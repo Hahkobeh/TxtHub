@@ -1,0 +1,100 @@
+.new-challenge-container{
+    
+    
+    margin: 3rem auto;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    border-radius: .95rem;
+    z-index: 10;
+    position: fixed;
+    top: 10vh;
+    text-align:left;
+    background: white;
+    align-self: center;
+    
+    width: 500px;
+    max-width: 500px;
+    margin-left:calc(50% - 250px);
+    
+}
+
+.nc-top {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 0;
+    height: 100%;
+    padding: 0;
+    padding-left: 24%;
+    
+}
+.nc-top h3{
+    padding: 0;
+    margin: 0;
+    margin-bottom: 2px;
+    margin-top: 10px;
+}
+
+.nc-title{
+    margin: 0;
+    text-align: center;
+}
+
+.body{
+    padding-left:5%;
+    padding-right: 5%;
+}
+
+.challenge-options{
+    display: grid;
+    align-items: baseline;
+    grid-template-columns: repeat(2, 1fr);
+    margin: 0;
+    padding: 0 2.5%;
+    margin-bottom: 10px;
+}
+
+.bu{
+    height: .8cm;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    border : 1px solid black;
+    border-radius: 25px;
+    font-size: 120%;
+    background: white;
+    text-align: center;
+    padding: 0;
+    padding-top: 8px;
+}
+
+.bu:hover{
+    border : 1px solid white;
+    color: white;
+    background: black;
+
+}
+
+.bu.selection{
+   
+    border : 1px solid white;
+    background: black;
+    color: white;
+    
+}
+
+.form #submitButton{
+    background-color: black;
+    border: 1px solid var(--nav-background);
+    border-radius: 3px;
+    box-sizing: border-box;
+    font-size: 120%;
+    margin-left: 2.5%;
+    margin-bottom: 10px;
+    color: white;
+    width: 95%;
+    height: 1cm;
+
+}
+
+.form #submitButton:hover{
+    background-color: rgb(78, 77, 77);
+}

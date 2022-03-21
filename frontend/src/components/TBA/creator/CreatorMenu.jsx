@@ -57,7 +57,7 @@ class CreatorMenu extends Component {
 
     render() {
         return (
-            <div>
+            <div className='creator-menu'>
                 
                 <this.loadElements/>
                 <button onClick={this.props.return}>temp return</button>
