@@ -2,6 +2,10 @@ import React, {useState} from 'react';
 import Layout from '../components/Layout';
 import Message from '../components/wordle/Message';
 import { useNavigate } from 'react-router-dom';
+import {BsPlusCircle} from 'react-icons/bs';
+import {GiCancel} from 'react-icons/gi';
+import Backdrop from '../components/wordle/Backdrop';
+import NewChallenge from './NewChallenge';
 import './ChallengePage.scss';
 
 var c = [ ["Wordle" , "Jacob", "--", 10], ["Wordle" , "Jacob", 5, "--"], ["Wordle" , "Jacob", 5, "--"]]
@@ -10,6 +14,8 @@ function ChallengePage(){
     
     let navigate = useNavigate();
     const [waiting, setWaiting] = useState(false);
+
+    const [newChallenge, setNewChallenge] = useState(false);
 
     function clickChallenge(id){
         setWaiting(false);
@@ -28,11 +34,23 @@ function ChallengePage(){
         }
     }  
 
+    function challengeHandler(){
+        setNewChallenge(!newChallenge);
+    }
+
     return(
         <div>
             <Layout/>
 
-            {waiting && <Message title='Waiting for opponent'/>}
+            {newChallenge && <NewChallenge button={<GiCancel/>} handler={challengeHandler}/>}
+            {newChallenge && <Backdrop onCancel={challengeHandler}/>}
+
+
+            {waiting && <Message title='Waiting for opponent to play'/>}
+
+            <div className='add' onClick={challengeHandler}>
+                <BsPlusCircle size={40}/>
+            </div>
 
             <div className='challenge-header'>
                 <h1>Ongoing Challenges</h1>

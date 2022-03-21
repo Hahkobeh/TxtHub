@@ -51,25 +51,6 @@ async function setWord(){
 
 }
 
-function scramWord(wordToBeScrambled){
-    var arr = wordToBeScrambled.split('');
-    var n = arr.length;
-
-    for(var i=0 ; i<n-1 ; ++i) {
-        var j = Math.floor(Math.random() * n);
-
-        var temp = arr[i];
-        arr[i] = arr[j];
-        arr[j] = temp;
-    }
-
-    wordToBeScrambled = arr.join('');
-    return wordToBeScrambled;
-
-}
-
-
-
 function Anagrams(){
     const [instructions, setInstructions] = useState(true);
     const [playingGame, setPlayingGame] = useState(false);
