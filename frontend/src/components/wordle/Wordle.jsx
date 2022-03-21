@@ -197,8 +197,9 @@ function Wordle(){
             setFinishedWrong(true);
         }
         currentWord = [];
-        if(ChallengeContext !== null){
-            console.log(ChallengeContext);
+        if(currentChallenge !== null){
+            console.log(currentChallenge);
+            setCurrentChallenge(null);
         }
     }
 
