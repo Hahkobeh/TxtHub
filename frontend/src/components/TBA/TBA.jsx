@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Layout from "../Layout";
-import CreatorMenu from './creator/creatorMenu';
-import PlayerMenu from './player/playerMenu';
+import CreatorMenu from './creator/CreatorMenu';
+import PlayerMenu from './player/PlayerMenu';
 import './TBA.scss'
 
 class TBA extends Component {
@@ -19,10 +19,8 @@ class TBA extends Component {
     
 
     tbaNav = () => {
-        console.log(this.state.screen)
         switch (this.state.screen){
             case 0:
-                console.log(this.state.screen)
                 return (
                     <div className='main-menu'>
                         <div className='card-2' onClick={()=> this.setState({screen:1})}>
