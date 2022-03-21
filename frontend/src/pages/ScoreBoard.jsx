@@ -1,34 +1,65 @@
 import axios from 'axios';
-import React from 'react';
+import React, {useContext} from 'react';
 import Layout from '../components/Layout';
+import { UserContext }  from '../UserContext';
 import './ScoreBoard.scss';
 
+var wordleRankings
+var anagramRankings
+var tbaRankings
+SetUp();
 
-var wordleRankings = setWordleRankings();
-var anagramRankings = setAnagramRankings();
-var tbaRankings = setTbaRankings();
+async function SetUp(){
+    const {user, setUser} = useContext(UserContext);
 
-async function setWordleRankings(){
+    var userWordleRank
+    var userAnagramRank
+    
+
+  
     await axios.get('http://localhost:8081/user/api/v1/leaders/wordle')
         .then(res => {
             wordleRankings = res.data;
-        });
-}
+    });
+    
 
-async function setAnagramRankings(){
+    
+   
+
+    
     await axios.get('http://localhost:8081/user/api/v1/leaders/anagram')
         .then(res => {
             anagramRankings = res.data;
     });
-}
-
-async function setTbaRankings(){
+    
     await axios.get('http://localhost:8081/user/api/v1/leaders/tba')
         .then(res => {
             tbaRankings = res.data;
     });
+
+    if(user !== null){
+        await axios.get(`http://localhost:8081/user/api/v1/rank/${user.username}/wordle`)
+        .then(res => {
+            userWordleRank = res.data;
+        });
+
+        await axios.get(`http://localhost:8081/user/api/v1/rank/${user.username}/anagram`)
+            .then(res => {
+                userAnagramRank = res.data;
+        });
+        
+        anagramRankings.push(userAnagramRank);
+        wordleRankings.push(userWordleRank);
+    }
+
+    
+
 }
+
+
 function ScoreBoard(){
+
+    
 
 
     return(
