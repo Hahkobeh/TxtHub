@@ -25,7 +25,7 @@ async function setWord(){
         .then(res => {
             answer = res.data
             console.log(res.data)
-        });
+    });
 }
 
 

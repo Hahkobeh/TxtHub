@@ -1,22 +1,32 @@
+import axios from 'axios';
 import React from 'react';
 import Layout from '../components/Layout';
 import './ScoreBoard.scss';
 
 
-var wordleRankings = [ ["Colin" ,"40" ] , ["Jacob" ,"5" ] ];
-var anagramRankings = [ ["Colin" ,"40" ] , ["Jacob" ,"5" ] ];
-var tbaRankings = [ ["Colin" ,"3.4" ] , ["Jacob" ,"5" ] ];
+var wordleRankings = setWordleRankings();
+var anagramRankings = setAnagramRankings();
+var tbaRankings = setTbaRankings();
 
 async function setWordleRankings(){
-
+    await axios.get('http://localhost:8081/user/api/v1/leaders/wordle')
+        .then(res => {
+            wordleRankings = res.data;
+        });
 }
 
 async function setAnagramRankings(){
-    
+    await axios.get('http://localhost:8081/user/api/v1/leaders/anagram')
+        .then(res => {
+            anagramRankings = res.data;
+    });
 }
 
 async function setTbaRankings(){
-    
+    await axios.get('http://localhost:8081/user/api/v1/leaders/tba')
+        .then(res => {
+            tbaRankings = res.data;
+    });
 }
 function ScoreBoard(){
 
