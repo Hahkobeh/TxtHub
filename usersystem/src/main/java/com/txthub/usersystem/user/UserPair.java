@@ -1,8 +1,23 @@
 package com.txthub.usersystem.user;
 
 public class UserPair {
+    int rank;
     String username;
     double rating;
+
+    public UserPair(int rank, String username, double rating) {
+        this.rank = rank;
+        this.username = username;
+        this.rating = rating;
+    }
+
+    public int getRank() {
+        return rank;
+    }
+
+    public void setRank(int rank) {
+        this.rank = rank;
+    }
 
     public String getUsername() {
         return username;
@@ -20,8 +35,4 @@ public class UserPair {
         this.rating = rating;
     }
 
-    public UserPair(String username, double rating) {
-        this.username = username;
-        this.rating = rating;
-    }
 }
