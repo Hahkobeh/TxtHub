@@ -8,4 +8,8 @@ import java.util.List;
 @Repository
 public interface StoryRepository extends MongoRepository<Story, String> {
 
+    Story findStoryById(String id);
+    List<Story> findStoryByGenre(Genre genre);
+    
+
 }
