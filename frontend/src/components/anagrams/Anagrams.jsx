@@ -51,6 +51,7 @@ async function setWord(){
 
 }
 
+
 function Anagrams(){
     const [instructions, setInstructions] = useState(true);
     const [playingGame, setPlayingGame] = useState(false);
