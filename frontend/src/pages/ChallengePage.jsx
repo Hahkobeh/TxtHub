@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState , useContext} from 'react';
 import Layout from '../components/Layout';
 import Message from '../components/wordle/Message';
 import { useNavigate } from 'react-router-dom';
@@ -6,11 +6,14 @@ import {BsPlusCircle} from 'react-icons/bs';
 import {GiCancel} from 'react-icons/gi';
 import Backdrop from '../components/wordle/Backdrop';
 import NewChallenge from './NewChallenge';
+import {ChallengeContext} from '../ChallengeContext';
 import './ChallengePage.scss';
 
 var c = [ ["Wordle" , "Jacob", "--", 10], ["Wordle" , "Jacob", 5, "--"], ["Wordle" , "Jacob", 5, "--"]]
 
 function ChallengePage(){
+
+    const {currentChallenge, setCurrentChallenge} = useContext(ChallengeContext);
     
     let navigate = useNavigate();
     const [waiting, setWaiting] = useState(false);
@@ -26,6 +29,7 @@ function ChallengePage(){
         }else{
 
             if(c[id][0] === "Wordle"){
+                setCurrentChallenge(c[id]);
                 navigate('/wordle');
             }else if(c[id][0] === "Anagrams"){
                 navigate('/anagrams');
