@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequestMapping(path = "user/api/v1")
 @CrossOrigin(origins = {"http://localhost:3000"})
@@ -69,6 +71,13 @@ public class UserController {
         return userService.updateRating(game, winner, loser);
     }
 
+    @GetMapping("/leaders/{game}")
+    @ResponseBody
+    public List<UserPair> getLeaders(@PathVariable String game){
+        return userService.getTopTen(game);
+
+
+    }
 
 
 

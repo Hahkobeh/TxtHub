@@ -2,15 +2,20 @@ package com.txthub.usersystem.user;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.repository.Query;
+import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+import static com.mongodb.client.model.Sorts.descending;
 import static java.lang.Math.pow;
+import static org.springframework.data.domain.Sort.Direction.DESC;
 
 @Service
 public class UserService {
@@ -125,6 +130,18 @@ public class UserService {
         double predictedOutcome = 1 / (1 + pow(10, (difference) / 400));
         return 32 * (1 - predictedOutcome);
 
+    }
+
+    public List<UserPair> getTopTen(String game){
+        String gameName = game + "rating";
+        List<UserPair> temp = new ArrayList<>();
+
+        List<User> users = userRepository.findAll(Sort.by(DESC, gameName));
+        for(int i = 0; i < 10; i++){
+            temp.add(new UserPair(users.get(i).getUsername(),users.get(i).getWordleRating()));
+        }
+        System.out.println(temp.toString());
+        return temp;
     }
 
 
