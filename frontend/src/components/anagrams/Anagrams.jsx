@@ -1,10 +1,11 @@
 import './Anagrams.scss';
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {FaBackspace, FaRedo} from 'react-icons/fa';
 import {GiCancel} from 'react-icons/gi';
 import {AiOutlineQuestionCircle} from 'react-icons/ai';
 import {MdExitToApp} from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
+import {ChallengeContext} from '../../ChallengeContext';
 import axios from "axios";
 
 import Layout from '../Layout';
@@ -23,6 +24,8 @@ var guessPos = 0;
 var lastClickedButton = [];
 
 async function setWord(){
+
+    
 
     let c;
     await axios.get('http://localhost:8084/anagram/api/v1/getword')
@@ -53,6 +56,9 @@ async function setWord(){
 
 
 function Anagrams(){
+
+    const {currentChallenge, setCurrentChallenge} = useContext(ChallengeContext);
+
     const [instructions, setInstructions] = useState(true);
     const [playingGame, setPlayingGame] = useState(false);
     const [notWord, setNotWord] = useState(false);
@@ -221,11 +227,21 @@ function Anagrams(){
 
     function playAgain(){
 
+        if(currentChallenge !== null){
+            console.log(currentChallenge);
+            setCurrentChallenge(null);
+        }
+
         quitMatch();
 
     }
 
     function quitGame(){
+
+        if(currentChallenge !== null){
+            console.log(currentChallenge);
+            setCurrentChallenge(null);
+        }
         navigate('/');
     }
 
