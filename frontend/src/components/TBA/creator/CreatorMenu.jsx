@@ -58,8 +58,10 @@ class CreatorMenu extends Component {
                 </>
             )
         }else{
+            let {storyName} = this.state.savedStories.find(e => (e.storyId === this.state.activeStory))
+
             return(
-                <StoryEditor storyID={this.state.activeStory}/>
+                <StoryEditor storyId={this.state.activeStory} storyName={storyName}/>
             )
         }
     }
