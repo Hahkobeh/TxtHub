@@ -8,11 +8,17 @@ import {GiCancel} from 'react-icons/gi';
 import Backdrop from '../components/wordle/Backdrop';
 import NewChallenge from './NewChallenge';
 import {ChallengeContext} from '../ChallengeContext';
+import { UserContext } from '../UserContext';
+
 import './ChallengePage.scss';
 
 var c = [ ["Wordle" , "Jacob", "--", 10], ["Wordle" , "Jacob", 5, "--"], ["Wordle" , "Jacob", 5, "--"]]
 
 function ChallengePage(){
+
+    const {currentChallenge, setCurrentChallenge} = useContext(ChallengeContext);
+
+    const {user, setUser} = useContext(UserContext);
 
     const [c, setC] = useState([]);
 
@@ -25,7 +31,7 @@ function ChallengePage(){
         });
     }
 
-    const {currentChallenge, setCurrentChallenge} = useContext(ChallengeContext);
+    
     
     let navigate = useNavigate();
     const [waiting, setWaiting] = useState(false);
