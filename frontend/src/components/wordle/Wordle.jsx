@@ -1,12 +1,12 @@
 import './Wordle.scss';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import Layout from '../Layout';
 import {FaBackspace, FaRedo} from 'react-icons/fa';
 import {GiCancel} from 'react-icons/gi';
 import {AiOutlineQuestionCircle} from 'react-icons/ai';
 import {MdExitToApp} from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
-
+import {ChallengeContext} from '../../ChallengeContext';
 import axios from "axios";
 
 import Instructions from './Instructions';
@@ -25,13 +25,17 @@ async function setWord(){
         .then(res => {
             answer = res.data
             console.log(res.data)
-        });
+    });
 }
 
 
 
 
 function Wordle(){
+
+    const {currentChallenge, setCurrentChallenge} = useContext(ChallengeContext);
+
+
     let navigate = useNavigate();
 
     const [notEnoughLetters, setNotEnoughLetters] = useState(false);
@@ -193,6 +197,10 @@ function Wordle(){
             setFinishedWrong(true);
         }
         currentWord = [];
+        if(currentChallenge !== null){
+            console.log(currentChallenge);
+            setCurrentChallenge(null);
+        }
     }
 
     function playAgain(){

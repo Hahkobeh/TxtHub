@@ -12,16 +12,24 @@ import ScoreBoard from './pages/ScoreBoard';
 import ChallengePage from './pages/ChallengePage';
 import { UserContext } from './UserContext';
 import TBA from './components/TBA/TBA'
+import { ChallengeContext } from './ChallengeContext';
 
 function App() {
 
   const [user, setUser] = useState(null);
+  const [currentChallenge, setCurrentChallenge] = useState(null);
+
+  
   const providerValue = useMemo( ()=> ({user, setUser}), [user, setUser]);
+  const providerTwoValue = useMemo( ()=> ({currentChallenge, setCurrentChallenge}), [currentChallenge, setCurrentChallenge]);
   return (
     
     <div>
       
       <UserContext.Provider value = {providerValue}>
+        <ChallengeContext.Provider value = {providerTwoValue}>
+
+        
         <Routes>
 
           <Route path='/' element={<HomePage/>}/>
@@ -45,6 +53,7 @@ function App() {
           <Route path='/tba' element={<TBA/>}/>
 
         </Routes>
+        </ChallengeContext.Provider>
       </UserContext.Provider>
     </div>
   );
