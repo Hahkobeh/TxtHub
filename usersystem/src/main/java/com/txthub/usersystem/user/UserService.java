@@ -15,6 +15,7 @@ import java.util.Optional;
 
 import static com.mongodb.client.model.Sorts.descending;
 import static java.lang.Math.pow;
+import static org.springframework.data.domain.Sort.Direction.ASC;
 import static org.springframework.data.domain.Sort.Direction.DESC;
 
 @Service
@@ -133,15 +134,39 @@ public class UserService {
     }
 
     public List<UserPair> getTopTen(String game){
-        String gameName = game + "rating";
+        String gameName = game + "Rating";
         List<UserPair> temp = new ArrayList<>();
+        List<User> users = userRepository.findAll(Sort.by(DESC, gameName));
+        for(int i = 0; i < 10 && i < users.size(); i++) {
+            switch (game) {
+                case "wordle":
+                    temp.add(new UserPair(i + 1, users.get(i).getUsername(), users.get(i).getWordleRating()));
+                    break;
+                case "anagram":
+                    temp.add(new UserPair(i + 1, users.get(i).getUsername(), users.get(i).getAnagramRating()));
+                    break;
+                case "tba":
+                    temp.add(new UserPair(i + 1, users.get(i).getUsername(), users.get(i).getTbaRating()));
+
+                    break;
+                default:
+                    break;
+            }
+        }
+        return temp;
+    }
+
+    public int getRank(String username, String game){
+        String gameName = game + "Rating";
 
         List<User> users = userRepository.findAll(Sort.by(DESC, gameName));
-        for(int i = 0; i < 10; i++){
-            temp.add(new UserPair(users.get(i).getUsername(),users.get(i).getWordleRating()));
+        System.out.println(users.toString());
+        for(int i = 0;i < users.size(); i++){
+            if(users.get(i).getUsername().equals(username)){
+                return i + 1;
+            }
         }
-        System.out.println(temp.toString());
-        return temp;
+        return -1;
     }
 
 
