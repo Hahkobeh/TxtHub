@@ -14,24 +14,23 @@ public class Node {
     private String title;
     private String body;
     private ArrayList<Integer> ChildrenId;
-    private boolean endPoint = false;
-
-    public Node(String id, String storyId, String title, String body, ArrayList<Integer> childrenId, boolean endPoint) {
+    private String type;  //"end" "start" "mid"
+    public Node(String id, String storyId, String title, String body, ArrayList<Integer> childrenId,String type) {
         this.id = id;
         this.storyId = storyId;
         this.title = title;
         this.body = body;
         ChildrenId = childrenId;
-        this.endPoint = endPoint;
+        this.type = type;
     }
 
-    public Node(String storyId, String title, String body, ArrayList<Integer> childrenId, boolean endPoint) {
+    public Node(String storyId, String title, String body, ArrayList<Integer> childrenId,String type) {
         this.id = new ObjectId().toString();
         this.storyId = storyId;
         this.title = title;
         this.body = body;
         ChildrenId = childrenId;
-        this.endPoint = endPoint;
+        this.type = type;
     }
 
     public Node(){}
