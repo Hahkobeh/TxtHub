@@ -42,8 +42,8 @@ public class tbaController {
     @GetMapping("/story/{id}")
     @ResponseBody
     public List<Node> getStory(@PathVariable String id){
-        //grab all nodes from story
-        return null;
+        
+        return nodeService.getStoryNodes(id);
     }
 
     @PostMapping("/newStory")

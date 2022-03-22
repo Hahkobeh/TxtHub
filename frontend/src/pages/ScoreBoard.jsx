@@ -1,66 +1,55 @@
 import axios from 'axios';
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import Layout from '../components/Layout';
 import { UserContext }  from '../UserContext';
 import './ScoreBoard.scss';
 
-var wordleRankings
-var anagramRankings
-var tbaRankings
-SetUp();
-
-async function SetUp(){
-    const {user, setUser} = useContext(UserContext);
-
-    var userWordleRank
-    var userAnagramRank
-    
-
-  
-    await axios.get('http://localhost:8081/user/api/v1/leaders/wordle')
-        .then(res => {
-            wordleRankings = res.data;
-    });
-    
-
-    
-   
-
-    
-    await axios.get('http://localhost:8081/user/api/v1/leaders/anagram')
-        .then(res => {
-            anagramRankings = res.data;
-    });
-    
-    await axios.get('http://localhost:8081/user/api/v1/leaders/tba')
-        .then(res => {
-            tbaRankings = res.data;
-    });
-
-    if(user !== null){
-        await axios.get(`http://localhost:8081/user/api/v1/rank/${user.username}/wordle`)
-        .then(res => {
-            userWordleRank = res.data;
-        });
-
-        await axios.get(`http://localhost:8081/user/api/v1/rank/${user.username}/anagram`)
-            .then(res => {
-                userAnagramRank = res.data;
-        });
-        
-        anagramRankings.push(userAnagramRank);
-        wordleRankings.push(userWordleRank);
-    }
-
-    
-
-}
-
-
 function ScoreBoard(){
 
-    
+    const {user, setUser} = useContext(UserContext);
 
+    const [wordleRankings, setWordleRankings] = useState([]);
+    const [anagramRankings, setAnagramRankings] = useState([]);
+    const [tbaRankings, setTbaRankings] = useState([]);
+
+    const [userWordleRank, setUserWordleRank] = useState([]);
+    const [userAnagramRank, setUserAnagramRank] = useState([]);
+    SetUp();
+
+    async function SetUp(){
+        
+        
+        if(user !== null){
+            await axios.get(`http://localhost:8081/user/api/v1/rank/${user.username}/wordle`)
+                .then(res => {
+                    setUserWordleRank(res.data);
+            });
+
+            await axios.get(`http://localhost:8081/user/api/v1/rank/${user.username}/anagram`)
+                .then(res => {
+                    setUserAnagramRank(res.data);
+            });
+            
+        }
+
+    
+        await axios.get('http://localhost:8081/user/api/v1/leaders/wordle')
+            .then(res => {
+                setWordleRankings(res.data);
+        });
+        
+
+        await axios.get('http://localhost:8081/user/api/v1/leaders/anagram')
+            .then(res => {
+                setAnagramRankings(res.data);
+        });
+        
+        await axios.get('http://localhost:8081/user/api/v1/leaders/tba')
+            .then(res => {
+                setTbaRankings(res.data);
+        });
+    
+    }
 
     return(
         <div>
@@ -87,13 +76,19 @@ function ScoreBoard(){
                             {wordleRankings.map(function(wordleRanking, index){
                                 return <div>
                                     <ul className = 'user-score'>
-                                        <li>{index + 1}</li>
-                                        <li>{wordleRanking[0]}</li>
-                                        <li>{wordleRanking[1]}</li>
+                                        <li>{wordleRankings[0]}</li>
+                                        <li>{wordleRankings[1]}</li>
+                                        <li>{wordleRankings[2]}</li>
                                     </ul>
                                     <hr/>
                                 </div>
                             })}
+                        <ul className = 'user-score'>
+                            <li>{userWordleRank[0]}</li>
+                            <li>{userWordleRank[1]}</li>
+                            <li>{userWordleRank[2]}</li>
+                        </ul>
+
                             
                     </div>
                 </li >
@@ -113,13 +108,19 @@ function ScoreBoard(){
                         {anagramRankings.map(function(anagramRanking, index){
                                 return <div>
                                     <ul className = 'user-score'>
-                                        <li>{index + 1}</li>
-                                        <li>{anagramRanking[0]}</li>
-                                        <li>{anagramRanking[1]}</li>
+                                        <li>{anagramRankings[0]}</li>
+                                        <li>{anagramRankings[1]}</li>
+                                        <li>{anagramRankings[2]}</li>
                                     </ul>
                                     <hr/>
                                 </div>
-                            })}
+                        })}
+
+                        <ul className = 'user-score'>
+                            <li>{userAnagramRank[0]}</li>
+                            <li>{userAnagramRank[1]}</li>
+                            <li>{userAnagramRank[2]}</li>
+                        </ul>
                        
                     </div>
                     
@@ -140,9 +141,9 @@ function ScoreBoard(){
                         {tbaRankings.map(function(tbaRanking, index){
                                 return <div>
                                     <ul className = 'user-score'>
-                                        <li>{index + 1}</li>
-                                        <li>{tbaRanking[0]}</li>
-                                        <li>{tbaRanking[1]}</li>
+                                        <li>{tbaRankings[0]}</li>
+                                        <li>{tbaRankings[1]}</li>
+                                        <li>{tbaRankings[2]}</li>
                                     </ul>
                                     <hr/>
                                 </div>
