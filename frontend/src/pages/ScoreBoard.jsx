@@ -12,21 +12,34 @@ function ScoreBoard(){
     const [anagramRankings, setAnagramRankings] = useState([]);
     const [tbaRankings, setTbaRankings] = useState([]);
 
-    const [userWordleRank, setUserWordleRank] = useState([]);
-    const [userAnagramRank, setUserAnagramRank] = useState([]);
-    SetUp();
+    const [userWordleRank, setUserWordleRank] = useState(null);
+    const [userAnagramRank, setUserAnagramRank] = useState(null)
+
+    const [loading, setLoading] = useState(true);
+
+    if(loading){
+
+        SetUp();
+
+    }
 
     async function SetUp(){
-        
-        
-        if(user !== null){
+
+        setLoading(false);
+
+        console.log(user)
+
+        if(user){
             await axios.get(`http://localhost:8081/user/api/v1/rank/${user.username}/wordle`)
                 .then(res => {
+                    console.log('hello')
+                    console.log(res.data)
                     setUserWordleRank(res.data);
             });
 
             await axios.get(`http://localhost:8081/user/api/v1/rank/${user.username}/anagram`)
                 .then(res => {
+                    console.log(res.data)
                     setUserAnagramRank(res.data);
             });
             
@@ -35,23 +48,28 @@ function ScoreBoard(){
     
         await axios.get('http://localhost:8081/user/api/v1/leaders/wordle')
             .then(res => {
+                console.log(res.data)
                 setWordleRankings(res.data);
         });
         
 
         await axios.get('http://localhost:8081/user/api/v1/leaders/anagram')
             .then(res => {
+                console.log(res.data)
                 setAnagramRankings(res.data);
         });
         
         await axios.get('http://localhost:8081/user/api/v1/leaders/tba')
             .then(res => {
+                console.log(res.data)
                 setTbaRankings(res.data);
         });
-    
+
+
     }
 
     return(
+
         <div>
             <Layout/>
 
@@ -72,22 +90,23 @@ function ScoreBoard(){
                             <li><h3>Username</h3></li>
                             <li><h3>Rating</h3></li>
                         </ul>
-                        
-                            {wordleRankings.map(function(wordleRanking, index){
+
+                            {wordleRankings.map(function(wordleRanking){
                                 return <div>
                                     <ul className = 'user-score'>
-                                        <li>{wordleRankings[0]}</li>
-                                        <li>{wordleRankings[1]}</li>
-                                        <li>{wordleRankings[2]}</li>
+                                        <li>{wordleRanking.rank}</li>
+                                        <li>{wordleRanking.username}</li>
+                                        <li>{parseInt(wordleRanking.rating)}</li>
                                     </ul>
                                     <hr/>
                                 </div>
                             })}
-                        <ul className = 'user-score'>
-                            <li>{userWordleRank[0]}</li>
-                            <li>{userWordleRank[1]}</li>
-                            <li>{userWordleRank[2]}</li>
-                        </ul>
+                        {userWordleRank !== null && <ul className = 'user-score'>
+                            <li>{userWordleRank.rank}</li>
+                            <li>{userWordleRank.username}</li>
+                            <li>{parseInt(userWordleRank.rating)}</li>
+                        </ul>}
+
 
                             
                     </div>
@@ -105,22 +124,22 @@ function ScoreBoard(){
                             <li><h3>Username</h3></li>
                             <li><h3>Rating</h3></li>
                         </ul>
-                        {anagramRankings.map(function(anagramRanking, index){
+                        {anagramRankings.map(function(anagramRanking){
                                 return <div>
                                     <ul className = 'user-score'>
-                                        <li>{anagramRankings[0]}</li>
-                                        <li>{anagramRankings[1]}</li>
-                                        <li>{anagramRankings[2]}</li>
+                                        <li>{anagramRanking.rank}</li>
+                                        <li>{anagramRanking.username}</li>
+                                        <li>{parseInt(anagramRanking.rating)}</li>
                                     </ul>
                                     <hr/>
                                 </div>
                         })}
 
-                        <ul className = 'user-score'>
-                            <li>{userAnagramRank[0]}</li>
-                            <li>{userAnagramRank[1]}</li>
-                            <li>{userAnagramRank[2]}</li>
-                        </ul>
+                        {user !== null && <ul className = 'user-score'>
+                            <li>{userAnagramRank.rank}</li>
+                            <li>{userAnagramRank.username}</li>
+                            <li>{parseInt(userAnagramRank.rating)}</li>
+                        </ul>}
                        
                     </div>
                     
@@ -138,12 +157,12 @@ function ScoreBoard(){
                             <li><h3>Story Name</h3></li>
                             <li><h3>Rating</h3></li>
                         </ul>
-                        {tbaRankings.map(function(tbaRanking, index){
+                        {tbaRankings.map(function(tbaRanking){
                                 return <div>
                                     <ul className = 'user-score'>
-                                        <li>{tbaRankings[0]}</li>
-                                        <li>{tbaRankings[1]}</li>
-                                        <li>{tbaRankings[2]}</li>
+                                        <li>{tbaRanking.rank}</li>
+                                        <li>{tbaRanking.username}</li>
+                                        <li>{parseInt(tbaRanking.rating)}</li>
                                     </ul>
                                     <hr/>
                                 </div>
