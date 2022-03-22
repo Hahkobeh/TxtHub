@@ -21,8 +21,8 @@ function ScoreBoard(){
         
         if(user !== null){
             await axios.get(`http://localhost:8081/user/api/v1/rank/${user.username}/wordle`)
-            .then(res => {
-                setUserWordleRank(res.data);
+                .then(res => {
+                    setUserWordleRank(res.data);
             });
 
             await axios.get(`http://localhost:8081/user/api/v1/rank/${user.username}/anagram`)
@@ -48,8 +48,6 @@ function ScoreBoard(){
             .then(res => {
                 setTbaRankings(res.data);
         });
-
-        
     
     }
 
