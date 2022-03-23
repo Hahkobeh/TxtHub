@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import Select from "react-select";
-import ObjectID from "bson-objectid";
+
+import ObjectID from "bson-objectid"
 
 export default class StoryEditor extends Component {
     constructor(props) {
@@ -41,7 +41,8 @@ export default class StoryEditor extends Component {
             ],
             checked: false,
             name: '',
-            body: ''
+            body: '',
+            connectId: ''
 
         }
     }
@@ -53,10 +54,11 @@ export default class StoryEditor extends Component {
     }
 
     changeCurrentNode = (id) => {
-
-        this.setState({
-            id: id
-        })
+        if(id !== this.state.id) {
+            this.setState({
+                id: id
+            })
+        }
 
     }
 
@@ -68,16 +70,26 @@ export default class StoryEditor extends Component {
     }
 
     handleChangeForm = (e) => {
-        console.log(this.state.name)
         const {name, value} = e.target
         this.setState({[name]: value})
+    }
+
+    removeNode = (id) => {
+        const newNodes = this.state.nodes.filter(element => element.id !== id)
+        newNodes.forEach(e => {
+            e.connections = e.connections.filter(e => e.id !== id)
+        })
+        console.log(this.state.nodes)
+        console.log(newNodes)
+        this.setState({nodes: newNodes})
+
 
     }
 
     createNode = (e) => {
         e.preventDefault()
 
-        if(!this.state.checked) {
+        if(!this.state.checked && this.state.name !== '') {
             const newNode = {
                 id: ObjectID().toHexString(),
                 nodeName: this.state.name,
@@ -96,7 +108,21 @@ export default class StoryEditor extends Component {
 
 
         }else{
-            {/*TODO select box*/}
+            console.log('you made it!')
+
+            const changedNodes = this.state.nodes.map(e => {
+                if(e.id === this.state.id){
+                    e.connections.push({
+                        id: this.state.connectId,
+                        nodeName: (this.state.nodes.find(e => e.id === this.state.connectId)).nodeName
+                    })
+
+                    return(e)
+                }else{
+                    return(e)
+                }
+            })
+            this.setState({nodes: changedNodes})
         }
     }
 
@@ -106,12 +132,15 @@ export default class StoryEditor extends Component {
         return(
             <div className='node-current'>
                 <h1>{node.nodeName}</h1>
-                <input type='text' value={this.state.nodes.find(e => e.id === this.state.id).body} onChange={this.handleChangeBody}/>
+                <textarea value={this.state.nodes.find(e => e.id === this.state.id).body} onChange={this.handleChangeBody}/>
                 <div className='connections'>
                     <div className='node-connections'>
                         <ul>
                             {node.connections.map((connection) => (
-                                <li key={connection.id} onClick={() => this.changeCurrentNode(connection.id)}>{connection.nodeName}</li>
+                                <li key={connection.id}>
+                                    <p onClick={() => this.changeCurrentNode(connection.id)}>{connection.nodeName}</p>
+                                    <button onClick={() => this.removeNode(connection.id)}>Delete node</button>
+                                </li>
                             ))}
                         </ul>
                     </div>
@@ -126,7 +155,9 @@ export default class StoryEditor extends Component {
                                 this.state.checked ? (
                                     <label>
                                         Node name:
-                                        <Select options={this.state.nodes.map(nodeElement => ({value: nodeElement.id, label: nodeElement.nodeName}))}/>
+                                        <select name='connectId' onChange={this.handleChangeForm}>
+                                            {this.state.nodes.filter(e => e.id !== node.id).map(nodeElement => (<option value={nodeElement.id}>{nodeElement.nodeName}</option>))}}
+                                        </select>
                                     </label>
                                 ) : (
                                     <>
@@ -144,7 +175,6 @@ export default class StoryEditor extends Component {
                         </form>
                     </div>
                 </div>
-                {/*TODO left off here, need to add checkbox to check if node already exists or create new node*/}
             </div>
         )
     }
