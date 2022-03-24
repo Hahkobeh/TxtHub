@@ -1,4 +1,4 @@
-import React, {useState , useContext} from 'react';
+import React, {useState , useContext, useEffect} from 'react';
 import axios from 'axios';
 import Layout from '../components/Layout';
 import Message from '../components/wordle/Message';
@@ -14,18 +14,23 @@ import './ChallengePage.scss';
 var c = [ ["Wordle" , "Jacob", "--", 10], ["Wordle" , "Jacob", 5, "--"], ["Wordle" , "Jacob", 5, "--"]]
 
 function ChallengePage(){
-
+    
+    const currentName = localStorage.getItem('username');
     const {currentChallenge, setCurrentChallenge} = useContext(ChallengeContext);
 
     let challengeId;
     const [c, setC] = useState([]);
 
-    SetUp();
+    useEffect(() => {
+        SetUp();
+    }, []);
 
     async function SetUp(){
-        await axios.get()
+        await axios.get(`http://localhost:8081/challenge/api/v1/current/${currentName}`)
             .then(res=> { 
+                
                 setC(res.data);
+                console.log("hello");
         });
     }
 
@@ -39,7 +44,9 @@ function ChallengePage(){
     function clickChallenge(id){
         setWaiting(false);
 
+
         if(c[id].userScore !== '--'){
+
             setWaiting(true);
             
         }else{
@@ -91,11 +98,16 @@ function ChallengePage(){
                 {c.map(function(c, index){
                     return <div onClick={() => clickChallenge(index)}>
                         <ul className='challenge' >
+
+
                             <li>{c.game}</li>
                             <li>{c.opponent}</li>
-                            <li>{c.opScore}</li>
-                            <li>{c.userScore}</li>
-                            
+                            {c.opScore !== -999 && <li>{c.opScore}</li>}
+                            {c.opScore === -999 && <li>---</li>}
+                                                        
+                            {c.userScore !== -999 && <li>{c.userScore}</li>}
+                            {c.userScore === -999 && <li>---</li>}
+
                         </ul>
 
                     </div>

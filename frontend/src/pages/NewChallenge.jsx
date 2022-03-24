@@ -44,11 +44,17 @@ function NewChallenge(props){
         //no username for chalelengee or usernameRef.current.value for specific person
 
         if(check){
-            await  axios.post('http[p' , selection, currentName, usernameRef.current.value)
+
+            let data = { 
+                game: selection,
+                username: usernameRef.current.value
+            }
+            await  axios.post(`http://localhost:8081/challenge/api/v1/send/${currentName}` , data)
 
 
         }else{
-            await  axios.post('http[p' , selection, currentName)
+            //await  axios.post('http[p' , selection, currentName)
+
 
         }
 
