@@ -81,7 +81,7 @@ public class UserController {
 
     @GetMapping("/rank/{username}/{game}")
     @ResponseBody
-    public int getRank(@PathVariable String username, @PathVariable String game){
+    public UserPair getRank(@PathVariable String username, @PathVariable String game){
         return userService.getRank(username, game);
     }
 

@@ -1,12 +1,11 @@
 import axios from 'axios';
-import React, {useContext, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Layout from '../components/Layout';
 
 import './ScoreBoard.scss';
 
 function ScoreBoard(){
 
-    const [loading, setLoading] = useState(true);
 
     const [wordleRankings, setWordleRankings] = useState([]);
     const [anagramRankings, setAnagramRankings] = useState([]);
@@ -14,16 +13,24 @@ function ScoreBoard(){
 
     const [userWordleRank, setUserWordleRank] = useState([]);
     const [userAnagramRank, setUserAnagramRank] = useState([]);
+    const [userTbaRank, setUserTbaRank] = useState([]);
+    /*TODO user tba rank if implemented*/
 
-    const currentName = localStorage.getItem('username');
+
+
+    useEffect(() => {
+        SetUp();
+    }, []);
     
-    
-    SetUp();
+
+
 
     async function SetUp(){
+
+        const currentName = localStorage.getItem('username');
+        console.log(currentName)
         
-        
-        if(!currentName){
+        if(currentName !== null){
             await axios.get(`http://localhost:8081/user/api/v1/rank/${currentName}/wordle`)
                 .then(res => {
                     console.log('hello')
@@ -36,14 +43,22 @@ function ScoreBoard(){
                     console.log(res.data)
                     setUserAnagramRank(res.data);
             });
+
+            await axios.get(`http://localhost:8081/user/api/v1/rank/${currentName}/tba`)
+                .then(res => {
+                    console.log(res.data)
+                    setUserTbaRank(res.data);
+                });
             
         }
 
     
         await axios.get('http://localhost:8081/user/api/v1/leaders/wordle')
             .then(res => {
+
                 console.log(res.data)
                 setWordleRankings(res.data);
+                console.log('hello2')
         });
         
 
@@ -51,88 +66,21 @@ function ScoreBoard(){
             .then(res => {
                 console.log(res.data)
                 setAnagramRankings(res.data);
+                console.log('hello3')
         });
         
         await axios.get('http://localhost:8081/user/api/v1/leaders/tba')
             .then(res => {
                 console.log(res.data)
                 setTbaRankings(res.data);
+                console.log('hello4')
         });
 
-        setLoading(false);
 
 
     }
 
-    if(loading){
-        return(
 
-            <div>
-                <Layout/>
-    
-                <h1 className='score-header'>Leaderboard</h1>
-    
-               
-                <ul className = 'leaderboard-container'>
-    
-                    
-                    <li className ='wordle-leaderboard'>
-                        
-                        <h1 className='wordle-header'>Wordle</h1>
-                        <hr className="hr"/>
-                        
-                        <div className ='labels'>
-                            <ul>
-                                <li><h3>Rank</h3></li>
-                                <li><h3>Username</h3></li>
-                                <li><h3>Rating</h3></li>
-                            </ul>
-                                
-                        </div>
-                    </li >
-    
-                    <li className ='anagram-leaderboard'>
-                        
-                        <h1 className='anagram-header'>Anagram</h1>
-                        <hr className="hr"/>
-                        
-    
-                        <div className ='labels'>
-                            <ul>
-                                <li><h3>Rank</h3></li>
-                                <li><h3>Username</h3></li>
-                                <li><h3>Rating</h3></li>
-                            </ul>
-                         
-                        </div>
-                        
-                    </li>
-    
-                    <li className ='tba-leaderboard'>
-                        
-                        <h1 className='tba-header'>TBA</h1>
-                        <hr className="hr"/>
-                        
-    
-                        <div className ='labels'>
-                            <ul>
-                                <li><h3>Rank</h3></li>
-                                <li><h3>Story Name</h3></li>
-                                <li><h3>Rating</h3></li>
-                            </ul>
-                    
-                        </div>
-                        
-                    </li>
-                </ul>
-               
-              
-            </div>
-            
-    
-        );
-
-    }else{
         return(
 
             <div>
@@ -243,7 +191,7 @@ function ScoreBoard(){
             
     
         );
-    }
+
 
     
 
