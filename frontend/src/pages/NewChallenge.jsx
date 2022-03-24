@@ -44,6 +44,7 @@ function NewChallenge(props){
         //no username for chalelengee or usernameRef.current.value for specific person
 
         if(check){
+
             let data = { 
                 game: selection,
                 username: usernameRef.current.value
@@ -53,6 +54,7 @@ function NewChallenge(props){
 
         }else{
             //await  axios.post('http[p' , selection, currentName)
+
 
         }
 

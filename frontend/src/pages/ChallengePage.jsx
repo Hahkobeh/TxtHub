@@ -44,18 +44,19 @@ function ChallengePage(){
     function clickChallenge(id){
         setWaiting(false);
 
-        if(false){
-            
+
+        if(c[id].userScore !== '--'){
+
             setWaiting(true);
             
         }else{
 
-            localStorage.setItem('currentChallenge', c[id]);
+            localStorage.setItem('currentChallenge', c[id].challengeId);
 
-            if(c[id][0] === "Wordle"){
+            if(c[id].game === "Wordle"){
                 //setCurrentChallenge(c[id]);
                 navigate('/wordle');
-            }else if(c[id][0] === "Anagrams"){
+            }else if(c[id].game === "Anagrams"){
                 //setCurrentChallenge(c[id]);
                 navigate('/anagrams');
             }
@@ -98,6 +99,7 @@ function ChallengePage(){
                     return <div onClick={() => clickChallenge(index)}>
                         <ul className='challenge' >
 
+
                             <li>{c.game}</li>
                             <li>{c.opponent}</li>
                             {c.opScore !== -999 && <li>{c.opScore}</li>}
@@ -105,6 +107,7 @@ function ChallengePage(){
                                                         
                             {c.userScore !== -999 && <li>{c.userScore}</li>}
                             {c.userScore === -999 && <li>---</li>}
+
                         </ul>
 
                     </div>
