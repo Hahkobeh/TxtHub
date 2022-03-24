@@ -125,7 +125,7 @@ function ScoreBoard(){
                                 </div>
                         })}
 
-                        {user !== null && <ul className = 'user-score'>
+                        {userAnagramRank !== null && <ul className = 'user-score'>
                             <li>{userAnagramRank.rank}</li>
                             <li>{userAnagramRank.username}</li>
                             <li>{parseInt(userAnagramRank.rating)}</li>
