@@ -1,12 +1,10 @@
 import axios from 'axios';
 import React, {useContext, useState} from 'react';
 import Layout from '../components/Layout';
-import { UserContext }  from '../UserContext';
+
 import './ScoreBoard.scss';
 
 function ScoreBoard(){
-
-    const {user, setUser} = useContext(UserContext);
 
     const [wordleRankings, setWordleRankings] = useState([]);
     const [anagramRankings, setAnagramRankings] = useState([]);
@@ -14,18 +12,20 @@ function ScoreBoard(){
 
     const [userWordleRank, setUserWordleRank] = useState([]);
     const [userAnagramRank, setUserAnagramRank] = useState([]);
+
+    const currentName = localStorage.getItem('username');
     SetUp();
 
     async function SetUp(){
         
         
-        if(user !== null){
-            await axios.get(`http://localhost:8081/user/api/v1/rank/${user.username}/wordle`)
+        if(!currentName){
+            await axios.get(`http://localhost:8081/user/api/v1/rank/${currentName}/wordle`)
                 .then(res => {
                     setUserWordleRank(res.data);
             });
 
-            await axios.get(`http://localhost:8081/user/api/v1/rank/${user.username}/anagram`)
+            await axios.get(`http://localhost:8081/user/api/v1/rank/${currentName}/anagram`)
                 .then(res => {
                     setUserAnagramRank(res.data);
             });

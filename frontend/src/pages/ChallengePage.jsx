@@ -8,7 +8,6 @@ import {GiCancel} from 'react-icons/gi';
 import Backdrop from '../components/wordle/Backdrop';
 import NewChallenge from './NewChallenge';
 import {ChallengeContext} from '../ChallengeContext';
-import { UserContext } from '../UserContext';
 
 import './ChallengePage.scss';
 
@@ -18,8 +17,7 @@ function ChallengePage(){
 
     const {currentChallenge, setCurrentChallenge} = useContext(ChallengeContext);
 
-    const {user, setUser} = useContext(UserContext);
-
+    let challengeId;
     const [c, setC] = useState([]);
 
     SetUp();
@@ -46,11 +44,13 @@ function ChallengePage(){
             
         }else{
 
+            localStorage.setItem('currentChallenge', c[id]);
+
             if(c[id][0] === "Wordle"){
-                setCurrentChallenge(c[id]);
+                //setCurrentChallenge(c[id]);
                 navigate('/wordle');
             }else if(c[id][0] === "Anagrams"){
-                setCurrentChallenge(c[id]);
+                //setCurrentChallenge(c[id]);
                 navigate('/anagrams');
             }
 
