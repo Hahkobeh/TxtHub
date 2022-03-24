@@ -156,17 +156,24 @@ public class UserService {
         return temp;
     }
 
-    public int getRank(String username, String game){
+    public UserPair getRank(String username, String game){
         String gameName = game + "Rating";
 
         List<User> users = userRepository.findAll(Sort.by(DESC, gameName));
-        System.out.println(users.toString());
         for(int i = 0;i < users.size(); i++){
             if(users.get(i).getUsername().equals(username)){
-                return i + 1;
+                switch (game) {
+                    case "wordle":
+                        return new UserPair(i + 1, users.get(i).getUsername(), users.get(i).getWordleRating());
+                    case "anagram":
+                        return new UserPair(i + 1, users.get(i).getUsername(), users.get(i).getAnagramRating());
+                    case "tba":
+                        return new UserPair(i + 1, users.get(i).getUsername(), users.get(i).getTbaRating());
+                }
+
             }
         }
-        return -1;
+        return new UserPair(-1, username, 0);
     }
 
 
