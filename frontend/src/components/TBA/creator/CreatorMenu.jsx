@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import StoryEditor from './StoryEditor';
+import axios from "axios";
 
 class CreatorMenu extends Component {
     constructor(props){
@@ -8,38 +9,47 @@ class CreatorMenu extends Component {
             activeStory: null,
             savedStories: [
                 {
-                storyID: "tempID",
-                storyName: "adventure for gold"
+                    storyId: "tempID",
+                    storyName: "adventure for gold",
+                    Likes: 5,
                 },
                 {
-                    storyID: "tempID2",
-                    storyName: "adventure to the center of the world"
+                    storyId: "tempID2",
+                    storyName: "adventure to the center of the world",
+                    Likes: 3,
                 }
             ]
             
         }
     }
 
+    getStories = async () => {
+        await axios.get()
+            .then(res => {
+
+            })
+    }
+
+    selectStory = (id) => {
+        this.setState({activeStory: id})
+    }
+
     listProjects = () => {
+        console.log('hello')
         return (
             <ul>
                 {this.state.savedStories.map((story) => (
-                    <li key={story.storyID} onClick={this.openStory}>{story.storyName}</li>
+                    <li key={story.storyId} onClick={() => this.selectStory(story.storyId)}>{story.storyName}</li>
                 ))}
             </ul>
         )
     }
 
-    openStory = (e) => {
-        console.log(e.target.StoryID)
-        this.setState({
-            ...this.setState,
-            activeStory: e.target.StoryID
-        })
-    }
+
 
     loadElements = () => {
         if(this.state.activeStory === null){
+
             return(
                 <>
                     <h1>Continue project:</h1>
@@ -48,8 +58,10 @@ class CreatorMenu extends Component {
                 </>
             )
         }else{
+            let {storyName} = this.state.savedStories.find(e => (e.storyId === this.state.activeStory))
+
             return(
-                <StoryEditor storyID={this.state.activeStory}/>
+                <StoryEditor storyId={this.state.activeStory} storyName={storyName}/>
             )
         }
     }

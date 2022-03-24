@@ -2,15 +2,21 @@ package com.txthub.usersystem.user;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.repository.Query;
+import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+import static com.mongodb.client.model.Sorts.descending;
 import static java.lang.Math.pow;
+import static org.springframework.data.domain.Sort.Direction.ASC;
+import static org.springframework.data.domain.Sort.Direction.DESC;
 
 @Service
 public class UserService {
@@ -125,6 +131,42 @@ public class UserService {
         double predictedOutcome = 1 / (1 + pow(10, (difference) / 400));
         return 32 * (1 - predictedOutcome);
 
+    }
+
+    public List<UserPair> getTopTen(String game){
+        String gameName = game + "Rating";
+        List<UserPair> temp = new ArrayList<>();
+        List<User> users = userRepository.findAll(Sort.by(DESC, gameName));
+        for(int i = 0; i < 10 && i < users.size(); i++) {
+            switch (game) {
+                case "wordle":
+                    temp.add(new UserPair(i + 1, users.get(i).getUsername(), users.get(i).getWordleRating()));
+                    break;
+                case "anagram":
+                    temp.add(new UserPair(i + 1, users.get(i).getUsername(), users.get(i).getAnagramRating()));
+                    break;
+                case "tba":
+                    temp.add(new UserPair(i + 1, users.get(i).getUsername(), users.get(i).getTbaRating()));
+
+                    break;
+                default:
+                    break;
+            }
+        }
+        return temp;
+    }
+
+    public int getRank(String username, String game){
+        String gameName = game + "Rating";
+
+        List<User> users = userRepository.findAll(Sort.by(DESC, gameName));
+        System.out.println(users.toString());
+        for(int i = 0;i < users.size(); i++){
+            if(users.get(i).getUsername().equals(username)){
+                return i + 1;
+            }
+        }
+        return -1;
     }
 
 
