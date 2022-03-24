@@ -39,17 +39,17 @@ function ChallengePage(){
     function clickChallenge(id){
         setWaiting(false);
 
-        if(c[id][3] !== '--'){
+        if(c[id].userScore !== '--'){
             setWaiting(true);
             
         }else{
 
             localStorage.setItem('currentChallenge', c[id]);
 
-            if(c[id][0] === "Wordle"){
+            if(c[id].game === "Wordle"){
                 //setCurrentChallenge(c[id]);
                 navigate('/wordle');
-            }else if(c[id][0] === "Anagrams"){
+            }else if(c[id].game === "Anagrams"){
                 //setCurrentChallenge(c[id]);
                 navigate('/anagrams');
             }
@@ -88,13 +88,14 @@ function ChallengePage(){
                 </ul>
                 <hr/>
                 
-                {c.map(function(c, index){
-                    return <div onClick={() => clickChallenge(index)}>
+                {c.map(function(c){
+                    return <div onClick={() => clickChallenge(c.id)}>
                         <ul className='challenge' >
-                            <li>{c[0]}</li>
-                            <li>{c[1]}</li>
-                            <li>{c[2]}</li>
-                            <li>{c[3]}</li>
+                            <li>{c.game}</li>
+                            <li>{c.opponent}</li>
+                            <li>{c.opScore}</li>
+                            <li>{c.userScore}</li>
+                            
                         </ul>
 
                     </div>

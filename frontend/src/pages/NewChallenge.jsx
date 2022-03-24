@@ -1,6 +1,6 @@
 import React, {useRef, useState} from 'react';
 
-
+import axios from 'axios';
 
 import './NewChallenge.scss';
 
@@ -23,7 +23,9 @@ function NewChallenge(props){
         setSelection(choice);
     }
 
-    function submitChallenge(e){
+    const currentName = localStorage.getItem('username');
+
+    async function submitChallenge(e){
         e.preventDefault();
         setUsernameError(false);
         setChoiceError(false);
@@ -36,6 +38,25 @@ function NewChallenge(props){
             setChoiceError(true);
             return;
         }
+
+        //selection for the game
+        //currentName for sender of challenge
+        //no username for chalelengee or usernameRef.current.value for specific person
+
+        if(check){
+            await  axios.post('http[p' , selection, currentName, usernameRef.current.value)
+
+
+        }else{
+            await  axios.post('http[p' , selection, currentName)
+
+        }
+
+
+        //await axios.post()
+
+
+
     }
 
     return(
