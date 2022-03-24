@@ -46,10 +46,11 @@ public class tbaController {
         return nodeService.getStoryNodes(id);
     }
 
+
+
     @PostMapping("/newStory")
     @ResponseBody
-    public String newStory(@RequestBody StoryForm storyForm){
-        return null;
+    public Story newStory(@RequestBody StoryForm storyForm) {
+        return storyService.createStory(storyForm);
     }
-
 }

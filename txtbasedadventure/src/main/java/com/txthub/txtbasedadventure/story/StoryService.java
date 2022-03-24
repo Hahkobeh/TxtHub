@@ -30,23 +30,21 @@ public class StoryService {
     
     
     
-    public void addStory(Story s){
-        if(s != null){
-            try{
-                storyRepo.save(s);
-            }catch(IllegalArgumentException e){
+    public Story createStory(StoryForm storyForm){
+        Story story = new Story(storyForm.getStoryName(),storyForm.getAuthor(),storyForm.getGenre());
+        storyRepo.save(story);
+        return story;
 
-            }
-        }
     }
+
 
     public void delStory(String id){
         
-            try{
-                storyRepo.deleteById(id);
-            }catch(IllegalArgumentException e){
+        try{
+            storyRepo.deleteById(id);
+        }catch(IllegalArgumentException e){
 
-            }
+        }
         
     }
 

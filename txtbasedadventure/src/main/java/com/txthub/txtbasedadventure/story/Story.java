@@ -10,6 +10,7 @@ public class Story {
     private String id;
     private String name;
     private String authorUsername;
+    private String firstNodeId;
     private Genre genre;
     private int likes = 0;
     private int dislikes = 0;
@@ -28,6 +29,7 @@ public class Story {
         this.name = name;
         this.authorUsername = authorUsername;
         this.genre = Genre.valueOf(genre);
+        this.firstNodeId = new ObjectId().toString();
     }
 
     public Story(){}
