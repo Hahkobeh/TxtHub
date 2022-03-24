@@ -51,6 +51,20 @@ public class ChallengeController {
         return false;
     }
 
+
+    // make score update api
+    
+    // @PutMapping("/random/{game}/{username}")
+    // @ResponseBody
+    // public boolean sendRandomChallenge(@PathVariable String username){
+    //     // Challenge ch = new Challenge();
+    //     // return chService.addChallenge(ch);
+    //     return false;
+    // }
+
+
+
+
     @PutMapping("/send/{username}")
     @ResponseBody
     public boolean sendChallenge(@RequestBody ChallengeForm chForm,@PathVariable String username){

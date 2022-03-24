@@ -63,6 +63,10 @@ public class ChallengeService {
         return false;
     }
 
+    public void updateChallenge(Challenge c){
+        chRepo.save(c);
+
+    }
 
 
 
