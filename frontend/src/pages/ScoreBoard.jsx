@@ -22,10 +22,13 @@ function ScoreBoard(){
         SetUp();
     }, []);
     
-
+    const [wordleTopTen, setWordleTopTen] = useState(null);
+    const [anagramTopTen , setAnagramTopTen] = useState(null);
 
 
     async function SetUp(){
+
+        
 
         const currentName = localStorage.getItem('username');
         console.log(currentName)
@@ -105,8 +108,12 @@ function ScoreBoard(){
                             </ul>
     
                                 {wordleRankings.map(function(wordleRanking){
+
+                                    if(wordleRanking.username === userWordleRank.username){
+                                        setWordleTopTen(wordleRanking.username);
+                                    }
                                     return <div>
-                                        <ul className = 'user-score'>
+                                        <ul className = {wordleTopTen === wordleRanking.username ? 'user-score bold' : 'user-score'} >
                                             <li>{wordleRanking.rank}</li>
                                             <li>{wordleRanking.username}</li>
                                             <li>{parseInt(wordleRanking.rating)}</li>
@@ -114,7 +121,13 @@ function ScoreBoard(){
                                         <hr/>
                                     </div>
                                 })}
-                            {userWordleRank !== null && <ul className = 'user-score'>
+
+                            {wordleTopTen !== null && userWordleRank !== null && <ul className = 'user-score bold'>
+                                <li>:</li>
+                                <li>:</li>
+                                <li>:</li>
+                            </ul>}
+                            {wordleTopTen !== null && userWordleRank !== null && <ul className = 'user-score bold'>
                                 <li>{userWordleRank.rank}</li>
                                 <li>{userWordleRank.username}</li>
                                 <li>{parseInt(userWordleRank.rating)}</li>
@@ -138,17 +151,27 @@ function ScoreBoard(){
                                 <li><h3>Rating</h3></li>
                             </ul>
                             {anagramRankings.map(function(anagramRanking){
-                                    return <div>
-                                        <ul className = 'user-score'>
-                                            <li>{anagramRanking.rank}</li>
-                                            <li>{anagramRanking.username}</li>
-                                            <li>{parseInt(anagramRanking.rating)}</li>
-                                        </ul>
-                                        <hr/>
-                                    </div>
+
+                                if(anagramRanking.username === userAnagramRank.username){
+                                    setAnagramTopTen(anagramRanking.username);
+                                }
+                                return <div>
+                                    <ul className = {anagramTopTen === anagramRanking.username ? 'user-score bold' : 'user-score'}>
+                                        <li>{anagramRanking.rank}</li>
+                                        <li>{anagramRanking.username}</li>
+                                        <li>{parseInt(anagramRanking.rating)}</li>
+                                    </ul>
+                                    <hr/>
+                                </div>
                             })}
+
+                            {anagramTopTen !== null && userAnagramRank !== null && <ul className = 'user-score bold'>
+                                <li>:</li>
+                                <li>:</li>
+                                <li>:</li>
+                            </ul>}
     
-                            {userAnagramRank !== null && <ul className = 'user-score'>
+                            {anagramTopTen !== null && userAnagramRank !== null && <ul className = 'user-score bold'>
                                 <li>{userAnagramRank.rank}</li>
                                 <li>{userAnagramRank.username}</li>
                                 <li>{parseInt(userAnagramRank.rating)}</li>
