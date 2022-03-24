@@ -3,16 +3,21 @@ import {Link } from 'react-router-dom';
 
 import './Layout.scss';
 
-import {UserContext} from '../UserContext';
+
 import logo from '../images/logo.svg';
 import { AiFillPropertySafety } from 'react-icons/ai';
-const Layout = (props) => {
-    const {user, setUser} = useContext(UserContext);
 
+const Layout = (props) => {
     function removeListener(){
         document.removeEventListener('keydown');
     }
-    if(!user){
+
+    function logout(){
+        localStorage.clear();
+    }
+
+
+    if(!localStorage.getItem('username')){
         return(
 
             
@@ -26,10 +31,6 @@ const Layout = (props) => {
                         
                         <li className ='nav-item'>
                             <Link onClick={removeListener} to ='/'>Games</Link>
-                        </li>
-
-                        <li className ='nav-item'>
-                            <Link onClick={removeListener} to ='/challenges'>Challenges</Link>
                         </li>
 
                         <li className='nav-item'>
@@ -54,6 +55,8 @@ const Layout = (props) => {
             <div className='header'>
                 <nav className='navbar'>
                     <img  className = 'logo'/>
+                    <h1 className='nav'>TxTHub</h1>
+                    <h1 className='nav game'>{props.Game}</h1>
                     
                     <ul >
                         <li className ='nav-item'>
@@ -69,7 +72,7 @@ const Layout = (props) => {
                         </li>
 
                         <li className ='nav-item'>
-                            <Link onClick={removeListener} to ='/'>Logout</Link>
+                            <Link onClick={logout} to ='/'>Logout</Link>
                         </li>
                     </ul>
     

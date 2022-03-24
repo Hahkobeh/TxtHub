@@ -33,8 +33,9 @@ async function setWord(){
 
 function Wordle(){
 
-    const {currentChallenge, setCurrentChallenge} = useContext(ChallengeContext);
+    //const {currentChallenge, setCurrentChallenge} = useContext(ChallengeContext);
 
+    const currentChallenge = localStorage.getItem('currentChallenge');
 
     let navigate = useNavigate();
 
@@ -197,9 +198,18 @@ function Wordle(){
             setFinishedWrong(true);
         }
         currentWord = [];
-        if(currentChallenge !== null){
+        if(!currentChallenge){
             console.log(currentChallenge);
-            setCurrentChallenge(null);
+
+            if(finishedWrong){
+                await axios.post( currentChallenge, 8)
+                    .then
+            }else{
+                await axios.post()
+            }
+
+            
+            //setCurrentChallenge(null);
         }
     }
 

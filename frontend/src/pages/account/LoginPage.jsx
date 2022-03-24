@@ -66,7 +66,8 @@ function LoginPage(){
             //const user = await login();
 
 
-            let returnValue
+            let usernameValue;
+            let idValue;
             let request = 'http://localhost:8081/user/api/v1/login'
 
             let userData = {
@@ -76,19 +77,22 @@ function LoginPage(){
             await axios.post(request, userData)
                 .then(res => {
                         console.log(res.data.toString() + 'happened!')
-                        returnValue = res.data
+                        usernameValue = res.data.username;
+                        idValue = res.data.id;
+
                     }
 
                 )
-            console.log(returnValue)
-            if(returnValue === ''){
+            console.log(usernameValue)
+            if(usernameValue === ''){
                 setError(true)
                 return
             }
-            setUser(returnValue)
 
+            localStorage.setItem('username', usernameValue);
+            localStorage.setItem('id', idValue);
 
-            navigate('/profile');
+            navigate('/');
             
         }catch(err){
             console.log(err);

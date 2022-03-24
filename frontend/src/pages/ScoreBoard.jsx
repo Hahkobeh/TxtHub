@@ -1,43 +1,33 @@
 import axios from 'axios';
 import React, {useContext, useState} from 'react';
 import Layout from '../components/Layout';
-import { UserContext }  from '../UserContext';
+
 import './ScoreBoard.scss';
 
 function ScoreBoard(){
-
-    const {user, setUser} = useContext(UserContext);
 
     const [wordleRankings, setWordleRankings] = useState([]);
     const [anagramRankings, setAnagramRankings] = useState([]);
     const [tbaRankings, setTbaRankings] = useState([]);
 
-    const [userWordleRank, setUserWordleRank] = useState(null);
-    const [userAnagramRank, setUserAnagramRank] = useState(null)
+    const [userWordleRank, setUserWordleRank] = useState([]);
+    const [userAnagramRank, setUserAnagramRank] = useState([]);
 
-    const [loading, setLoading] = useState(true);
-
-    if(loading){
-
-        SetUp();
-
-    }
+    const currentName = localStorage.getItem('username');
+    SetUp();
 
     async function SetUp(){
-
-        setLoading(false);
-
-        console.log(user)
-
-        if(user){
-            await axios.get(`http://localhost:8081/user/api/v1/rank/${user.username}/wordle`)
+        
+        
+        if(!currentName){
+            await axios.get(`http://localhost:8081/user/api/v1/rank/${currentName}/wordle`)
                 .then(res => {
                     console.log('hello')
                     console.log(res.data)
                     setUserWordleRank(res.data);
             });
 
-            await axios.get(`http://localhost:8081/user/api/v1/rank/${user.username}/anagram`)
+            await axios.get(`http://localhost:8081/user/api/v1/rank/${currentName}/anagram`)
                 .then(res => {
                     console.log(res.data)
                     setUserAnagramRank(res.data);
@@ -135,7 +125,7 @@ function ScoreBoard(){
                                 </div>
                         })}
 
-                        {user !== null && <ul className = 'user-score'>
+                        {userAnagramRank !== null && <ul className = 'user-score'>
                             <li>{userAnagramRank.rank}</li>
                             <li>{userAnagramRank.username}</li>
                             <li>{parseInt(userAnagramRank.rating)}</li>

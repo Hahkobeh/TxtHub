@@ -2,7 +2,6 @@ import React, { useState, useMemo } from 'react';
 import {Route, Routes } from 'react-router-dom';
 
 import HomePage from './pages/HomePage';
-import ProfilePage from './pages/ProfilePage';
 import LoginPage from './pages/account/LoginPage';
 import SignupPage from './pages/account/SignupPage';
 import PResetPage from './pages/account/PResetPage';
@@ -43,8 +42,6 @@ function App() {
           <Route path='/signup' element={<SignupPage/>}/>
 
           <Route path='/password-reset' element={<PResetPage/>}/>
-
-          <Route path='/profile' element={<ProfilePage/>}/>
 
           <Route path='/wordle' element={<Wordle/>}/>
 
