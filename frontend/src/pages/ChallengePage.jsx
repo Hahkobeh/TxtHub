@@ -44,15 +44,14 @@ function ChallengePage(){
     function clickChallenge(challenge){
         setWaiting(false);
 
-
-        if(challenge.userScore !== '---'){
-
+        if(challenge.userScore !== -999){
+            
             setWaiting(true);
             
         }else{
 
             localStorage.setItem('currentChallenge', challenge.challengeId);
-
+            
             if(challenge.game === "Wordle"){
                 //setCurrentChallenge(c[id]);
                 navigate('/wordle');

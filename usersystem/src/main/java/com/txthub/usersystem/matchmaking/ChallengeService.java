@@ -2,6 +2,7 @@ package com.txthub.usersystem.matchmaking;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -63,9 +64,23 @@ public class ChallengeService {
         return false;
     }
 
-    public void updateChallenge(Challenge c){
-        chRepo.save(c);
+    public boolean updateChallenge(String challengeId,String username,Double score){
 
+
+        Optional<Challenge> res = chRepo.findById(challengeId);
+        Challenge ch = res.orElse(null);
+        if(ch == null){
+            return false;
+        }
+        if(ch.getUsername1().equals(username)){
+            ch.setScore1(score);
+        }
+        if(ch.getUsername2().equals(username)){
+            ch.setScore2(score);
+        }
+
+        chRepo.save(ch);
+        return true;
     }
 
 

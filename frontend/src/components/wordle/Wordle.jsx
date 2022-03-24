@@ -198,14 +198,30 @@ function Wordle(){
             setFinishedWrong(true);
         }
         currentWord = [];
-        if(!currentChallenge){
+        const currentChallenge = localStorage.getItem('currentChallenge');
+        console.log(currentChallenge);
+        if(currentChallenge !== null){
             console.log(currentChallenge);
-
+            
             if(finishedWrong){
-                await axios.post( currentChallenge, 8)
-                    .then
+                let data = {
+    
+                    username: localStorage.getItem("username"),
+                    score: 8,
+                    challengeId: currentChallenge
+                }
+                await axios.post(`http://localhost:8081/challenge/api/v1/update`,data)
+                localStorage.removeItem('challengeId');
             }else{
-                await axios.post()
+
+                let data = {
+    
+                    username: localStorage.getItem("username"),
+                    score: guessedWords.length,
+                    challengeId: currentChallenge
+                }
+                await axios.post(`http://localhost:8081/challenge/api/v1/update`,data)
+                localStorage.removeItem('challengeId');
             }
 
             

@@ -72,13 +72,11 @@ public class ChallengeController {
 
     // make score update api
 
-    // @PutMapping("/random/{game}/{username}")
-    // @ResponseBody
-    // public boolean sendRandomChallenge(@PathVariable String username){
-    //     // Challenge ch = new Challenge();
-    //     // return chService.addChallenge(ch);
-    //     return false;
-    // }
+    @PostMapping("/update")
+    @ResponseBody
+    public boolean updateChallengeScore(@RequestBody ScoreForm sf){
+        return chService.updateChallenge(sf.getChallengeId(),sf.getUsername(),sf.getScore());
+    }
 
 
 
