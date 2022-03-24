@@ -44,7 +44,7 @@ function ChallengePage(){
             
         }else{
 
-            localStorage.setItem('currentChallenge', c[id]);
+            localStorage.setItem('currentChallenge', c[id].challengeId);
 
             if(c[id].game === "Wordle"){
                 //setCurrentChallenge(c[id]);
@@ -88,8 +88,8 @@ function ChallengePage(){
                 </ul>
                 <hr/>
                 
-                {c.map(function(c){
-                    return <div onClick={() => clickChallenge(c.id)}>
+                {c.map(function(c, index){
+                    return <div onClick={() => clickChallenge(index)}>
                         <ul className='challenge' >
                             <li>{c.game}</li>
                             <li>{c.opponent}</li>
