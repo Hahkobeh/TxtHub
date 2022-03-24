@@ -79,6 +79,10 @@ public class ChallengeService {
             ch.setScore2(score);
         }
 
+        if(ch.getScore1() != -999 && ch.getScore2() != -999){
+            ch.setFinished(true);
+        }
+
         chRepo.save(ch);
         return true;
     }
