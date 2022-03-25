@@ -48,6 +48,7 @@ public class StoryService {
         try{
             storyRepo.deleteById(id);
         }catch(Exception e){
+            e.getStackTrace();
             return false;
         }
         return true;

@@ -1,5 +1,7 @@
 package com.txthub.txtbasedadventure;
 
+import com.txthub.txtbasedadventure.connection.Connection;
+import com.txthub.txtbasedadventure.connection.ConnectionService;
 import com.txthub.txtbasedadventure.node.Node;
 import com.txthub.txtbasedadventure.node.NodeService;
 import com.txthub.txtbasedadventure.story.Story;
@@ -20,11 +22,13 @@ public class tbaController {
 
     private final NodeService nodeService;
     private final StoryService storyService;
+    private final ConnectionService connectionService;
 
     @Autowired
-    public tbaController(NodeService nodeService, StoryService storyService){
+    public tbaController(NodeService nodeService, StoryService storyService, ConnectionService connectionService){
         this.nodeService = nodeService;
         this.storyService = storyService;
+        this.connectionService = connectionService;
     }
 
     @GetMapping("/getAllStories")
@@ -72,12 +76,11 @@ public class tbaController {
 
     @PostMapping("/newStory")
     @ResponseBody
-    public Story newStory(@RequestBody StoryForm storyForm) {
+    public void newStory(@RequestBody StoryForm storyForm) {
 
 
         Story story = storyService.createStory(storyForm);
         nodeService.createFirstNode(story.getFirstNodeId(),story.getId());
-        return story;
     }
 
 
@@ -96,13 +99,34 @@ public class tbaController {
 
     @DeleteMapping("/deleteNode/{nodeId}")
     public void deleteNode(@PathVariable String nodeId){
+        connectionService.deleteAllConnections(nodeId);
         nodeService.deleteNode(nodeId);
     }
 
-    @PostMapping("/createNode/{storyId}")
+    @PostMapping("/addNode/{storyId}/{nodeId}")
     @ResponseBody
-    public Node createNode(@PathVariable String storyId){
-        return nodeService.createNode(storyId);
+    public Node addNode(@PathVariable String storyId, @PathVariable String nodeId){
+        Node node = nodeService.createNode(storyId);
+        connectionService.addConnection(nodeId, node.getId());
+        return node;
+    }
+
+    //CONNECTIONS!!!
+
+    @GetMapping("/getConnections/{nodeId}")
+    @ResponseBody
+    public List<Connection> getConnections(@PathVariable String nodeId){
+        return connectionService.getConnections(nodeId);
+    }
+
+    @PostMapping("/addConnection/{nodeId}/{connectionId}")
+    public void addConnection(@PathVariable String nodeId, @PathVariable String connectionId){
+        connectionService.addConnection(nodeId,connectionId);
+    }
+
+    @DeleteMapping("deleteConnection/{id}")
+    public void removeConnection(@PathVariable String id){
+        connectionService.removeConnection(id);
     }
 
 
