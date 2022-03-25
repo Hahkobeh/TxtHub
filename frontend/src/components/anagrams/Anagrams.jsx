@@ -33,9 +33,6 @@ async function setWord(){
             c = res.data
             console.log(res.data)
         });
-    //b = scramWord(b);
-    //return b;
-    //var c= 'other';
 
     var arr = c.split('');
     var n = arr.length;
@@ -57,28 +54,60 @@ async function setWord(){
 
 function Anagrams(){
 
-    const {currentChallenge, setCurrentChallenge} = useContext(ChallengeContext);
+    //const {currentChallenge, setCurrentChallenge} = useContext(ChallengeContext);
+
+    const currentChallenge = localStorage.getItem('currentChallenge');
 
     const [instructions, setInstructions] = useState(true);
     const [playingGame, setPlayingGame] = useState(false);
     const [notWord, setNotWord] = useState(false);
     const [notEnoughLetters, setNotEnoughLetters] = useState(false);
 
+    const [stopGame, setStopGame] = useState(false);
+
     const [timer, setTimer] = React.useState(0);
 
     let navigate = useNavigate();
+    let times;
+    
 
+    useEffect( () => { 
+        times = timer;
+        setStopGame(false);
+        const intervalId = setInterval( () => {
+            updateRemainingTime();
+        }, 1000);
+        return () => clearInterval(intervalId);
+    }, [playingGame])
 
-    React.useEffect(() => {
-        timer > 0 && setTimeout(()=> setTimer(timer - 1), 1000);
-    }, [timer]);
+    function updateRemainingTime(){
+        
+        
+        if(times === 0){
+                setStopGame(true);
+                let data = {
+    
+                    username: localStorage.getItem("username"),
+                    score: currentScore,
+                    challengeId: currentChallenge
+                }
+                await axios.post(`http://localhost:8081/challenge/api/v1/update`,data)
+                localStorage.removeItem('challengeId');
+                
+        }else{
+            times--;
+            setTimer(times);
+        }
+    }
 
     function startGame(){
         
+        setStopGame(false);
+        console.log(timer);
         setPlayingGame(true);
         setTimer(60);
         currentScore =0;
-
+        
     }
 
     useEffect(() => {
@@ -147,7 +176,6 @@ function Anagrams(){
             var temp = lastClickedButton[i];
             const box2 = document.getElementById(temp);
             box2.style.backgroundColor = '#d3d6da';
-            //box2.textContent = word[i];
 
             const box = document.getElementById(i);
             box.textContent = '';
@@ -231,6 +259,7 @@ function Anagrams(){
             console.log(currentChallenge);
             setCurrentChallenge(null);
         }
+        setStopGame(false);
 
         quitMatch();
 
