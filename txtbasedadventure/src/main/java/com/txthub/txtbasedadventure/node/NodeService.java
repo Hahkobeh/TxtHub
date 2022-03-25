@@ -16,18 +16,14 @@ public class NodeService {
     }
 
 
-    public List<Node> getStoryNodes(String id){
-        return nodeRepo.findByStoryId(id);
+    public List<Node> getStoryNodes(String storyId){
+        return nodeRepo.findByStoryId(storyId);
     }
 
-    public void addNode(Node n){
-        if(n != null){
-            try{
-                nodeRepo.save(n);
-            }catch(IllegalArgumentException e){
+    public void saveNode(Node n){
 
-            }
-        }
+        nodeRepo.save(n);
+
     }
 
     public void delNode(String id){

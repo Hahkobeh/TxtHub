@@ -27,30 +27,47 @@ public class tbaController {
         this.storyService = storyService;
     }
 
-    @GetMapping("/getstories")
+    @GetMapping("/getAllStories")
     @ResponseBody
-    public List<Story> getStories(){
-        List<Story> temp = new ArrayList<>();
+    public List<Story> getAllStories(){
+        /*List<Story> temp = new ArrayList<>();
         temp.add(new Story(new ObjectId().toString(), "journey to the center of the earth","usernameXD","ADVENTURE", 5, 0));
         temp.add(new Story(new ObjectId().toString(), "40 days in the dessert tray","hello1","FANTASY", 0, 0));
 
 
         System.out.println(temp.toString());
-        return temp;
+        return temp;*/
+
+        return storyService.getAllStories();
     }
 
-    @GetMapping("/story/{id}")
+    @GetMapping("/story/{storyId}")
     @ResponseBody
-    public List<Node> getStory(@PathVariable String id){
+    public List<Node> getStories(@PathVariable String storyId){
         
-        return nodeService.getStoryNodes(id);
+        return nodeService.getStoryNodes(storyId);
     }
+
+    @GetMapping("/getstories/{authorUsername}")
+    @ResponseBody
+    public List<Story> getStoriesByAuthor(@PathVariable String authorUsername){
+        return storyService.getStoriesByAuthor(authorUsername);
+    }
+
+
 
 
 
     @PostMapping("/newStory")
     @ResponseBody
     public Story newStory(@RequestBody StoryForm storyForm) {
-        return storyService.createStory(storyForm);
+
+
+        Story story = storyService.createStory(storyForm);
+        Node firstNode = new Node(story.getFirstNodeId(), story.getId());
+        nodeService.saveNode(firstNode);
+        return story;
     }
+
+
 }
