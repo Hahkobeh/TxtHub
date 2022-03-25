@@ -94,11 +94,12 @@ function ChallengePage(){
     async function delHandler(){
         console.log('del handler clicked');
 
-        if(selectedOption.userScore !== null){
+        if(selectedOption.userScore !== -999){
             setCantDel(true);
             return;
         }else{
-            await axios.post()
+            console.log(selectedOption.challengeId);
+            await axios.post(`http://localhost:8081/challenge/api/v1/delete/${selectedOption.challengeId}`);
         }
 
         SetUp();

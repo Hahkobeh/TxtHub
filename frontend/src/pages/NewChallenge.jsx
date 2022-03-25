@@ -25,6 +25,8 @@ function NewChallenge(props){
 
     const currentName = localStorage.getItem('username');
 
+    const [challengeYourself, setChallengeYourself] = useState(false);
+
     async function submitChallenge(e){
         e.preventDefault();
         setUsernameError(false);
@@ -45,30 +47,32 @@ function NewChallenge(props){
 
         if(check){
 
+            if(usernameRef.current.value === currentName){
+
+                setChallengeYourself(true);
+                return;
+            }
+
             let data = { 
                 game: selection,
                 username: usernameRef.current.value
             }
-            await  axios.post(`http://localhost:8081/challenge/api/v1/send/${currentName}` , data)
+            await  axios.post(`http://localhost:8081/challenge/api/v1/send/${currentName}` , data);
 
 
         }else{
-            //await  axios.post('http[p' , selection, currentName)
 
+            await  axios.post(`http://localhost:8081/challenge/api/v1/send/${currentName}` , selection);
 
         }
 
         props.handler();
 
-
-        //await axios.post()
-
-
-
     }
 
     return(
         <div className = 'new-challenge-container'>
+
 
             <div className='nc-top'>
                 <h1 className='nc-title'>Create Challenge</h1>
@@ -96,6 +100,7 @@ function NewChallenge(props){
                     </div>
                     {choiceError && <p className='error'>You must select a game mode.</p>}
                 </div>
+                {challengeYourself && <div className = 'error cye'> you cannot challenge yourself</div>}
                 <div className ="control">
                     <button onClick={submitChallenge} id="submitButton">Send Challenge!</button>
                 </div>
