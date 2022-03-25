@@ -176,6 +176,11 @@ public class UserService {
         return new UserPair(-1, username, 0);
     }
 
+    public boolean checkUsername(String username) {
+
+        return userRepository.existsByUsername(username);
+    }
+
 
 
 

@@ -79,6 +79,13 @@ public class UserController {
 
     }
 
+    @GetMapping("/exists/{username}")
+    @ResponseBody
+    public boolean checkUsername(@PathVariable String username){
+        return userService.checkUsername(username);
+
+    }
+
     @GetMapping("/rank/{username}/{game}")
     @ResponseBody
     public UserPair getRank(@PathVariable String username, @PathVariable String game){

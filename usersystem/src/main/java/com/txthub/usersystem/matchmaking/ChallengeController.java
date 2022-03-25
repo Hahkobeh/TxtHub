@@ -81,7 +81,7 @@ public class ChallengeController {
         return chService.updateChallenge(sf.getChallengeId(),sf.getUsername(),sf.getScore());
     }
 
-   
+    
 
 
 
