@@ -58,6 +58,8 @@ function NewChallenge(props){
 
         }
 
+        props.handler();
+
 
         //await axios.post()
 
