@@ -196,7 +196,7 @@ function Wordle(){
 
         }else if(guessedWords.length === 6){
             setFinishedWrong(true);
-        }
+        }else {}
         currentWord = [];
         const currentChallenge = localStorage.getItem('currentChallenge');
         console.log(currentChallenge);
@@ -204,6 +204,7 @@ function Wordle(){
             console.log(currentChallenge);
             
             if(finishedWrong){
+                console.log("wrong")
                 let data = {
     
                     username: localStorage.getItem("username"),
@@ -213,7 +214,7 @@ function Wordle(){
                 await axios.post(`http://localhost:8081/challenge/api/v1/update`,data)
                 localStorage.removeItem('currentChallenge');
             }else{
-
+                console.log(guessedWords.length)
                 let data = {
     
                     username: localStorage.getItem("username"),
