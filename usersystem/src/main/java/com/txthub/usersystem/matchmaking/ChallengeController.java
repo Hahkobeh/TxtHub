@@ -66,16 +66,7 @@ public class ChallengeController {
         return res;
     }
 
-    @PutMapping("/random/{game}/{username}")
-    @ResponseBody
-    public boolean sendRandomChallenge(@PathVariable String username){
-        // Challenge ch = new Challenge();
-        // return chService.addChallenge(ch);
-        return false;
-    }
-
-
-    @DeleteMapping("/{challengeId}")
+    @DeleteMapping("/delete/{challengeId}")
     @ResponseBody
     public boolean removeChallenge(@PathVariable String challengeId){
         
