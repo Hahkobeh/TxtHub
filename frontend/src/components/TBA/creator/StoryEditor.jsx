@@ -131,21 +131,23 @@ export default class StoryEditor extends Component {
 
         }else{
             console.log(this.state.connectId)
+            if(this.state.connectId !== '') {
+                const changedNodes = this.state.nodes.map(e => {
+                    if (e.id === this.state.id) {
 
-            const changedNodes = this.state.nodes.map(e => {
-                if(e.id === this.state.id){
+                        e.connections.push({
+                            id: this.state.connectId,
+                            nodeName: (this.state.nodes.find(c => c.id === this.state.connectId)).nodeName
+                        })
 
-                    e.connections.push({
-                        id: this.state.connectId,
-                        nodeName: (this.state.nodes.find(c => c.id === this.state.connectId)).nodeName
-                    })
-
-                    return(e)
-                }else{
-                    return(e)
-                }
-            })
-            this.setState({nodes: changedNodes})
+                        return (e)
+                    } else {
+                        return (e)
+                    }
+                })
+                this.setState({nodes: changedNodes})
+            }
+            /*TODO fix this for when there are no available node !!! SET SELECT FIRST OPTION TO DO NOTHING!!!!*/
         }
     }
 
@@ -285,4 +287,4 @@ export default class StoryEditor extends Component {
     }
 }
 
-/*TODO deal with backend saving/loading and stuff + styling*/
+/*TODO deal with backend saving/loading and stuff + styling ++++ BUG WITH SELECTING STORY*/
