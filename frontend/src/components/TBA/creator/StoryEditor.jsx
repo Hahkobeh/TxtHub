@@ -225,7 +225,7 @@ export default class StoryEditor extends Component {
                                             Node name:
                                             <select name='connectId' onChange={this.handleChangeForm}>
                                                 {this.state.nodes.filter(e => e.id !== node.id && !node.connections.find(c => e.id === c.id)).map(nodeElement => (
-                                                    <option key={nodeElement.id} value={nodeElement.id}>{nodeElement.nodeName}</option>))}}
+                                                    <option key={nodeElement.id} value={nodeElement.id}>{nodeElement.nodeName}</option>))}
                                             </select>
                                         </label>
                                     ) : (
