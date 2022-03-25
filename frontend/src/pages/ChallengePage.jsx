@@ -110,12 +110,17 @@ function ChallengePage(){
         setOptionOpen(false);
     }
 
+    function optionClose(){
+        setOptionOpen(false);
+    }
+
     return(
         <div>
             <Layout/>
 
             {optionOpen && <ChallengeConfirm playHandler={playHandler} delHandler={delHandler}/>}
-
+            {optionOpen  && <Backdrop onCancel={optionClose}/>}
+            
             {newChallenge && <NewChallenge button={<GiCancel/>} handler={challengeHandler}/>}
             {newChallenge && <Backdrop onCancel={challengeHandler}/>}
 
