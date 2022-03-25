@@ -103,6 +103,13 @@ public class ChallengeController {
         return chService.addChallenge(ch);
     }
 
+    @PostMapping("/sendRandom/{username}")
+    @ResponseBody
+    public boolean sendRandomChallenge(@RequestBody String game,@PathVariable String username){
+        Challenge ch = new Challenge(username,chService.findChallenger(username),game);
+        return chService.addChallenge(ch);
+    }
+    
 
     @PostMapping("/make")
     @ResponseBody

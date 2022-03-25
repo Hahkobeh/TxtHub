@@ -3,6 +3,10 @@ package com.txthub.usersystem.matchmaking;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
+
+import com.txthub.usersystem.user.User;
+import com.txthub.usersystem.user.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,10 +15,12 @@ import org.springframework.stereotype.Service;
 public class ChallengeService {
 
     private final ChallengeRepository chRepo;
+    private final UserRepository userRepo;
 
     @Autowired
-    public ChallengeService(ChallengeRepository chRepo){
+    public ChallengeService(ChallengeRepository chRepo,UserRepository userRepo){
         this.chRepo = chRepo;
+        this.userRepo = userRepo;
     }
 
 
@@ -111,6 +117,20 @@ public class ChallengeService {
             return false;
         }
         return true;
+    }
+
+
+    public String findChallenger(String username) {
+        List<User> u = userRepo.findAll();
+        String opponent;
+        do {
+            Random rand = new Random();
+            opponent = u.get(rand.nextInt(u.size())).getUsername();
+        } while (username.equals(opponent));
+        return opponent;
+        
+
+       
     }
 
 
