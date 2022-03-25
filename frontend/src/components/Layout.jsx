@@ -37,6 +37,10 @@ const Layout = (props) => {
                         <li className='nav-item'>
                             <Link onClick={removeListener} to='/scoreboard'>Leader Board</Link>
                         </li>
+
+                        <li className ='nav-item'>
+                            <Link onClick={removeListener} to ='/challenges'>Challenges</Link>
+                        </li>
                         
                         <li className ='nav-item'>
                             <Link onClick={removeListener} to ='/signup'>Sign up</Link>

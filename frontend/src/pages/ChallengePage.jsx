@@ -11,7 +11,10 @@ import {ChallengeContext} from '../ChallengeContext';
 
 import './ChallengePage.scss';
 
-var c = [ ["Wordle" , "Jacob", "--", 10], ["Wordle" , "Jacob", 5, "--"], ["Wordle" , "Jacob", 5, "--"]]
+var f = [   {challenge: "Wordle" ,opponent : "Jacob", opScore : 4, userScore : 7}, 
+            {challenge: "Wordle" ,opponent : "Jacob", opScore : 5, userScore : 5}, 
+            {challenge: "Wordle" ,opponent : "Jacob", opScore : 4, userScore : 3},
+            {challenge: "Wordle" ,opponent : "Jacob", opScore : 7, userScore : 1}];
 
 function ChallengePage(){
     
@@ -20,6 +23,7 @@ function ChallengePage(){
 
     let challengeId;
     const [c, setC] = useState([]);
+    //const [f, setF] = useState([]);
 
     useEffect(() => {
         SetUp();
@@ -31,8 +35,14 @@ function ChallengePage(){
             .then(res=> { 
                 
                 setC(res.data);
-                console.log("hello");
+                
         });
+        /*await axios.get(`http://localhost:8081/challenge/api/v1/finished/${currentName}`)
+            .then(res=> { 
+                
+                setF(res.data);
+                
+        });*/
     }
 
     
@@ -108,6 +118,35 @@ function ChallengePage(){
                                                         
                             {c.userScore !== -999 && <li>{c.userScore}</li>}
                             {c.userScore === -999 && <li>---</li>}
+
+                        </ul>
+
+                    </div>
+                })}
+
+
+            </div>
+
+            <div className='challenge-header'>
+                <h1>Finished Challenges</h1>
+            </div>
+            <div className="challenge-container">
+
+                <ul className='labels'>
+                    <li><h3>Challenge</h3></li>
+                    <li><h3>Opponent</h3></li>
+                    <li><h3>Opp Score</h3></li>
+                    <li><h3>Your Score</h3></li>
+                </ul>
+                <hr/>
+                
+                {f.map(function(f, index){
+                    return <div>
+                        <ul className={f.opScore < f.userScore ? 'challenge-f win' : 'challenge-f loss'} id={f.opScore === f.userScore ? 'tie' : ''} >
+                            <li>{f.game}</li>
+                            <li>{f.opponent}</li>
+                            <li>{f.opScore}</li>
+                            <li>{f.userScore}</li>
 
                         </ul>
 

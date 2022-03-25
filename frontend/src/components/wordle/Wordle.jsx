@@ -28,7 +28,7 @@ async function setWord(){
     });
 }
 
-
+let currentScore = 7;
 
 
 function Wordle(){
@@ -190,6 +190,7 @@ function Wordle(){
 
         }
         guessedWords.push(currentWord);
+        currentScore--;
 
         if(currentWord.join('') === answer){
             setFinishedSuccessfully(true);
@@ -214,7 +215,7 @@ function Wordle(){
                 let data = {
     
                     username: localStorage.getItem("username"),
-                    score: guessedWords.length,
+                    score: currentScore,
                     challengeId: currentChallenge
                 }
                 await axios.post(`http://localhost:8081/challenge/api/v1/update`,data)
@@ -239,7 +240,7 @@ function Wordle(){
                 let data = {
     
                     username: localStorage.getItem("username"),
-                    score: 8,
+                    score: currentScore,
                     challengeId: currentChallenge
                 }
                 await axios.post(`http://localhost:8081/challenge/api/v1/update`,data)
@@ -274,6 +275,7 @@ function Wordle(){
         }
         guessPosition = 0;
         guessedWords = [];
+        currentScore = 7;
         setFinishedSuccessfully(false);
         setFinishedWrong(false);    
         setNotEnoughLetters(false);
@@ -299,10 +301,10 @@ function Wordle(){
             {notWord && <Message title = 'Not in word list.'/>}
             {/**{finishedSuccessfully && <Message title= 'Good Job!' again='Play again?'  handler={playAgain} button={<FaRedo size = {20}/> }/>}
             {finishedWrong && <Message title= 'Nice Try :(' again='Play again?' handler={playAgain} button={<FaRedo size = {20}/> }/>}*/}
-            {finishedSuccessfully && <ScoreCard title = 'Good Job!' score = 'You finished in ' data = {guessedWords.length} guesses =' Guesses' 
+            {finishedSuccessfully && <ScoreCard title = 'Good Job!' score = 'You finished in ' data = {guessedWords.length} guesses =' Guesses for a score of' data2= {currentScore} 
             quitHandler ={quitGame} quitButton={<MdExitToApp/>} playHandler={playAgain} playButton={<FaRedo size = {20}/>} />}
 
-            {finishedWrong && <ScoreCard title = 'Nice Try :(' score = "You couldn't finish so you get a score of " data = {8}
+            {finishedWrong && <ScoreCard title = 'Nice Try :(' score = "You couldn't finish so you get a score of " data = {currentScore}
             quitHandler ={quitGame} quitButton={<MdExitToApp/>} playHandler={playAgain} playButton={<FaRedo size = {20}/>} />}  
             {instructions && <Instructions button={<GiCancel/>} handler={changeInstructions}/>}
             {instructions && <Backdrop onCancel={changeInstructions}/>}
