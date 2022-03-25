@@ -16,6 +16,14 @@ public class Node {
     private ArrayList<Integer> ChildrenId;
     private boolean end = false;
 
+    public Node(String storyId) {
+        this.id = new ObjectId().toString();
+        this.storyId = storyId;
+        this.title = "";
+        this.body = "";
+        this.ChildrenId = new ArrayList<>();
+    }
+
     public Node(String id, String storyId) {
         this.id = id;
         this.storyId = storyId;

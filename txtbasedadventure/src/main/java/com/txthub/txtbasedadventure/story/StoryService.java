@@ -43,14 +43,14 @@ public class StoryService {
     }
 
 
-    public void delStory(String id){
+    public boolean deleteStory(String id){
         
         try{
             storyRepo.deleteById(id);
-        }catch(IllegalArgumentException e){
-
+        }catch(Exception e){
+            return false;
         }
-        
+        return true;
     }
 
     

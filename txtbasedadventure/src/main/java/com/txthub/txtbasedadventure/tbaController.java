@@ -41,6 +41,13 @@ public class tbaController {
         return storyService.getAllStories();
     }
 
+    @GetMapping("/getStoriesByLikes")
+    @ResponseBody
+    public List<Story> getStoriesByLikes(){
+        return storyService.getStoriesByLikes();
+    }
+
+
     @GetMapping("/story/{storyId}")
     @ResponseBody
     public List<Node> getStories(@PathVariable String storyId){
@@ -48,14 +55,19 @@ public class tbaController {
         return nodeService.getStoryNodes(storyId);
     }
 
-    @GetMapping("/getstories/{authorUsername}")
+    @GetMapping("/getStories/{authorUsername}")
     @ResponseBody
     public List<Story> getStoriesByAuthor(@PathVariable String authorUsername){
         return storyService.getStoriesByAuthor(authorUsername);
     }
 
 
+    @DeleteMapping("/deleteStory/{storyId}")
+    @ResponseBody
+    public boolean deleteStory(@PathVariable String storyId){
+        return nodeService.deleteAllStoryNodes(storyId) && storyService.deleteStory(storyId);
 
+    }
 
 
     @PostMapping("/newStory")
@@ -64,9 +76,33 @@ public class tbaController {
 
 
         Story story = storyService.createStory(storyForm);
-        Node firstNode = new Node(story.getFirstNodeId(), story.getId());
-        nodeService.saveNode(firstNode);
+        nodeService.createFirstNode(story.getFirstNodeId(),story.getId());
         return story;
+    }
+
+
+    //NODES!!
+
+    @GetMapping("/nodes/{storyId}")
+    @ResponseBody
+    public List<Node> getNodes(@PathVariable String storyId){
+        return nodeService.getStoryNodes(storyId);
+    }
+
+    @PutMapping("/updateNodes")
+    public void saveChanges(@RequestBody List<Node> nodes){
+        nodeService.updateNodes(nodes);
+    }
+
+    @DeleteMapping("/deleteNode/{nodeId}")
+    public void deleteNode(@PathVariable String nodeId){
+        nodeService.deleteNode(nodeId);
+    }
+
+    @PostMapping("/createNode/{storyId}")
+    @ResponseBody
+    public Node createNode(@PathVariable String storyId){
+        return nodeService.createNode(storyId);
     }
 
 
