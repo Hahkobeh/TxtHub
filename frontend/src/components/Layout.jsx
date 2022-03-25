@@ -9,6 +9,7 @@ import { AiFillPropertySafety } from 'react-icons/ai';
 
 const Layout = (props) => {
     function removeListener(){
+        localStorage.removeItem('currentChallenge');
         document.removeEventListener('keydown');
     }
 

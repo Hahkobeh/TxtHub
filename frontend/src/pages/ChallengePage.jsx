@@ -25,6 +25,7 @@ function ChallengePage(){
         SetUp();
     }, []);
 
+
     async function SetUp(){
         await axios.get(`http://localhost:8081/challenge/api/v1/current/${currentName}`)
             .then(res=> { 
@@ -64,6 +65,7 @@ function ChallengePage(){
     }  
 
     function challengeHandler(){
+        SetUp();
         setNewChallenge(!newChallenge);
     }
 

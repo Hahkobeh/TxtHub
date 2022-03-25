@@ -3,6 +3,8 @@ package com.txthub.usersystem.matchmaking;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.txthub.usersystem.user.UserService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -20,9 +22,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class ChallengeController {
 
     private final ChallengeService chService;
+    private final UserService userService;
 
-    @Autowired public ChallengeController(ChallengeService chService){
+    @Autowired public ChallengeController(ChallengeService chService,UserService userService){
         this.chService = chService;
+        this.userService = userService;
     }
 
 
@@ -74,9 +78,12 @@ public class ChallengeController {
 
     @PostMapping("/update")
     @ResponseBody
-    public boolean updateChallengeScore(@RequestBody ScoreForm sf){
+    public ChallengeResult updateChallengeScore(@RequestBody ScoreForm sf){
         return chService.updateChallenge(sf.getChallengeId(),sf.getUsername(),sf.getScore());
     }
+
+   
+
 
 
 

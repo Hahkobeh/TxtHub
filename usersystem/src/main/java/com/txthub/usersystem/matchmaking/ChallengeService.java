@@ -64,13 +64,14 @@ public class ChallengeService {
         return false;
     }
 
-    public boolean updateChallenge(String challengeId,String username,Double score){
+    public ChallengeResult updateChallenge(String challengeId,String username,Double score){
 
+        ChallengeResult cr = new ChallengeResult();
 
         Optional<Challenge> res = chRepo.findById(challengeId);
         Challenge ch = res.orElse(null);
         if(ch == null){
-            return false;
+          
         }
         if(ch.getUsername1().equals(username)){
             ch.setScore1(score);
@@ -81,10 +82,25 @@ public class ChallengeService {
 
         if(ch.getScore1() != -999 && ch.getScore2() != -999){
             ch.setFinished(true);
+            
+            if(ch.getScore1()>ch.getScore2()){
+                cr.setWinner(ch.getUsername1());
+                cr.setLoser(ch.getUsername2());
+            }
+            if(ch.getScore1()==ch.getScore2()){
+                cr.setWinner(ch.getUsername1());
+                cr.setLoser(ch.getUsername1());
+            }
+            else{
+                cr.setWinner(ch.getUsername2());
+                cr.setLoser(ch.getUsername1());
+            }
+            
         }
 
         chRepo.save(ch);
-        return true;
+        return cr;
+        
     }
 
 
