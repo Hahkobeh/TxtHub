@@ -57,7 +57,15 @@ function NewChallenge(props){
                 game: selection,
                 username: usernameRef.current.value
             }
-            await  axios.post(`http://localhost:8081/challenge/api/v1/send/${currentName}` , data);
+            let notExist;
+            await  axios.post(`http://localhost:8081/challenge/api/v1/send/${currentName}` , data)
+                .then(res =>{
+                    notExist = res.data;
+                })
+            
+            if(!notExist){
+                return;
+            }
 
 
         }else{
