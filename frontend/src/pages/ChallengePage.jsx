@@ -24,7 +24,7 @@ function ChallengePage(){
 
     let challengeId;
     const [c, setC] = useState([]);
-    //const [f, setF] = useState([]);
+    const [f, setF] = useState([]);
 
     useEffect(() => {
         SetUp();
@@ -38,12 +38,12 @@ function ChallengePage(){
                 setC(res.data);
                 
         });
-        /*await axios.get(`http://localhost:8081/challenge/api/v1/finished/${currentName}`)
+        await axios.get(`http://localhost:8081/challenge/api/v1/finished/${currentName}`)
             .then(res=> { 
                 
                 setF(res.data);
                 
-        });*/
+        });
     }
 
     
@@ -179,7 +179,7 @@ function ChallengePage(){
                 <hr/>
                 
                 {f.map(function(f, index){
-                    return <div onClick={() => optionHandler(f)}>
+                    return <div>
                         <ul className={f.opScore < f.userScore ? 'challenge-f win' : 'challenge-f loss'} id={f.opScore === f.userScore ? 'tie' : ''} >
                             <li>{f.game}</li>
                             <li>{f.opponent}</li>
