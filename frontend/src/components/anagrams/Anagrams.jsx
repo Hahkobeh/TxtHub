@@ -80,7 +80,7 @@ function Anagrams(){
         return () => clearInterval(intervalId);
     }, [playingGame])
 
-    function updateRemainingTime(){
+    async function updateRemainingTime(){
         
         
         if(times === 0){
@@ -92,7 +92,7 @@ function Anagrams(){
                     challengeId: currentChallenge
                 }
                 await axios.post(`http://localhost:8081/challenge/api/v1/update`,data)
-                localStorage.removeItem('challengeId');
+                localStorage.removeItem('currentChallenge');
                 
         }else{
             times--;
@@ -257,7 +257,7 @@ function Anagrams(){
 
         if(currentChallenge !== null){
             console.log(currentChallenge);
-            setCurrentChallenge(null);
+            //setCurrentChallenge(null);
         }
         setStopGame(false);
 
@@ -269,7 +269,7 @@ function Anagrams(){
 
         if(currentChallenge !== null){
             console.log(currentChallenge);
-            setCurrentChallenge(null);
+            //setCurrentChallenge(null);
         }
         navigate('/');
     }

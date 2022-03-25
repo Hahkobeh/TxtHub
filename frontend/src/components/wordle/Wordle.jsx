@@ -211,7 +211,7 @@ function Wordle(){
                     challengeId: currentChallenge
                 }
                 await axios.post(`http://localhost:8081/challenge/api/v1/update`,data)
-                localStorage.removeItem('challengeId');
+                localStorage.removeItem('currentChallenge');
             }else{
 
                 let data = {
@@ -221,7 +221,7 @@ function Wordle(){
                     challengeId: currentChallenge
                 }
                 await axios.post(`http://localhost:8081/challenge/api/v1/update`,data)
-                localStorage.removeItem('challengeId');
+                localStorage.removeItem('currentChallenge');
             }
 
             
