@@ -1,4 +1,4 @@
-import React, {useState , useContext} from 'react';
+import React, {useState , useContext, useEffect} from 'react';
 import axios from 'axios';
 import Layout from '../components/Layout';
 import Message from '../components/wordle/Message';
@@ -14,18 +14,23 @@ import './ChallengePage.scss';
 var c = [ ["Wordle" , "Jacob", "--", 10], ["Wordle" , "Jacob", 5, "--"], ["Wordle" , "Jacob", 5, "--"]]
 
 function ChallengePage(){
-
+    
+    const currentName = localStorage.getItem('username');
     const {currentChallenge, setCurrentChallenge} = useContext(ChallengeContext);
 
     let challengeId;
     const [c, setC] = useState([]);
 
-    SetUp();
+    useEffect(() => {
+        SetUp();
+    }, []);
 
     async function SetUp(){
-        await axios.get()
+        await axios.get(`http://localhost:8081/challenge/api/v1/current/${currentName}`)
             .then(res=> { 
+                
                 setC(res.data);
+                console.log("hello");
         });
     }
 
@@ -36,20 +41,21 @@ function ChallengePage(){
 
     const [newChallenge, setNewChallenge] = useState(false);
 
-    function clickChallenge(id){
+    function clickChallenge(challenge){
         setWaiting(false);
 
-        if(c[id][3] !== '--'){
+        if(challenge.userScore !== -999){
+            
             setWaiting(true);
             
         }else{
 
-            localStorage.setItem('currentChallenge', c[id]);
-
-            if(c[id][0] === "Wordle"){
+            localStorage.setItem('currentChallenge', challenge.challengeId);
+            
+            if(challenge.game === "Wordle"){
                 //setCurrentChallenge(c[id]);
                 navigate('/wordle');
-            }else if(c[id][0] === "Anagrams"){
+            }else if(challenge.game === "Anagrams"){
                 //setCurrentChallenge(c[id]);
                 navigate('/anagrams');
             }
@@ -89,12 +95,18 @@ function ChallengePage(){
                 <hr/>
                 
                 {c.map(function(c, index){
-                    return <div onClick={() => clickChallenge(index)}>
+                    return <div onClick={() => clickChallenge(c)}>
                         <ul className='challenge' >
-                            <li>{c[0]}</li>
-                            <li>{c[1]}</li>
-                            <li>{c[2]}</li>
-                            <li>{c[3]}</li>
+
+
+                            <li>{c.game}</li>
+                            <li>{c.opponent}</li>
+                            {c.opScore !== -999 && <li>{c.opScore}</li>}
+                            {c.opScore === -999 && <li>---</li>}
+                                                        
+                            {c.userScore !== -999 && <li>{c.userScore}</li>}
+                            {c.userScore === -999 && <li>---</li>}
+
                         </ul>
 
                     </div>
