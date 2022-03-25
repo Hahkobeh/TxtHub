@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
 
-import ObjectID from "bson-objectid"
-
 export default class StoryEditor extends Component {
     constructor(props) {
         super(props);
@@ -113,7 +111,7 @@ export default class StoryEditor extends Component {
 
         if(!this.state.checked && this.state.name !== '') {
             const newNode = {
-                id: ObjectID().toHexString(),
+                id: 'kkk',
                 nodeName: this.state.name,
                 body: '',
                 connections: []
