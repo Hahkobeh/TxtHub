@@ -125,69 +125,76 @@ function ChallengePage(){
             <div className='add' onClick={challengeHandler}>
                 <BsPlusCircle size={40}/>
             </div>
+            <div className='challenge-cont'>
 
-            <div className='challenge-header'>
-                <h1>Ongoing Challenges</h1>
-            </div>
-            <div className="challenge-container">
+                <div className='challenge-header'>
+                    <h1>Ongoing Challenges</h1>
+                </div>
+                <div className="challenge-container">
 
-                <ul className='labels'>
-                    <li><h3>Challenge</h3></li>
-                    <li><h3>Opponent</h3></li>
-                    <li><h3>Opp Score</h3></li>
-                    <li><h3>Your Score</h3></li>
-                </ul>
-                <hr/>
-                
-                {c.map(function(c, index){
-                    return <div onClick={() => optionHandler(c)}>
-                        <ul className='challenge' >
-
-
-                            <li>{c.game}</li>
-                            <li>{c.opponent}</li>
-                            {c.opScore !== -999 && <li>{c.opScore}</li>}
-                            {c.opScore === -999 && <li>---</li>}
-                                                        
-                            {c.userScore !== -999 && <li>{c.userScore}</li>}
-                            {c.userScore === -999 && <li>---</li>}
-
-                        </ul>
-
-                    </div>
-                })}
+                    <ul className='labels'>
+                        <li><h3>Challenge</h3></li>
+                        <li><h3>Opponent</h3></li>
+                        <li><h3>Opp Score</h3></li>
+                        <li><h3>Your Score</h3></li>
+                    </ul>
+                    <hr/>
+                    
+                    {c.map(function(c, index){
+                        return <div onClick={() => optionHandler(c)}>
+                            <ul className='challenge' >
 
 
-            </div>
+                                <li>{c.game}</li>
+                                <li>{c.opponent}</li>
+                                {c.opScore !== -999 && <li>{c.opScore}</li>}
+                                {c.opScore === -999 && <li>---</li>}
+                                                            
+                                {c.userScore !== -999 && <li>{c.userScore}</li>}
+                                {c.userScore === -999 && <li>---</li>}
 
-            <div className='challenge-header'>
-                <h1>Finished Challenges</h1>
-            </div>
-            <div className="challenge-container">
+                            </ul>
 
-                <ul className='labels'>
-                    <li><h3>Challenge</h3></li>
-                    <li><h3>Opponent</h3></li>
-                    <li><h3>Opp Score</h3></li>
-                    <li><h3>Your Score</h3></li>
-                </ul>
-                <hr/>
-                
-                {f.map(function(f, index){
-                    return <div>
-                        <ul className={f.opScore < f.userScore ? 'challenge-f win' : 'challenge-f loss'} id={f.opScore === f.userScore ? 'tie' : ''} >
-                            <li>{f.game}</li>
-                            <li>{f.opponent}</li>
-                            <li>{f.opScore}</li>
-                            <li>{f.userScore}</li>
+                        </div>
+                    })}
 
-                        </ul>
 
-                    </div>
-                })}
-
+                </div>
 
             </div>
+
+            <div className = 'challenge-cont'>
+                <div className='challenge-header'>
+                    <h1>Finished Challenges</h1>
+                </div>
+                <div className="challenge-container">
+
+                    <ul className='labels'>
+                        <li><h3>Challenge</h3></li>
+                        <li><h3>Opponent</h3></li>
+                        <li><h3>Opp Score</h3></li>
+                        <li><h3>Your Score</h3></li>
+                    </ul>
+                    <hr/>
+                    
+                    {f.map(function(f, index){
+                        return <div>
+                            <ul className={f.opScore < f.userScore ? 'challenge-f win' : 'challenge-f loss'} id={f.opScore === f.userScore ? 'tie' : ''} >
+                                <li>{f.game}</li>
+                                <li>{f.opponent}</li>
+                                <li>{f.opScore}</li>
+                                <li>{f.userScore}</li>
+
+                            </ul>
+
+                        </div>
+                    })}
+
+
+                </div>
+            </div>
+
+            
 
 
         </div>
