@@ -41,7 +41,7 @@ hr{
     
 }
 
-.challenge{
+.challenge, .challenge-f{
     list-style: none;
     display: grid;
     align-items: baseline;
@@ -61,4 +61,16 @@ hr{
     margin-left: 3rem;
     margin-right: 3rem;
     text-align: center;
+}
+
+.win{
+    background: rgb(70, 158, 70);
+}
+
+.loss{
+    background: rgb(199, 87, 87);
+}
+
+#tie{
+    background: grey;
 }

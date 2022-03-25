@@ -16,7 +16,7 @@ function ScoreCard(props){
             <hr/>
             
             <div className ='score'>
-                <h1 className ='game-over'>{props.score} {props.data} {props.guesses}</h1>
+                <h1 className ='game-over'>{props.score} {props.data} {props.guesses} {props.data2}</h1>
                 
             </div>
 
