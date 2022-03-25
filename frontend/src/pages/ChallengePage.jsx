@@ -8,13 +8,14 @@ import {GiCancel} from 'react-icons/gi';
 import Backdrop from '../components/wordle/Backdrop';
 import NewChallenge from './NewChallenge';
 import {ChallengeContext} from '../ChallengeContext';
+import ChallengeConfirm from './ChallengeConfirm';
 
 import './ChallengePage.scss';
 
-var f = [   {challenge: "Wordle" ,opponent : "Jacob", opScore : 4, userScore : 7}, 
-            {challenge: "Wordle" ,opponent : "Jacob", opScore : 5, userScore : 5}, 
-            {challenge: "Wordle" ,opponent : "Jacob", opScore : 4, userScore : 3},
-            {challenge: "Wordle" ,opponent : "Jacob", opScore : 7, userScore : 1}];
+var f = [   {game: "Wordle" ,opponent : "Jacob", opScore : 4, userScore : -999}, 
+            {game: "Wordle" ,opponent : "Jacob", opScore : 5, userScore : 5}, 
+            {game: "Wordle" ,opponent : "Jacob", opScore : 4, userScore : 3},
+            {game: "Wordle" ,opponent : "Jacob", opScore : 7, userScore : 1}];
 
 function ChallengePage(){
     
@@ -74,14 +75,46 @@ function ChallengePage(){
         }
     }  
 
+    const [optionOpen, setOptionOpen] = useState(false);
+    const [selectedOption, setSelectedOption] = useState([]);
+    const [cantDel, setCantDel] = useState(false);
     function challengeHandler(){
         SetUp();
         setNewChallenge(!newChallenge);
     }
 
+    function optionHandler(challenge){
+
+        setOptionOpen(true);
+        setSelectedOption(challenge);
+
+    }
+
+    function playHandler(){
+        console.log('play handler clicked');
+
+        clickChallenge(selectedOption);
+    }  
+
+    async function delHandler(){
+        console.log('del handler clicked');
+
+        if(selectedOption.userScore !== null){
+            setCantDel(true);
+            return;
+        }else{
+            await axios.post()
+        }
+
+        SetUp();
+        setOptionOpen(false);
+    }
+
     return(
         <div>
             <Layout/>
+
+            {optionOpen && <ChallengeConfirm playHandler={playHandler} delHandler={delHandler}/>}
 
             {newChallenge && <NewChallenge button={<GiCancel/>} handler={challengeHandler}/>}
             {newChallenge && <Backdrop onCancel={challengeHandler}/>}
@@ -107,7 +140,7 @@ function ChallengePage(){
                 <hr/>
                 
                 {c.map(function(c, index){
-                    return <div onClick={() => clickChallenge(c)}>
+                    return <div onClick={() => optionHandler(c)}>
                         <ul className='challenge' >
 
 
@@ -141,7 +174,7 @@ function ChallengePage(){
                 <hr/>
                 
                 {f.map(function(f, index){
-                    return <div>
+                    return <div onClick={() => optionHandler(f)}>
                         <ul className={f.opScore < f.userScore ? 'challenge-f win' : 'challenge-f loss'} id={f.opScore === f.userScore ? 'tie' : ''} >
                             <li>{f.game}</li>
                             <li>{f.opponent}</li>
