@@ -99,7 +99,7 @@ function ChallengePage(){
             return;
         }else{
             console.log(selectedOption.challengeId);
-            await axios.post(`http://localhost:8081/challenge/api/v1/delete/${selectedOption.challengeId}`);
+            await axios.delete(`http://localhost:8081/challenge/api/v1/delete/${selectedOption.challengeId}`);
         }
 
         SetUp();

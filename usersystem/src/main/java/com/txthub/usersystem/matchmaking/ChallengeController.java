@@ -97,7 +97,7 @@ public class ChallengeController {
     @PostMapping("/sendRandom/{username}")
     @ResponseBody
     public boolean sendRandomChallenge(@RequestBody String game,@PathVariable String username){
-        Challenge ch = new Challenge(username,chService.findChallenger(username),game);
+        Challenge ch = new Challenge(username,chService.findChallenger(username),game.substring(0,game.length()-1));
         return chService.addChallenge(ch);
     }
     

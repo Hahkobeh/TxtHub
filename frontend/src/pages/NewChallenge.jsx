@@ -61,8 +61,9 @@ function NewChallenge(props){
 
 
         }else{
-
-            await  axios.post(`http://localhost:8081/challenge/api/v1/send/${currentName}` , selection);
+          
+            
+            await  axios.post(`http://localhost:8081/challenge/api/v1/sendRandom/${currentName}` , selection);
 
         }
 
