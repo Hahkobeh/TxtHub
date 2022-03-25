@@ -109,11 +109,8 @@ function ScoreBoard(){
     
                                 {wordleRankings.map(function(wordleRanking){
 
-                                    if(wordleRanking.username === userWordleRank.username){
-                                        setWordleTopTen(wordleRanking.username);
-                                    }
                                     return <div>
-                                        <ul className = {wordleTopTen === wordleRanking.username ? 'user-score bold' : 'user-score'} >
+                                        <ul className = {userWordleRank.username === wordleRanking.username ? 'user-score bold' : 'user-score'} >
                                             <li>{wordleRanking.rank}</li>
                                             <li>{wordleRanking.username}</li>
                                             <li>{parseInt(wordleRanking.rating)}</li>
@@ -122,12 +119,12 @@ function ScoreBoard(){
                                     </div>
                                 })}
 
-                            {wordleTopTen !== null && userWordleRank !== null && <ul className = 'user-score bold'>
+                            { userWordleRank !== null && userWordleRank.rank > 10 && <div><ul className = 'user-score bold'>
                                 <li>:</li>
                                 <li>:</li>
                                 <li>:</li>
-                            </ul>}
-                            {wordleTopTen !== null && userWordleRank !== null && <ul className = 'user-score bold'>
+                            </ul> <hr/></div>}
+                            { userWordleRank !== null && userWordleRank.rank > 10 && <ul className = 'user-score bold'>
                                 <li>{userWordleRank.rank}</li>
                                 <li>{userWordleRank.username}</li>
                                 <li>{parseInt(userWordleRank.rating)}</li>
@@ -152,11 +149,8 @@ function ScoreBoard(){
                             </ul>
                             {anagramRankings.map(function(anagramRanking){
 
-                                if(anagramRanking.username === userAnagramRank.username){
-                                    setAnagramTopTen(anagramRanking.username);
-                                }
                                 return <div>
-                                    <ul className = {anagramTopTen === anagramRanking.username ? 'user-score bold' : 'user-score'}>
+                                    <ul className = {userAnagramRank.username === anagramRanking.username ? 'user-score bold' : 'user-score'}>
                                         <li>{anagramRanking.rank}</li>
                                         <li>{anagramRanking.username}</li>
                                         <li>{parseInt(anagramRanking.rating)}</li>
@@ -165,13 +159,13 @@ function ScoreBoard(){
                                 </div>
                             })}
 
-                            {anagramTopTen !== null && userAnagramRank !== null && <ul className = 'user-score bold'>
+                            { userAnagramRank !== null && userAnagramRank.rank > 10 && <div><ul className = 'user-score bold'>
                                 <li>:</li>
                                 <li>:</li>
                                 <li>:</li>
-                            </ul>}
+                            </ul><hr/></div>}
     
-                            {anagramTopTen !== null && userAnagramRank !== null && <ul className = 'user-score bold'>
+                            { userAnagramRank !== null && userAnagramRank.rank > 10 && <ul className = 'user-score bold'>
                                 <li>{userAnagramRank.rank}</li>
                                 <li>{userAnagramRank.username}</li>
                                 <li>{parseInt(userAnagramRank.rating)}</li>

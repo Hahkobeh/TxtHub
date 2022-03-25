@@ -12,24 +12,14 @@ import ChallengeConfirm from './ChallengeConfirm';
 
 import './ChallengePage.scss';
 
-var c = [   {game: "Wordle" ,opponent : "Jacob", opScore : -999, userScore : 6}, 
-            {game: "Wordle" ,opponent : "Jacob", opScore : -999, userScore : -999}, 
-            {game: "Wordle" ,opponent : "Jacob", opScore : -999, userScore : 3},
-            {game: "Wordle" ,opponent : "Jacob", opScore : 7, userScore : -999}];
-
-            var f = [   {game: "Wordle" ,opponent : "Jacob", opScore : 4, userScore : 6}, 
-            {game: "Wordle" ,opponent : "Jacob", opScore : 5, userScore : 5}, 
-            {game: "Wordle" ,opponent : "Jacob", opScore : 4, userScore : 3},
-            {game: "Wordle" ,opponent : "Jacob", opScore : 7, userScore : 1}];
-
 function ChallengePage(){
     
     const currentName = localStorage.getItem('username');
     const {currentChallenge, setCurrentChallenge} = useContext(ChallengeContext);
 
     let challengeId;
-    //const [c, setC] = useState([]);
-    //const [f, setF] = useState([]);
+    const [c, setC] = useState([]);
+    const [f, setF] = useState([]);
 
     useEffect(() => {
         SetUp();
@@ -37,18 +27,18 @@ function ChallengePage(){
 
 
     async function SetUp(){
-        /*await axios.get(`http://localhost:8081/challenge/api/v1/current/${currentName}`)
+        await axios.get(`http://localhost:8081/challenge/api/v1/current/${currentName}`)
             .then(res=> { 
                 
                 setC(res.data);
                 
-        });*/
-        /*await axios.get(`http://localhost:8081/challenge/api/v1/finished/${currentName}`)
+        });
+        await axios.get(`http://localhost:8081/challenge/api/v1/finished/${currentName}`)
             .then(res=> { 
                 
                 setF(res.data);
                 
-        });*/
+        });
     }
 
     
