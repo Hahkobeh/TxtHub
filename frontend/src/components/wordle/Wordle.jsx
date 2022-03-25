@@ -197,29 +197,19 @@ function Wordle(){
 
         }else if(guessedWords.length === 6){
             setFinishedWrong(true);
-            update();
+            updateF();
         }else {}
         currentWord = [];
         
     }
 
-    function update(){
+    async function update(){
         const currentChallenge = localStorage.getItem('currentChallenge');
         console.log(currentChallenge);
         if(currentChallenge !== null){
             console.log(currentChallenge);
             
-            if(finishedWrong){
-                console.log("wrong")
-                let data = {
-    
-                    username: localStorage.getItem("username"),
-                    score: 8,
-                    challengeId: currentChallenge
-                }
-                await axios.post(`http://localhost:8081/challenge/api/v1/update`,data)
-                localStorage.removeItem('currentChallenge');
-            }else{
+           
                 console.log(guessedWords.length)
                 let data = {
     
@@ -229,13 +219,34 @@ function Wordle(){
                 }
                 await axios.post(`http://localhost:8081/challenge/api/v1/update`,data)
                 localStorage.removeItem('currentChallenge');
-            }
+            
 
             
             //setCurrentChallenge(null);
         }
     }
+    async function updateF(){
+        const currentChallenge = localStorage.getItem('currentChallenge');
+        console.log(currentChallenge);
+        if(currentChallenge !== null){
+            console.log(currentChallenge);
+            
+           
+                console.log("wrong")
+                let data = {
+    
+                    username: localStorage.getItem("username"),
+                    score: 8,
+                    challengeId: currentChallenge
+                }
+                await axios.post(`http://localhost:8081/challenge/api/v1/update`,data)
+                localStorage.removeItem('currentChallenge');
+           
 
+            
+            //setCurrentChallenge(null);
+        }
+    }
     function playAgain(){
 
         for(let i = 0; i < guessedWords.length; i++){
