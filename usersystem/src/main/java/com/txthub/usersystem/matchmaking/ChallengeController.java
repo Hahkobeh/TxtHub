@@ -78,9 +78,12 @@ public class ChallengeController {
 
     @PostMapping("/update")
     @ResponseBody
-    public boolean updateChallengeScore(@RequestBody ScoreForm sf){
+    public ChallengeResult updateChallengeScore(@RequestBody ScoreForm sf){
         return chService.updateChallenge(sf.getChallengeId(),sf.getUsername(),sf.getScore());
     }
+
+   
+
 
 
 

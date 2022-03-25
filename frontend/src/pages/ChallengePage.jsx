@@ -25,9 +25,6 @@ function ChallengePage(){
         SetUp();
     }, []);
 
-    useEffect(() => {
-        SetUp();
-    }, [newChallenge]);
 
     async function SetUp(){
         await axios.get(`http://localhost:8081/challenge/api/v1/current/${currentName}`)
@@ -68,6 +65,7 @@ function ChallengePage(){
     }  
 
     function challengeHandler(){
+        SetUp();
         setNewChallenge(!newChallenge);
     }
 
