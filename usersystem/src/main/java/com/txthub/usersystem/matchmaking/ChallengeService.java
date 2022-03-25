@@ -104,6 +104,16 @@ public class ChallengeService {
     }
 
 
+    public boolean deleteChallenge(String challengeId) {
+        try {
+            chRepo.deleteById(challengeId);
+        }catch (IllegalArgumentException e){
+            return false;
+        }
+        return true;
+    }
+
+
 
     
 }
