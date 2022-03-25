@@ -193,11 +193,17 @@ function Wordle(){
 
         if(currentWord.join('') === answer){
             setFinishedSuccessfully(true);
+            update();
 
         }else if(guessedWords.length === 6){
             setFinishedWrong(true);
+            update();
         }else {}
         currentWord = [];
+        
+    }
+
+    function update(){
         const currentChallenge = localStorage.getItem('currentChallenge');
         console.log(currentChallenge);
         if(currentChallenge !== null){
