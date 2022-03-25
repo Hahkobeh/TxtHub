@@ -112,7 +112,7 @@ public class ChallengeService {
 
     public boolean deleteChallenge(String challengeId) {
         try {
-            chRepo.deleteById(challengeId);
+            chRepo.deleteByChallengeId(challengeId);
         }catch (IllegalArgumentException e){
             return false;
         }

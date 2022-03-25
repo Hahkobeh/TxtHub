@@ -10,6 +10,7 @@ public interface ChallengeRepository extends MongoRepository<Challenge, String>{
     
     List<Challenge> findByUsername1(String username);
     List<Challenge> findByUsername2(String username);
+    void deleteByChallengeId(String challengeId);
     Optional<Challenge> findById(String challengeId);
     
 }
