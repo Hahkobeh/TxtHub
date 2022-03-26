@@ -79,19 +79,21 @@ public class UserService {
         return true;
     }
 
-    public boolean updateRating(String game, String winnerId, String loserId){
-        Optional<User> winner = userRepository.findById(winnerId);
-        Optional<User> loser = userRepository.findById(loserId);
+    public boolean updateRating(String game, String winnername, String losername){
+        Optional<User> winner = userRepository.findOneByUsername(winnername);
+        Optional<User> loser = userRepository.findOneByUsername(losername);
+
+
         if(winner.isEmpty() || loser.isEmpty()){
             return false;
         }
 
 
         switch (game){
-            case "anagram":
+            case "Anagrams":
                 changeAnagramRating(winner.get(), loser.get());
                 return true;
-            case "wordle":
+            case "Wordle":
                 changeWordleRating(winner.get(), loser.get());
                 return true;
             case "tba":
