@@ -1,5 +1,5 @@
 import './Anagrams.scss';
-import React, {useState, useEffect, useContext} from 'react';
+import React, {useState, useEffect, useContext, useCallback} from 'react';
 import {FaBackspace, FaRedo} from 'react-icons/fa';
 import {GiCancel} from 'react-icons/gi';
 import {AiOutlineQuestionCircle} from 'react-icons/ai';
@@ -119,39 +119,52 @@ function Anagrams(){
         
     }
 
-    useEffect(() => {
-        document.addEventListener('keydown' , e => {
+    const [enterHan, setEnterHan] = useState(false);
 
+    const handleKeyPress = useCallback( (event) => {
+        //console.log(`key pressed: ${event.key}`);
 
-            if(e.key === 'Delete' || e.key === 'Backspace'){
-                removeLetter();
-            }else if(word.includes(e.key)){
+        if(event.key === 'Backspace'){
+            removeLetter();
+        }else if(word.includes(event.key)){
 
-                var id = 1;
-                for(let i = -1; i > -6; i--){
-                    const box = document.getElementById(i);
-                    if(!lastClickedButton.includes(i) && word[ (i + 1) * -1] === e.key){
-                        id = i;
-                        break;
-                    }
+            var id = 1;
+            for(let i = -1; i > -6; i--){
+                const box = document.getElementById(i);
+                if(!lastClickedButton.includes(i) && word[ (i + 1) * -1] === event.key){
+                    id = i;
+                    break;
                 }
-                if(id === 1){
-                    return;
-                }
-                letterClick(e.key, id);
-
-            }else if(e.key === 'Enter' ){
-
-                enterWord();
             }
-        });
+            if(id === 1){
+                return;
+            }
+            letterClick(event.key, id);
+
+        }else if(event.key === 'Enter' ){
+            setEnterHan(true)
+            enterWord();
+        }
+        
     }, []);
+
+    useEffect( () => {
+
+        document.addEventListener('keydown', handleKeyPress);
+
+        return () => {
+            document.removeEventListener('keydown', handleKeyPress);
+        }
+    }, [handleKeyPress])
+
 
 
 
     async function enterWord(){
         setNotEnoughLetters(false);
         setNotWord(false);
+
+        
 
         if(currentGuess.length < 5){
 
@@ -161,20 +174,22 @@ function Anagrams(){
 
         let test
         let request = 'http://localhost:8084/anagram/api/v1/testword/' + currentGuess.join("")
-        console.log(request)
-        await axios.get(request)
+        console.log('Request is returned as' + request)
+        await axios.get('http://localhost:8084/anagram/api/v1/testword/' + currentGuess.join(""))
             .then(res => {
-                console.log(res.data)
                 test =  res.data
             })
-        console.log(test)
         if(test === false){
             setNotWord(true);
+            setEnterHan(false)
             return;
+        }else{
+            
+            currentScore+=100;
+            nextWord();
+            setEnterHan(false)
         }
-
-        currentScore+=100;
-        nextWord();
+        
     }
 
     async function nextWord(){
@@ -192,7 +207,7 @@ function Anagrams(){
         guessPos = 0;
         lastClickedButton = [];
         currentGuess = [];
-
+        
     }
 
     function letterClick(a, id){
@@ -239,13 +254,16 @@ function Anagrams(){
 
     }
 
-    async function skipPressed(){
-        setNotEnoughLetters(false);
-        setNotWord(false);
+    function skipPressed(){
 
-        nextWord();
-        currentScore -=25;
-
+        if(!enterHan){
+            setNotWord(false);
+            setNotEnoughLetters(false);
+            
+        
+            nextWord();
+            currentScore -=25;
+        }
     }
 
     function quitMatch(){
