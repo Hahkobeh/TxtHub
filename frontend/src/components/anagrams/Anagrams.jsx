@@ -91,8 +91,17 @@ function Anagrams(){
                     score: currentScore,
                     challengeId: currentChallenge
                 }
+                let returnV;
                 await axios.post(`http://localhost:8081/challenge/api/v1/update`,data)
+                    .then(res=>{
+                        returnV = res.data;
+                    })
                 localStorage.removeItem('currentChallenge');
+                if(returnV.winner === returnV.loser){
+                    return;
+                }else{ 
+                    await axios.put(`http://localhost:8081/user/api/v1/update/Anagrams/${returnV.winner}/${returnV.loser}`);
+                }
                 
         }else{
             times--;

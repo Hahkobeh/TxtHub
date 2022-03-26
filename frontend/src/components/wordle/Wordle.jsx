@@ -228,12 +228,10 @@ function Wordle(){
                 
 
                 if(returnV.winner === returnV.loser){
-                    console.log('it goes in here by mistake')
                     return;
                 }else{
-                    console.log('it goes in here but doesnt post');
+
                     await axios.put(`http://localhost:8081/user/api/v1/update/Wordle/${returnV.winner}/${returnV.loser}`);
-                    console.log('it wont make it here');
                 }
                 
                 
