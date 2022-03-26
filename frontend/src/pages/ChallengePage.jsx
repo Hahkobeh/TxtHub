@@ -72,7 +72,7 @@ function ChallengePage(){
 
     const [optionOpen, setOptionOpen] = useState(false);
     const [selectedOption, setSelectedOption] = useState([]);
-    const [cantDel, setCantDel] = useState(false);
+
     function challengeHandler(){
         SetUp();
         setNewChallenge(!newChallenge);
@@ -80,7 +80,11 @@ function ChallengePage(){
 
     function optionHandler(challenge){
 
-        setOptionOpen(true);
+        if(challenge.userScore === -999){
+            setOptionOpen(true);
+        }
+
+        
         setSelectedOption(challenge);
 
     }
@@ -94,13 +98,10 @@ function ChallengePage(){
     async function delHandler(){
         console.log('del handler clicked');
 
-        if(selectedOption.userScore !== -999){
-            setCantDel(true);
-            return;
-        }else{
-            console.log(selectedOption.challengeId);
-            await axios.delete(`http://localhost:8081/challenge/api/v1/delete/${selectedOption.challengeId}`);
-        }
+      
+        console.log(selectedOption.challengeId);
+        await axios.delete(`http://localhost:8081/challenge/api/v1/delete/${selectedOption.challengeId}`);
+        
 
         SetUp();
         setOptionOpen(false);
@@ -114,7 +115,7 @@ function ChallengePage(){
         <div>
             <Layout/>
 
-            {optionOpen && <ChallengeConfirm playHandler={playHandler} delHandler={delHandler}/>}
+            {optionOpen && <ChallengeConfirm playHandler={playHandler} delHandler={delHandler} handler={optionClose} button={<GiCancel/>}/>}
             {optionOpen  && <Backdrop onCancel={optionClose}/>}
             
             {newChallenge && <NewChallenge button={<GiCancel/>} handler={challengeHandler}/>}
