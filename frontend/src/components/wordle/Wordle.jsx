@@ -218,12 +218,25 @@ function Wordle(){
                     score: currentScore,
                     challengeId: currentChallenge
                 }
+                let returnV;
                 await axios.post(`http://localhost:8081/challenge/api/v1/update`,data)
                     .then(res=>{
+                        returnV = res.data;
                         console.log(res.data)
                     })
                 localStorage.removeItem('currentChallenge');
-            
+                
+
+                if(returnV.winner === returnV.loser){
+                    console.log('it goes in here by mistake')
+                    return;
+                }else{
+                    console.log('it goes in here but doesnt post');
+                    await axios.put(`http://localhost:8081/user/api/v1/update/Wordle/${returnV.winner}/${returnV.loser}`);
+                    console.log('it wont make it here');
+                }
+                
+                
 
             
             //setCurrentChallenge(null);
