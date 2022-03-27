@@ -12,11 +12,6 @@ import ChallengeConfirm from './ChallengeConfirm';
 
 import './ChallengePage.scss';
 
-var f = [   {game: "Wordle" ,opponent : "Jacob", opScore : 4, userScore : -999}, 
-            {game: "Wordle" ,opponent : "Jacob", opScore : 5, userScore : 5}, 
-            {game: "Wordle" ,opponent : "Jacob", opScore : 4, userScore : 3},
-            {game: "Wordle" ,opponent : "Jacob", opScore : 7, userScore : 1}];
-
 function ChallengePage(){
     
     const currentName = localStorage.getItem('username');
@@ -77,7 +72,7 @@ function ChallengePage(){
 
     const [optionOpen, setOptionOpen] = useState(false);
     const [selectedOption, setSelectedOption] = useState([]);
-    const [cantDel, setCantDel] = useState(false);
+
     function challengeHandler(){
         SetUp();
         setNewChallenge(!newChallenge);
@@ -85,7 +80,11 @@ function ChallengePage(){
 
     function optionHandler(challenge){
 
-        setOptionOpen(true);
+        if(challenge.userScore === -999){
+            setOptionOpen(true);
+        }
+
+        
         setSelectedOption(challenge);
 
     }
@@ -99,12 +98,10 @@ function ChallengePage(){
     async function delHandler(){
         console.log('del handler clicked');
 
-        if(selectedOption.userScore !== null){
-            setCantDel(true);
-            return;
-        }else{
-            await axios.post()
-        }
+      
+        console.log(selectedOption.challengeId);
+        await axios.delete(`http://localhost:8081/challenge/api/v1/delete/${selectedOption.challengeId}`);
+        
 
         SetUp();
         setOptionOpen(false);
@@ -118,7 +115,7 @@ function ChallengePage(){
         <div>
             <Layout/>
 
-            {optionOpen && <ChallengeConfirm playHandler={playHandler} delHandler={delHandler}/>}
+            {optionOpen && <ChallengeConfirm playHandler={playHandler} delHandler={delHandler} handler={optionClose} button={<GiCancel/>}/>}
             {optionOpen  && <Backdrop onCancel={optionClose}/>}
             
             {newChallenge && <NewChallenge button={<GiCancel/>} handler={challengeHandler}/>}
@@ -130,69 +127,76 @@ function ChallengePage(){
             <div className='add' onClick={challengeHandler}>
                 <BsPlusCircle size={40}/>
             </div>
+            <div className='challenge-cont'>
 
-            <div className='challenge-header'>
-                <h1>Ongoing Challenges</h1>
-            </div>
-            <div className="challenge-container">
+                <div className='challenge-header'>
+                    <h1>Ongoing Challenges</h1>
+                </div>
+                <div className="challenge-container">
 
-                <ul className='labels'>
-                    <li><h3>Challenge</h3></li>
-                    <li><h3>Opponent</h3></li>
-                    <li><h3>Opp Score</h3></li>
-                    <li><h3>Your Score</h3></li>
-                </ul>
-                <hr/>
-                
-                {c.map(function(c, index){
-                    return <div onClick={() => optionHandler(c)}>
-                        <ul className='challenge' >
-
-
-                            <li>{c.game}</li>
-                            <li>{c.opponent}</li>
-                            {c.opScore !== -999 && <li>{c.opScore}</li>}
-                            {c.opScore === -999 && <li>---</li>}
-                                                        
-                            {c.userScore !== -999 && <li>{c.userScore}</li>}
-                            {c.userScore === -999 && <li>---</li>}
-
-                        </ul>
-
-                    </div>
-                })}
+                    <ul className='labels'>
+                        <li><h3>Challenge</h3></li>
+                        <li><h3>Opponent</h3></li>
+                        <li><h3>Opp Score</h3></li>
+                        <li><h3>Your Score</h3></li>
+                    </ul>
+                    <hr/>
+                    
+                    {c.map(function(c, index){
+                        return <div onClick={() => optionHandler(c)}>
+                            <ul className='challenge' >
 
 
-            </div>
+                                <li>{c.game}</li>
+                                <li>{c.opponent}</li>
+                                {c.opScore !== -999 && <li>{c.opScore}</li>}
+                                {c.opScore === -999 && <li>---</li>}
+                                                            
+                                {c.userScore !== -999 && <li>{c.userScore}</li>}
+                                {c.userScore === -999 && <li>---</li>}
 
-            <div className='challenge-header'>
-                <h1>Finished Challenges</h1>
-            </div>
-            <div className="challenge-container">
+                            </ul>
 
-                <ul className='labels'>
-                    <li><h3>Challenge</h3></li>
-                    <li><h3>Opponent</h3></li>
-                    <li><h3>Opp Score</h3></li>
-                    <li><h3>Your Score</h3></li>
-                </ul>
-                <hr/>
-                
-                {f.map(function(f, index){
-                    return <div>
-                        <ul className={f.opScore < f.userScore ? 'challenge-f win' : 'challenge-f loss'} id={f.opScore === f.userScore ? 'tie' : ''} >
-                            <li>{f.game}</li>
-                            <li>{f.opponent}</li>
-                            <li>{f.opScore}</li>
-                            <li>{f.userScore}</li>
+                        </div>
+                    })}
 
-                        </ul>
 
-                    </div>
-                })}
-
+                </div>
 
             </div>
+
+            <div className = 'challenge-cont'>
+                <div className='challenge-header'>
+                    <h1>Finished Challenges</h1>
+                </div>
+                <div className="challenge-container">
+
+                    <ul className='labels'>
+                        <li><h3>Challenge</h3></li>
+                        <li><h3>Opponent</h3></li>
+                        <li><h3>Opp Score</h3></li>
+                        <li><h3>Your Score</h3></li>
+                    </ul>
+                    <hr/>
+                    
+                    {f.map(function(f, index){
+                        return <div>
+                            <ul className={f.opScore < f.userScore ? 'challenge-f win' : 'challenge-f loss'} id={f.opScore === f.userScore ? 'tie' : ''} >
+                                <li>{f.game}</li>
+                                <li>{f.opponent}</li>
+                                <li>{f.opScore}</li>
+                                <li>{f.userScore}</li>
+
+                            </ul>
+
+                        </div>
+                    })}
+
+
+                </div>
+            </div>
+
+            
 
 
         </div>

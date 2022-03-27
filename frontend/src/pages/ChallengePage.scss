@@ -1,6 +1,7 @@
 .add{
     margin-left: 90%;
-    margin-top: 14vh;
+    margin-top: 12vh;
+    z-index: 4;
     
 }
 
@@ -8,9 +9,13 @@
     color: grey;
 }
 
+.challenge-cont{
+    margin-top: 1vh;
+}
+
 
 .challenge-header{
-    margin-top: -2vh;
+    margin-top: 0;
     text-align: center;
     
 }
@@ -51,6 +56,7 @@ hr{
     border-radius: .3rem;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
     padding: 5px 0;
+
 }
 
 .challenge:hover{
@@ -58,6 +64,12 @@ hr{
 }
 
 .challenge li{
+    margin-left: 3rem;
+    margin-right: 3rem;
+    text-align: center;
+}
+
+.challenge-f li{
     margin-left: 3rem;
     margin-right: 3rem;
     text-align: center;

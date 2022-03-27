@@ -79,19 +79,21 @@ public class UserService {
         return true;
     }
 
-    public boolean updateRating(String game, String winnerUsername, String loserUsername){
-        Optional<User> winner = Optional.ofNullable(userRepository.findByUsername(winnerUsername).get(0));
-        Optional<User> loser = Optional.ofNullable(userRepository.findByUsername(loserUsername).get(0));
+    public boolean updateRating(String game, String winnername, String losername){
+        Optional<User> winner = userRepository.findOneByUsername(winnername);
+        Optional<User> loser = userRepository.findOneByUsername(losername);
+
+
         if(winner.isEmpty() || loser.isEmpty()){
             return false;
         }
 
 
         switch (game){
-            case "anagram":
+            case "Anagrams":
                 changeAnagramRating(winner.get(), loser.get());
                 return true;
-            case "wordle":
+            case "Wordle":
                 changeWordleRating(winner.get(), loser.get());
                 return true;
             case "tba":
@@ -174,6 +176,11 @@ public class UserService {
             }
         }
         return new UserPair(-1, username, 0);
+    }
+
+    public boolean checkUsername(String username) {
+
+        return userRepository.existsByUsername(username);
     }
 
 
