@@ -50,10 +50,13 @@ public class StoryService {
     public void like(String storyId) {
         Story story = storyRepository.findStoryById(storyId);
         story.setLikes(story.getLikes() + 1);
+        System.out.println("added like?");
+        storyRepository.save(story);
     }
 
     public void dislike(String storyId){
         Story story = storyRepository.findStoryById(storyId);
         story.setDislikes(story.getDislikes() + 1);
+        storyRepository.save(story);
     }
 }

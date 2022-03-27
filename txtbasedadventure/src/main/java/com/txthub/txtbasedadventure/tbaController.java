@@ -111,6 +111,7 @@ public class tbaController {
     @PutMapping("/like/{storyId}")
     @ResponseBody
     public boolean likeStory(@PathVariable String storyId){
+        System.out.println("boom");
         storyService.like(storyId);
         return true;
     }

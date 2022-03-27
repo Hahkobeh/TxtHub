@@ -14,6 +14,10 @@ export default class PlayerMenu extends Component {
     }
 
     componentDidMount() {
+        this.getStories()
+    }
+
+    getStories = () => {
         axios.get(`http://localhost:8083/tba/api/v1/getStoriesByLikes`)
             .then(res => {
                     this.setState({stories: res.data})
@@ -22,7 +26,9 @@ export default class PlayerMenu extends Component {
             )
     }
 
+
     returnToStories = () => {
+        this.getStories()
         this.setState({activeStory: null})
     }
 
@@ -33,7 +39,7 @@ export default class PlayerMenu extends Component {
         if(this.state.activeStory === null){
             return (
                 <>
-                    <h1>GAMES!</h1>
+                    <h1>Stories rated by highest likes!</h1>
                     <ul>
                         {this.state.stories.map((story) => (
                             <li key={story.id} onClick={() => {this.setState({activeStory: story.id})}}>{story.name} by {story.authorUsername}, <span className='likes'> likes: {story.likes} dislikes: {story.dislikes}</span></li>
