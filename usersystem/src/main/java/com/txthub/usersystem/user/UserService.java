@@ -80,9 +80,9 @@ public class UserService {
     }
 
 
-    public boolean updateRating(String game, String winnername, String losername){
-        Optional<User> winner = userRepository.findOneByUsername(winnername);
-        Optional<User> loser = userRepository.findOneByUsername(losername);
+    public boolean updateRating(String game, String winnerName, String loserName){
+        Optional<User> winner = userRepository.findOneByUsername(winnerName);
+        Optional<User> loser = userRepository.findOneByUsername(loserName);
         if(winner.isEmpty() || loser.isEmpty()){
             return false;
         }
@@ -97,6 +97,7 @@ public class UserService {
                 return true;
             case "tba":
                 changeTbaRating(winner.get(), loser.get());
+                return true;
             default:
                 return false;
         }
