@@ -69,6 +69,9 @@ function Anagrams(){
 
     let navigate = useNavigate();
     let times;
+
+    let [fTime, setFTime] = useState(false);
+    let [end, setEnd] = useState(false);
     
 
     useEffect( () => { 
@@ -83,8 +86,9 @@ function Anagrams(){
     async function updateRemainingTime(){
         
         
-        if(times === 0){
-                setStopGame(true);
+        if(times === 0 && fTime){
+                //setStopGame(true);
+                setEnd(true);
                 let data = {
     
                     username: localStorage.getItem("username"),
@@ -106,12 +110,13 @@ function Anagrams(){
         }else{
             times--;
             setTimer(times);
+            setFTime(true);
         }
     }
 
     function startGame(){
         
-        
+        setEnd(false);
         setStopGame(false);
         console.log(timer);
         setPlayingGame(true);
@@ -162,6 +167,10 @@ function Anagrams(){
 
 
     async function enterWord(){
+
+        if(end){
+            return;
+        }
         setNotEnoughLetters(false);
         setNotWord(false);
 
@@ -195,6 +204,10 @@ function Anagrams(){
 
     async function nextWord(){
 
+        if(end){
+            return;
+        }
+
         await setWord();
 
         for(let i = 0; i < 5; i++){
@@ -216,6 +229,9 @@ function Anagrams(){
     }
     function letterClick(a, id){
         
+        if(end){
+            return;
+        }
 
         setNotEnoughLetters(false);
         setNotWord(false);
