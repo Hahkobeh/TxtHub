@@ -79,11 +79,10 @@ public class UserService {
         return true;
     }
 
+
     public boolean updateRating(String game, String winnername, String losername){
         Optional<User> winner = userRepository.findOneByUsername(winnername);
         Optional<User> loser = userRepository.findOneByUsername(losername);
-
-
         if(winner.isEmpty() || loser.isEmpty()){
             return false;
         }
