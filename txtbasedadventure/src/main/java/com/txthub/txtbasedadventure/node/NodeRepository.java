@@ -9,5 +9,6 @@ import org.springframework.stereotype.Repository;
 public interface NodeRepository extends MongoRepository<Node, String> {
 
     List<Node> findByStoryId(String storyId);
+    void deleteAllByStoryId(String storyId);
 }
 

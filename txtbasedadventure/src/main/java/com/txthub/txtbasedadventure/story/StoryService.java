@@ -5,50 +5,55 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class StoryService {
 
-    private final StoryRepository storyRepo;
+    private final StoryRepository storyRepository;
 
     @Autowired
     public StoryService(StoryRepository storyRepo){
-        this.storyRepo = storyRepo;
+        this.storyRepository = storyRepo;
     }
 
-    public List<Story> getStories (){
-        return storyRepo.findAll();
+    public List<Story> getAllStories (){
+        return storyRepository.findAll();
     }
 
 
-    public List<Story> getLikedStories(){
-        return storyRepo.findAll(Sort.by(Direction.DESC,"Likes"));
+    public List<Story> getStoriesByLikes(){
+        return storyRepository.findAll(Sort.by(Direction.DESC,"Likes"));
     }
 
+    public List<Story> getStoriesByAuthor(String username){
+        return storyRepository.findAllByAuthorUsername(username);
+    }
     
     
     
-    public void addStory(Story s){
-        if(s != null){
-            try{
-                storyRepo.save(s);
-            }catch(IllegalArgumentException e){
+    public Story createStory(StoryForm storyForm){
+        Story story = new Story(storyForm.getStoryName(),storyForm.getAuthor(),storyForm.getGenre());
 
-            }
-        }
+        storyRepository.save(story);
+        return story;
+
     }
 
-    public void delStory(String id){
-        
-            try{
-                storyRepo.deleteById(id);
-            }catch(IllegalArgumentException e){
 
-            }
-        
+    public void deleteStory(String storyId) {
+        storyRepository.deleteById(storyId);
+
     }
 
-    
+
+    public void like(String storyId) {
+        Story story = storyRepository.findStoryById(storyId);
+        story.setLikes(story.getLikes() + 1);
+    }
+
+    public void dislike(String storyId){
+        Story story = storyRepository.findStoryById(storyId);
+        story.setDislikes(story.getDislikes() + 1);
+    }
 }

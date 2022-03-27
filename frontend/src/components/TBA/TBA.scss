@@ -7,7 +7,7 @@
   height: 90vh;
   background: white;
   overflow: hidden;
-  
+  font-size: 1rem;
 }
 
 .main-menu{
@@ -21,7 +21,7 @@
 }
 
 
-.card-2{
+.card-1{
   background-color: white;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   color: black;
@@ -32,6 +32,21 @@
   align-items: center;
   justify-content: center;
 
+}
+
+
+
+.card-2{
+  background-color: gray;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  color: black;
+  border-radius: .95rem;
+  height: 200px;
+  width: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
 
 
