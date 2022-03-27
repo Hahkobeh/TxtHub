@@ -42,7 +42,7 @@ export default class PlayerMenu extends Component {
                     <h1>Stories rated by highest likes!</h1>
                     <ul>
                         {this.state.stories.map((story) => (
-                            <li key={story.id} onClick={() => {this.setState({activeStory: story.id})}}>{story.name} by {story.authorUsername}, <span className='likes'> likes: {story.likes} dislikes: {story.dislikes}</span></li>
+                            <li key={story.id} onClick={() => {this.setState({activeStory: story.id})}}>{story.name} by {story.authorUsername}, <span className='likes'> likes: {story.likes} dislikes: {story.dislikes} genre: [{story.genre}]</span></li>
                         ))}
                     </ul>
                 </>
