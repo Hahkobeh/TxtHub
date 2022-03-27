@@ -8,6 +8,7 @@ import com.txthub.usersystem.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -65,14 +66,12 @@ public class ChallengeController {
         return res;
     }
 
-    @PutMapping("/random/{game}/{username}")
+    @DeleteMapping("/delete/{challengeId}")
     @ResponseBody
-    public boolean sendRandomChallenge(@PathVariable String username){
-        // Challenge ch = new Challenge();
-        // return chService.addChallenge(ch);
-        return false;
+    public boolean removeChallenge(@PathVariable String challengeId){
+        
+        return chService.deleteChallenge(challengeId);
     }
-
 
     // make score update api
 
@@ -82,7 +81,7 @@ public class ChallengeController {
         return chService.updateChallenge(sf.getChallengeId(),sf.getUsername(),sf.getScore());
     }
 
-   
+    
 
 
 
@@ -95,6 +94,13 @@ public class ChallengeController {
         return chService.addChallenge(ch);
     }
 
+    @PostMapping("/sendRandom/{username}")
+    @ResponseBody
+    public boolean sendRandomChallenge(@RequestBody String game,@PathVariable String username){
+        Challenge ch = new Challenge(username,chService.findChallenger(username),game.substring(0,game.length()-1));
+        return chService.addChallenge(ch);
+    }
+    
 
     @PostMapping("/make")
     @ResponseBody

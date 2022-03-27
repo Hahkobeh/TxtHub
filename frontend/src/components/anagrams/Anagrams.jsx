@@ -1,5 +1,5 @@
 import './Anagrams.scss';
-import React, {useState, useEffect, useContext} from 'react';
+import React, {useState, useEffect, useContext, useCallback} from 'react';
 import {FaBackspace, FaRedo} from 'react-icons/fa';
 import {GiCancel} from 'react-icons/gi';
 import {AiOutlineQuestionCircle} from 'react-icons/ai';
@@ -69,6 +69,9 @@ function Anagrams(){
 
     let navigate = useNavigate();
     let times;
+
+    let [fTime, setFTime] = useState(false);
+    let [end, setEnd] = useState(false);
     
 
     useEffect( () => { 
@@ -83,25 +86,37 @@ function Anagrams(){
     async function updateRemainingTime(){
         
         
-        if(times === 0){
-                setStopGame(true);
+        if(times === 0 && fTime){
+                //setStopGame(true);
+                setEnd(true);
                 let data = {
     
                     username: localStorage.getItem("username"),
                     score: currentScore,
                     challengeId: currentChallenge
                 }
+                let returnV;
                 await axios.post(`http://localhost:8081/challenge/api/v1/update`,data)
+                    .then(res=>{
+                        returnV = res.data;
+                    })
                 localStorage.removeItem('currentChallenge');
+                if(returnV.winner === returnV.loser){
+                    return;
+                }else{ 
+                    await axios.put(`http://localhost:8081/user/api/v1/update/Anagrams/${returnV.winner}/${returnV.loser}`);
+                }
                 
         }else{
             times--;
             setTimer(times);
+            setFTime(true);
         }
     }
 
     function startGame(){
         
+        setEnd(false);
         setStopGame(false);
         console.log(timer);
         setPlayingGame(true);
@@ -110,39 +125,56 @@ function Anagrams(){
         
     }
 
-    useEffect(() => {
-        document.addEventListener('keydown' , e => {
+    const [enterHan, setEnterHan] = useState(false);
 
+    const handleKeyPress = useCallback( (event) => {
+        //console.log(`key pressed: ${event.key}`);
 
-            if(e.key === 'Delete' || e.key === 'Backspace'){
-                removeLetter();
-            }else if(word.includes(e.key)){
+        if(event.key === 'Backspace'){
+            removeLetter();
+        }else if(word.includes(event.key)){
 
-                var id = 1;
-                for(let i = -1; i > -6; i--){
-                    const box = document.getElementById(i);
-                    if(!lastClickedButton.includes(i) && word[ (i + 1) * -1] === e.key){
-                        id = i;
-                        break;
-                    }
+            var id = 1;
+            for(let i = -1; i > -6; i--){
+                const box = document.getElementById(i);
+                if(!lastClickedButton.includes(i) && word[ (i + 1) * -1] === event.key){
+                    id = i;
+                    break;
                 }
-                if(id === 1){
-                    return;
-                }
-                letterClick(e.key, id);
-
-            }else if(e.key === 'Enter' ){
-
-                enterWord();
             }
-        });
+            if(id === 1){
+                return;
+            }
+            letterClick(event.key, id);
+
+        }else if(event.key === 'Enter' ){
+            setEnterHan(true)
+            enterWord();
+        }
+        
     }, []);
+
+    useEffect( () => {
+
+        document.addEventListener('keydown', handleKeyPress);
+
+        return () => {
+            document.removeEventListener('keydown', handleKeyPress);
+        }
+    }, [handleKeyPress])
+
 
 
 
     async function enterWord(){
+
+        if(end){
+            return;
+        }
         setNotEnoughLetters(false);
         setNotWord(false);
+
+        
 
         if(currentGuess.length < 5){
 
@@ -152,23 +184,29 @@ function Anagrams(){
 
         let test
         let request = 'http://localhost:8084/anagram/api/v1/testword/' + currentGuess.join("")
-        console.log(request)
-        await axios.get(request)
+        console.log('Request is returned as' + request)
+        await axios.get('http://localhost:8084/anagram/api/v1/testword/' + currentGuess.join(""))
             .then(res => {
-                console.log(res.data)
                 test =  res.data
             })
-        console.log(test)
         if(test === false){
             setNotWord(true);
+            setEnterHan(false)
             return;
+        }else{
+            
+            currentScore+=100;
+            nextWord();
+            setEnterHan(false)
         }
-
-        currentScore+=100;
-        nextWord();
+        
     }
 
     async function nextWord(){
+
+        if(end){
+            return;
+        }
 
         await setWord();
 
@@ -184,9 +222,16 @@ function Anagrams(){
         lastClickedButton = [];
         currentGuess = [];
 
+        for(let i = 0; i < 5; i++){
+            removeLetter();
+        }
+        
     }
-
     function letterClick(a, id){
+        
+        if(end){
+            return;
+        }
 
         setNotEnoughLetters(false);
         setNotWord(false);
@@ -231,12 +276,32 @@ function Anagrams(){
     }
 
     async function skipPressed(){
-        setNotEnoughLetters(false);
-        setNotWord(false);
 
-        nextWord();
-        currentScore -=25;
-
+        
+        if(!enterHan){
+            await setWord();
+            currentScore -=25;
+            setNotWord(false);
+            setNotEnoughLetters(false);
+            //nextWord();
+            guessPos = 0;
+            lastClickedButton = [];
+            currentGuess = [];
+            for(let i = 0; i < 6; i++){
+                if( i !== 0){
+                    var temp = i * -1;
+                    const box2 = document.getElementById(temp);
+                    box2.style.backgroundColor = '#d3d6da';
+                }
+            
+    
+                const box = document.getElementById(i);
+                box.textContent = '';
+            }
+            
+            
+        }
+      
     }
 
     function quitMatch(){

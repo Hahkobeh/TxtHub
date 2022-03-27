@@ -3,6 +3,7 @@ import axios from "axios";
 import CurrentNode from "./CurrentNode";
 import ObjectID from "bson-objectid";
 
+
 export default class StoryEditor extends Component {
     constructor(props) {
         super(props);
@@ -283,44 +284,9 @@ export default class StoryEditor extends Component {
         })
         this.setState({nodes:newNodes})
 
+
     }
 
 
 
 }
-
-/*TODO deal with backend saving/loading and stuff + styling ++++ BUG WITH SELECTING STORY*/
-/*
-                {
-                    id: props.startNodeId,
-                    nodeName: 'startStory!',
-                    body: 'you awake in the morning, get ready for work. u see a knife on the ground',
-                    end: false,
-                    connections: [
-                        {
-                            id:'2',
-                            nodeName: 'pick up knife'
-                        },
-                        {
-                            id:'3',
-                            nodeName: 'go to work'
-
-                        }
-                    ]
-
-                },
-                {
-                    id: '2',
-                    nodeName: 'pick up knife',
-                    body: 'u pick up the knife',
-                    connections: [],
-                    end: false,
-                },
-                {
-                    id: '3',
-                    nodeName: 'go to work',
-                    body: 'u go to work',
-                    connections: [],
-                    end: false,
-                },
-            */
