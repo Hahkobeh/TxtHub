@@ -8,7 +8,9 @@ import java.util.List;
 
 @Repository
 public interface ConnectionRepository extends MongoRepository<Connection, String> {
-    List<Connection> findAllByNodeId(String nodeId);
+    List<Connection> findAllByStoryId(String storyId);
     void deleteAllByNodeId(String nodeId);
     void deleteAllByConnectedNodeId(String nodeId);
+
+    void deleteAllByStoryId(String storyId);
 }

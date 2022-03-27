@@ -5,50 +5,46 @@ import PlayingGame from "./PlayingGame";
 export default class PlayerMenu extends Component {
     constructor(props){
         super(props)
-
         this.state = {
-            stories: [],
-            playing: null
+            activeStory: null,
+            stories: []
+
         }
 
     }
 
-
     componentDidMount() {
-        console.log('stories')
-        let request = 'http://localhost:8083/tba/api/v1/getstories'
-        axios.get(request)
+        axios.get(`http://localhost:8083/tba/api/v1/getStoriesByLikes`)
             .then(res => {
-                console.log(res)
-                this.setState({
-                    stories: res.data,
-                })
-            })
+                    this.setState({stories: res.data})
+                }
 
+            )
     }
 
-    returnToMenu = () => {
-        this.setState({
-            playing: null
-        })
+    returnToStories = () => {
+        this.setState({activeStory: null})
     }
+
+
 
     inGame = () => {
         console.log('u r here')
-        if(this.state.playing === null){
+        if(this.state.activeStory === null){
             return (
                 <>
                     <h1>GAMES!</h1>
                     <ul>
                         {this.state.stories.map((story) => (
-                            <li key={story.id} onClick={() => {this.setState({playing: story.id})}}>{story.name} <span> likes: {story.likes} dislikes: {story.dislikes}</span></li>
+                            <li key={story.id} onClick={() => {this.setState({activeStory: story.id})}}>{story.name} by {story.authorUsername}, <span className='likes'> likes: {story.likes} dislikes: {story.dislikes}</span></li>
                         ))}
                     </ul>
                 </>
             )
         }else{
+            let currentStory = this.state.stories.find(e => e.id === this.state.activeStory)
             return (
-                <PlayingGame storyId={this.state.playing} return={this.returnToMenu}/>
+                <PlayingGame storyId={currentStory.id} firstNodeId={currentStory.firstNodeId} storyName={currentStory.name} author={currentStory.authorUsername} genre={currentStory.genre} returnToStories={this.returnToStories} username={this.props.username}/>
             )
         }
     }
@@ -57,11 +53,9 @@ export default class PlayerMenu extends Component {
 
     render() {
         return (
-            <div>
+            <div className='player-menu'>
                 <this.inGame/>
-
-
-                <button onClick={this.props.return}>temp return</button>
+                <button onClick={this.props.return}>Return to main menu</button>
 
             </div>
         )

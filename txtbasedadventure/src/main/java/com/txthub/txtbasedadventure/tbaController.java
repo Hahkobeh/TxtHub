@@ -9,6 +9,8 @@ import com.txthub.txtbasedadventure.story.StoryForm;
 import com.txthub.txtbasedadventure.story.StoryService;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,14 +36,6 @@ public class tbaController {
     @GetMapping("/getAllStories")
     @ResponseBody
     public List<Story> getAllStories(){
-        /*List<Story> temp = new ArrayList<>();
-        temp.add(new Story(new ObjectId().toString(), "journey to the center of the earth","usernameXD","ADVENTURE", 5, 0));
-        temp.add(new Story(new ObjectId().toString(), "40 days in the dessert tray","hello1","FANTASY", 0, 0));
-
-
-        System.out.println(temp.toString());
-        return temp;*/
-
         return storyService.getAllStories();
     }
 
@@ -52,25 +46,11 @@ public class tbaController {
     }
 
 
-    @GetMapping("/story/{storyId}")
-    @ResponseBody
-    public List<Node> getStories(@PathVariable String storyId){
-        
-        return nodeService.getStoryNodes(storyId);
-    }
 
     @GetMapping("/getStories/{authorUsername}")
     @ResponseBody
     public List<Story> getStoriesByAuthor(@PathVariable String authorUsername){
         return storyService.getStoriesByAuthor(authorUsername);
-    }
-
-
-    @DeleteMapping("/deleteStory/{storyId}")
-    @ResponseBody
-    public boolean deleteStory(@PathVariable String storyId){
-        return nodeService.deleteAllStoryNodes(storyId) && storyService.deleteStory(storyId);
-
     }
 
 
@@ -83,6 +63,16 @@ public class tbaController {
         nodeService.createFirstNode(story.getFirstNodeId(),story.getId());
     }
 
+    @DeleteMapping("/deleteStory/{storyId}")
+    public ResponseEntity<String> deleteStory(@PathVariable String storyId){
+        System.out.println("delete story" + storyId);
+        storyService.deleteStory(storyId);
+        nodeService.deleteAllStoryNodes(storyId);
+        connectionService.deleteStoryConnections(storyId);
+        return new ResponseEntity<>(storyId, HttpStatus.OK);
+
+    }
+
 
     //NODES!!
 
@@ -92,42 +82,47 @@ public class tbaController {
         return nodeService.getStoryNodes(storyId);
     }
 
-    @PutMapping("/updateNodes")
-    public void saveChanges(@RequestBody List<Node> nodes){
-        nodeService.updateNodes(nodes);
+    @PutMapping("/updateNodes/{storyId}")
+    public ResponseEntity<String> saveNodeChanges(@RequestBody List<Node> nodes, @PathVariable String storyId){
+        System.out.println(nodes);
+        nodeService.updateNodes(nodes, storyId);
+        return new ResponseEntity<>(storyId, HttpStatus.OK);
     }
 
-    @DeleteMapping("/deleteNode/{nodeId}")
-    public void deleteNode(@PathVariable String nodeId){
-        connectionService.deleteAllConnections(nodeId);
-        nodeService.deleteNode(nodeId);
-    }
 
-    @PostMapping("/addNode/{storyId}/{nodeId}")
-    @ResponseBody
-    public Node addNode(@PathVariable String storyId, @PathVariable String nodeId){
-        Node node = nodeService.createNode(storyId);
-        connectionService.addConnection(nodeId, node.getId());
-        return node;
-    }
 
     //CONNECTIONS!!!
 
-    @GetMapping("/getConnections/{nodeId}")
+    @GetMapping("/connections/{storyId}")
     @ResponseBody
-    public List<Connection> getConnections(@PathVariable String nodeId){
-        return connectionService.getConnections(nodeId);
+    public List<Connection> getConnections(@PathVariable String storyId){
+        return connectionService.getConnections(storyId);
     }
 
-    @PostMapping("/addConnection/{nodeId}/{connectionId}")
-    public void addConnection(@PathVariable String nodeId, @PathVariable String connectionId){
-        connectionService.addConnection(nodeId,connectionId);
+    @PutMapping("/updateConnections/{storyId}")
+    public ResponseEntity<String> saveConnectionChanges(@RequestBody List<Connection> connections, @PathVariable String storyId){
+        System.out.println(connections);
+        connectionService.updateConnections(connections, storyId);
+        return new ResponseEntity<>(storyId, HttpStatus.OK);
     }
 
-    @DeleteMapping("deleteConnection/{id}")
-    public void removeConnection(@PathVariable String id){
-        connectionService.removeConnection(id);
+    //LIKES/dislikes!!
+
+    @PutMapping("/like/{storyId}")
+    @ResponseBody
+    public boolean likeStory(@PathVariable String storyId){
+        storyService.like(storyId);
+        return true;
     }
+
+    @PutMapping("/dislike/{storyId}")
+    @ResponseBody
+    public boolean dislikeStory(@PathVariable String storyId){
+        storyService.dislike(storyId);
+        return true;
+    }
+
+
 
 
 }

@@ -7,14 +7,20 @@ import './TBA.scss'
 class TBA extends Component {
     constructor() {
         super();
+        console.log(localStorage.getItem('username'))
         this.state = {
-            screen: 0 //0 - main, 1 - play, 3 - create
+            screen: 0, //0 - main, 1 - play, 3 - create
+            username: localStorage.getItem('username')
         }
     }
     
     returnToMainMenu = () => {
         this.setState({screen: 0})
     }
+
+
+
+
 
     
 
@@ -23,21 +29,26 @@ class TBA extends Component {
             case 0:
                 return (
                     <div className='main-menu'>
-                        <div className='card-2' onClick={()=> this.setState({screen:1})}>
+                        <div className='card-1' onClick={()=> this.setState({screen:1})}>
                             <h1>Play!</h1>
                         </div>
-                        <div className='card-2' onClick={()=> this.setState({screen:2})}>
-                            <h1>Create!</h1>
-                        </div>
+                        {this.state.username !== null ?
+                            <div className='card-1' onClick={() => this.setState({screen: 2})}>
+                                <h1>Create!</h1>
+                            </div> :
+                            <div className='card-2'>
+                                <h1>Must log in to create!</h1>
+                            </div>
+                        }
                     </div>
                 )
             case 1:
                 return (
-                    <PlayerMenu return={this.returnToMainMenu}/>
+                    <PlayerMenu return={this.returnToMainMenu} username={this.state.username}/>
                 )
             case 2:
                 return (
-                    <CreatorMenu return={this.returnToMainMenu}/>
+                    <CreatorMenu return={this.returnToMainMenu} username={this.state.username}/>
                 )
             default:
                 this.setState({screen:0})

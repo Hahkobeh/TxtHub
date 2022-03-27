@@ -15,20 +15,30 @@ public class ConnectionService {
         this.connectionRepository = connectionRepository;
     }
 
-    public List<Connection> getConnections(String nodeId){
-        return connectionRepository.findAllByNodeId(nodeId);
+    public List<Connection> getConnections(String storyId){
+        return connectionRepository.findAllByStoryId(storyId);
     }
 
     public void removeConnection(String id){
         connectionRepository.deleteById(id);
     }
 
-    public void addConnection(String nodeId, String connectedNodeId){
-        connectionRepository.save(new Connection(nodeId,connectedNodeId));
+    public void addConnection(String storyId, String nodeId, String connectedNodeId){
+        connectionRepository.save(new Connection(storyId, nodeId, connectedNodeId));
     }
 
-    public void deleteAllConnections(String nodeId){
+    public void deleteNodeConnections(String nodeId){
         connectionRepository.deleteAllByNodeId(nodeId);
         connectionRepository.deleteAllByConnectedNodeId(nodeId);
+    }
+
+    public void deleteStoryConnections(String storyId){
+        connectionRepository.deleteAllByStoryId(storyId);
+    }
+
+    public void updateConnections(List<Connection> connections, String storyId) {
+        connectionRepository.deleteAllByStoryId(storyId);
+        connectionRepository.saveAll(connections);
+
     }
 }

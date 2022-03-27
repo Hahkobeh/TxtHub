@@ -2,6 +2,7 @@ package com.txthub.txtbasedadventure.node;
 
 import java.util.List;
 
+import com.txthub.txtbasedadventure.connection.Connection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,27 +22,17 @@ public class NodeService {
 
 
 
-    public boolean deleteAllStoryNodes(String storyId){
-        try{
+    public void deleteAllStoryNodes(String storyId){
             nodeRepository.deleteAllByStoryId(storyId);
-        }catch (Exception e){
-            e.printStackTrace();
-            return false;
-        }
-        return true;
+
     }
 
 
 
-    public void updateNodes(List<Node> nodes) {
+    public void updateNodes(List<Node> nodes, String storyId) {
         assert (nodes.size() != 0);
-        String storyId = nodes.get(0).getStoryId();
-        if (nodes.size() == nodeRepository.findByStoryId(storyId).size()) {
-            nodeRepository.saveAll(nodes);
-        } else {
-            nodeRepository.deleteAllByStoryId(nodes.get(0).getStoryId());
-            nodeRepository.saveAll(nodes);
-        }
+        nodeRepository.deleteAllByStoryId(storyId);
+        nodeRepository.saveAll(nodes);
     }
 
 
@@ -59,4 +50,6 @@ public class NodeService {
         Node node = new Node(id, storyId);
         nodeRepository.save(node);
     }
+
+
 }

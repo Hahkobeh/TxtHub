@@ -1,35 +1,33 @@
 package com.txthub.txtbasedadventure.story;
 
-import com.txthub.txtbasedadventure.node.Node;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class StoryService {
 
-    private final StoryRepository storyRepo;
+    private final StoryRepository storyRepository;
 
     @Autowired
     public StoryService(StoryRepository storyRepo){
-        this.storyRepo = storyRepo;
+        this.storyRepository = storyRepo;
     }
 
     public List<Story> getAllStories (){
-        return storyRepo.findAll();
+        return storyRepository.findAll();
     }
 
 
     public List<Story> getStoriesByLikes(){
-        return storyRepo.findAll(Sort.by(Direction.DESC,"Likes"));
+        return storyRepository.findAll(Sort.by(Direction.DESC,"Likes"));
     }
 
     public List<Story> getStoriesByAuthor(String username){
-        return storyRepo.findAllByAuthorUsername(username);
+        return storyRepository.findAllByAuthorUsername(username);
     }
     
     
@@ -37,22 +35,25 @@ public class StoryService {
     public Story createStory(StoryForm storyForm){
         Story story = new Story(storyForm.getStoryName(),storyForm.getAuthor(),storyForm.getGenre());
 
-        storyRepo.save(story);
+        storyRepository.save(story);
         return story;
 
     }
 
 
-    public boolean deleteStory(String id){
-        
-        try{
-            storyRepo.deleteById(id);
-        }catch(Exception e){
-            e.getStackTrace();
-            return false;
-        }
-        return true;
+    public void deleteStory(String storyId) {
+        storyRepository.deleteById(storyId);
+
     }
 
-    
+
+    public void like(String storyId) {
+        Story story = storyRepository.findStoryById(storyId);
+        story.setLikes(story.getLikes() + 1);
+    }
+
+    public void dislike(String storyId){
+        Story story = storyRepository.findStoryById(storyId);
+        story.setDislikes(story.getDislikes() + 1);
+    }
 }

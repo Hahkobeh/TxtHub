@@ -79,9 +79,9 @@ public class UserService {
         return true;
     }
 
-    public boolean updateRating(String game, String winnerId, String loserId){
-        Optional<User> winner = userRepository.findById(winnerId);
-        Optional<User> loser = userRepository.findById(loserId);
+    public boolean updateRating(String game, String winnerUsername, String loserUsername){
+        Optional<User> winner = Optional.ofNullable(userRepository.findByUsername(winnerUsername).get(0));
+        Optional<User> loser = Optional.ofNullable(userRepository.findByUsername(loserUsername).get(0));
         if(winner.isEmpty() || loser.isEmpty()){
             return false;
         }
