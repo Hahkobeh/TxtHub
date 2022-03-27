@@ -111,6 +111,7 @@ function Anagrams(){
 
     function startGame(){
         
+        
         setStopGame(false);
         console.log(timer);
         setPlayingGame(true);
@@ -207,10 +208,14 @@ function Anagrams(){
         guessPos = 0;
         lastClickedButton = [];
         currentGuess = [];
+
+        for(let i = 0; i < 5; i++){
+            removeLetter();
+        }
         
     }
-
     function letterClick(a, id){
+        
 
         setNotEnoughLetters(false);
         setNotWord(false);
@@ -259,9 +264,22 @@ function Anagrams(){
         if(!enterHan){
             setNotWord(false);
             setNotEnoughLetters(false);
+            //nextWord();
+            guessPos = 0;
+            lastClickedButton = [];
+            currentGuess = [];
+            for(let i = 0; i < 6; i++){
+                if( i !== 0){
+                    var temp = i * -1;
+                    const box2 = document.getElementById(temp);
+                    box2.style.backgroundColor = '#d3d6da';
+                }
             
-        
-            nextWord();
+    
+                const box = document.getElementById(i);
+                box.textContent = '';
+            }
+            
             currentScore -=25;
         }
     }
