@@ -259,9 +259,12 @@ function Anagrams(){
 
     }
 
-    function skipPressed(){
+    async function skipPressed(){
 
+        
         if(!enterHan){
+            await setWord();
+            currentScore -=25;
             setNotWord(false);
             setNotEnoughLetters(false);
             //nextWord();
@@ -280,8 +283,9 @@ function Anagrams(){
                 box.textContent = '';
             }
             
-            currentScore -=25;
+            
         }
+      
     }
 
     function quitMatch(){
