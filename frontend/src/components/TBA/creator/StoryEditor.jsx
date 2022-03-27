@@ -3,7 +3,6 @@ import axios from "axios";
 import CurrentNode from "./CurrentNode";
 import ObjectID from "bson-objectid";
 
-
 export default class StoryEditor extends Component {
     constructor(props) {
         super(props);
@@ -283,7 +282,6 @@ export default class StoryEditor extends Component {
             }
         })
         this.setState({nodes:newNodes})
-
 
     }
 
