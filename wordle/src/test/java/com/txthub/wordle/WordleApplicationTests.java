@@ -46,7 +46,7 @@ class WordleApplicationTests{
 	void checkIfValidTest(){
 		String match = "match";
 		WordleService wordletest = new WordleService();
-		assertTrue(wordletest.checkIfValid(match), "Testing checkIfValidTest by checking if 'Match is a word.");
+		assertTrue(wordletest.checkIfValid(match), "Test on checkIfValidTest did not work.");
 	}
 
 
@@ -56,7 +56,7 @@ class WordleApplicationTests{
 	void wordleControllerTest(){
 		WordleService wordleServiceTest = new WordleService();
 		WordleController wordleControllerTest = new WordleController(wordleServiceTest);
-		assertFalse(wordleControllerTest == null,"The wordle controller class constructor has been successfully created.");
+		assertFalse(wordleControllerTest == null,"The wordle controller class constructor has not been created.");
 	}
 	//Testing method wordRequest
 	@Test
@@ -64,7 +64,7 @@ class WordleApplicationTests{
 		WordleService wordleServiceTest = new WordleService();
 		WordleController wordleControllerTest = new WordleController(wordleServiceTest);
 		String wordTest = wordleControllerTest.wordRequest();
-		assertTrue(wordTest.length() == 5, "The word returned is found in the file.");
+		assertTrue(wordTest.length() == 5, "The word returned is not found in the file.");
 	}
 
 	//Testing method validWordTest()
@@ -73,7 +73,7 @@ class WordleApplicationTests{
 		WordleService wordleServiceTest = new WordleService();
 		WordleController wordleControllerTest = new WordleController(wordleServiceTest);
 		String wordTest = "talon";
-		assertTrue(wordleControllerTest.validWord(wordTest), "This is a valid 5 letter word.");
+		assertTrue(wordleControllerTest.validWord(wordTest), "This is not a valid 5 letter word.");
 	}
 }
 
