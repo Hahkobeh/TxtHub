@@ -46,7 +46,7 @@ class TxtbasedadventureApplicationTests {
 		String id = "0001";
 		String name = "matt's story";
 		String username = "matthew";
-		String genre = "Mystery";
+		String genre = "MYSTERY";
 		int likes = 0;
 		int dislikes = 1;
 		Story story = new Story(id, name, username, genre, likes, dislikes);
@@ -58,7 +58,7 @@ class TxtbasedadventureApplicationTests {
 	void StoryConstructor3ArgsTest(){
 		String name = "giving tree";
 		String authorName = "matthew";
-		String genre = "Action";
+		String genre = "ACTION";
 		Story story = new Story(name, authorName, genre);
 
 		assertTrue(story != null, "This story has not been created.");
