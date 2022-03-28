@@ -1,6 +1,8 @@
 import axios from 'axios'
 import React, { Component } from 'react'
 import PlayingGame from "./PlayingGame";
+import book from '../book.svg'
+import './PlayerMenu.scss'
 
 export default class PlayerMenu extends Component {
     constructor(props){
@@ -35,14 +37,28 @@ export default class PlayerMenu extends Component {
 
 
     inGame = () => {
-        console.log('u r here')
         if(this.state.activeStory === null){
             return (
                 <>
                     <h1>Stories rated by highest likes!</h1>
                     <ul>
                         {this.state.stories.map((story) => (
-                            <li key={story.id} onClick={() => {this.setState({activeStory: story.id})}}>{story.name} by {story.authorUsername}, <span className='likes'> likes: {story.likes} dislikes: {story.dislikes} genre: [{story.genre}]</span></li>
+                            <li key={story.id} onClick={() => {this.setState({activeStory: story.id})}}>
+                                <div className='story-info'>
+                                    <h2>{story.name}</h2>
+                                    <p>by {story.authorUsername}</p>
+                                </div>
+                                <div className='story-meta-info'>
+                                    <p>Likes:</p>
+                                    <p>Dislikes:</p>
+                                    <p>genre:</p>
+                                </div>
+                                <div className='story-info-2'>
+                                    <p>{story.likes}</p>
+                                    <p>{story.dislikes}</p>
+                                    <p>[{story.genre}]</p>
+                                </div>
+                            </li>
                         ))}
                     </ul>
                 </>
@@ -59,11 +75,14 @@ export default class PlayerMenu extends Component {
 
     render() {
         return (
-            <div className='player-menu'>
-                <this.inGame/>
-                <button onClick={this.props.return}>Return to main menu</button>
+            <>
+                <img src={book} alt='book' className='icon book'/>
+                <div className='player-menu'>
+                    <this.inGame/>
+                    <button className='return-button' onClick={this.props.return}>Return to main menu</button>
 
-            </div>
+                </div>
+            </>
         )
     }
 }

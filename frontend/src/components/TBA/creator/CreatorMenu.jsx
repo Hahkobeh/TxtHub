@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import StoryEditor from './StoryEditor';
 import axios from "axios";
+import editor from "../editor.svg";
+import './CreatorMenu.scss'
 
 class CreatorMenu extends Component {
     constructor(props){
@@ -37,8 +39,11 @@ class CreatorMenu extends Component {
 
                     this.state.savedStories.map((story) => (
                         <li key={story.id}>
-                            <p onClick={() => this.selectStory(story.id)}>{story.name} [{story.genre}]</p>
-                            <button onClick={() => this.deleteStory(story.id)}>Delete Story</button>
+                            <div className='story-info'>
+                                <p className='story-title' onClick={() => this.selectStory(story.id)}>{story.name}</p>
+                                <p>[{story.genre}]</p>
+                            </div>
+                            <button onClick={() => this.deleteStory(story.id)} className='secondary-button'>Delete</button>
 
                         </li>
                     ))
@@ -96,11 +101,15 @@ class CreatorMenu extends Component {
         return(
             <form onSubmit={this.addStory}>
                 <label>
+                    <p>
                     Story name:
+                    </p>
                     <input name='addStoryName' type='text' onChange={this.handleFormChange} value={this.state.addStoryName}/>
                 </label>
                 <label>
+                    <p>
                     Genre:
+                    </p>
                     <select name='addStoryGenre' onChange={this.handleFormChange}>
                         <option key='1' value='ADVENTURE'>Adventure</option>
                         <option key='2' value='MYSTERY'>Mystery</option>
@@ -109,7 +118,7 @@ class CreatorMenu extends Component {
 
                     </select>
                 </label>
-                <input type='submit'/>
+                <input type='submit' className='submit' value='Add Story'/>
             </form>
         )
     }
@@ -143,29 +152,19 @@ class CreatorMenu extends Component {
 
     render() {
         return (
+            <>
+            <img src={editor} alt='Editor' className='icon editor'/>
+
             <div className='creator-menu'>
                 
                 <this.loadElements/>
 
-                <button onClick={this.props.return}>Return to main menu</button>
+                <button className='return-button' onClick={this.props.return}>Return to main menu</button>
 
             </div>
+            </>
         );
     }
 }
 
 export default CreatorMenu;
-
-/*
-                {
-                    storyId: "tempID",
-                    storyName: "adventure for gold",
-                    startNodeId: '1',
-                    Likes: 5,
-                },
-                {
-                    storyId: "tempID2",
-                    storyName: "adventure to the center of the world",
-                    startNodeId: '1',
-                    Likes: 3,
-                }*/

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import axios from "axios";
 import CurrentNode from "./CurrentNode";
 import ObjectID from "bson-objectid";
+import './StoryEditor.scss'
 
 export default class StoryEditor extends Component {
     constructor(props) {
@@ -60,7 +61,7 @@ export default class StoryEditor extends Component {
 
 
     render() {
-
+        console.log(this.state.nodes)
          if(this.state.nodes.length === 0){
             return (
                 <h1>LOADING</h1>
@@ -69,14 +70,15 @@ export default class StoryEditor extends Component {
             let node = this.state.nodes.find(e => e.id === this.state.id)
 
             return (
-
-            <>
-                <h1>Currently working on: {this.props.storyName}</h1>
-                <this.allNodes/>
-                <CurrentNode node={node} handleChangeNodeName={this.handleChangeNodeName} handleChangeNodeBody={this.handleChangeNodeBody} handleChangeNodeEnd={this.handleChangeNodeEnd}/>
-                <this.connections/>
-                <button onClick={() => this.props.selectStory(null)}>Return to my stories</button>
-            </>
+                <>
+                    <h1>{this.props.storyName}</h1>
+                    <div className='story-editor'>
+                        <this.allNodes/>
+                        <CurrentNode node={node} handleChangeNodeName={this.handleChangeNodeName} handleChangeNodeBody={this.handleChangeNodeBody} handleChangeNodeEnd={this.handleChangeNodeEnd}/>
+                        <this.connections/>
+                    </div>
+                    <button onClick={() => this.props.selectStory(null)}>Return to my stories</button>
+                </>
 
             )
         }
@@ -85,7 +87,7 @@ export default class StoryEditor extends Component {
     allNodes = () => {
         return (
             <div className='node-list'>
-                <h2>All nodes:</h2>
+                <h2>Node List</h2>
                 <ul>
                     {this.state.nodes.map((node) => (
 
@@ -105,50 +107,49 @@ export default class StoryEditor extends Component {
         console.log(possibleNodeConnections)
         return (
             <div className='node-connections'>
-                <div className='node-current'>
-                    <ul>
-                        {allConnections.length !== 0 ? allConnections.map((connection) => (
-                                <li key={connection.id}>
-                                    <p onClick={() => this.changeCurrentNode(connection.connectedNodeId)}>{this.state.nodes.find(e => connection.connectedNodeId === e.id).nodeName}</p>
-                                    <button onClick={() => this.removeConnection(connection.id)}>Remove connection</button>
-                                    {connection.connectedNodeId !== this.props.firstNodeId && <button onClick={() => this.removeNode(connection.connectedNodeId)}>Delete node</button>}
-                                </li>
-                            )) :
-                            <li>There are no connections, add one!</li>}
-                    </ul>
-                </div>
-                <div className='node-add'>
-                    <form onSubmit={this.createNode}>
-                        <h2>Add connection</h2>
-                        <label>
-                            Existing node?
-                            <input type='checkbox' value={this.state.checked} onChange={() => this.handleChecked()}/>
-                        </label>
-                        {
-                            this.state.checked ? (
+                <ul className='node-current-connections'>
+                    {allConnections.length !== 0 ? allConnections.map((connection) => (
+                            <li key={connection.id}>
+                                <p onClick={() => this.changeCurrentNode(connection.connectedNodeId)}>{this.state.nodes.find(e => connection.connectedNodeId === e.id).nodeName}</p>
+                                <button className='secondary-button' onClick={() => this.removeConnection(connection.id)}>Remove connection</button>
+                                {connection.connectedNodeId !== this.props.firstNodeId && <button className='secondary-button' onClick={() => this.removeNode(connection.connectedNodeId)}>Delete node</button>}
+                            </li>
+                        )) :
+                        <li>There are no connections, add one!</li>}
+                </ul>
+                <form onSubmit={this.createNode}>
+                    <h2>Add connection</h2>
+                    <label>
+                        <p>
+                        Existing node?
+                        </p>
+                        <input type='checkbox' value={this.state.checked} onChange={() => this.handleChecked()}/>
+                    </label>
+                    {
+                        this.state.checked ? (
+                            <label>
+                                <p>
+                                Node name:
+                                </p>
+                                <select name='connectId' onChange={this.handleChangeForm}>
+                                    <option key={''} value=''/>
+                                    {possibleNodeConnections.map(nodeElement => (
+                                        <option key={nodeElement.id} value={nodeElement.id}>{nodeElement.nodeName}</option>))}}
+                                </select>
+                            </label>
+                        ) : (
+                            <>
                                 <label>
+                                    <p>
                                     Node name:
-                                    <select name='connectId' onChange={this.handleChangeForm}>
-                                        <option key={''} value=''/>
-                                        {possibleNodeConnections.map(nodeElement => (
-                                            <option key={nodeElement.id} value={nodeElement.id}>{nodeElement.nodeName}</option>))}}
-                                    </select>
+                                    </p>
+                                    <input type='text' name='newNodeName' onChange={this.handleChangeForm} value={this.state.newNodeName}/>
                                 </label>
-                            ) : (
-                                <>
-                                    <label>
-                                        Node name:
-                                        <input type='text' name='newNodeName' onChange={this.handleChangeForm} value={this.state.newNodeName}/>
-                                    </label>
-                                </>
-                            )
-                        }
-                        <label>
-                            Connect!
-                            <input type='submit'/>
-                        </label>
-                    </form>
-                </div>
+                            </>
+                        )
+                    }
+                    <input type='submit' value='Connect' className='submit'/>
+                </form>
 
             </div>
         )
