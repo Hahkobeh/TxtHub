@@ -66,7 +66,7 @@ class UsersystemApplicationTests {
 //-------------------------------Testing the UserService-----------------------------------------------------//
 	
 	//Don't exactly know how the User Repository is being connected on mongodb should prob ask about this
-	private final UserRepository userRepository;
+	UserRepository userRepository;
 	UserService userService = new UserService(userRepository);
 
 	String username = "alexander";
@@ -89,8 +89,46 @@ class UsersystemApplicationTests {
 		userService.deleteAccount(username);
 	}
 
-	// in order to do more tests in this field we need to figure out how to get ID.
+	@Test
+	void UserServiceChangePassword(){
+		ObjectId id = new ObjectId();
 
+		String username = "matthew";
+		String password = "password";
+		double anagramRating = 400;
+		double wordleRating = 500;
+		double tbaRating = 200;
+
+
+		User user = new User(id, username, password, anagramRating, wordleRating, tbaRating);
+		String idNumb = id.toString();
+		
+		assertTrue(userService.changePassword(idNumb, "newPassword") != null, "The password can not be changed.");
+		userService.deleteAccount(username);
+	}
+
+	@Test
+	void UserServiceChangeUsername(){
+		ObjectId id = new ObjectId();
+		String username = "matthew";
+		String password = "password";
+		double anagramRating = 400;
+		double wordleRating = 500;
+		double tbaRating = 200;
+
+		User user = new User(id, username, password, anagramRating, wordleRating, tbaRating);
+		String idNumb = id.toString();
+
+		assertTrue(userService.changeUsername(idNumb, "alexander") != null, "The username can not be changed.");
+	}
+
+	@Test
+	void UserServiceUpdateRating(){
+		String game = "wordle";
+		userService.createUser(username, password);
+		userService.createUser("selena", "password2");
+		assertTrue(userService.updateRating(game, username, "selena"), "The updated rating can not be changed.");
+	}
 
 //-------------------------------End of the testing UserService-----------------------------------------------//
 
@@ -152,8 +190,9 @@ class UsersystemApplicationTests {
 
 //-------------------------------Testing ChallengeService------------------------------------------------------------//
 	//Same problem here, I don't know here theese repositories should equal to???????
-	private final ChallengeRepository chRepo;
-	private final UserRepository userRepo;
+	ChallengeRepository chRepo;
+	UserRepository userRepo;
+
 	String challengeId = "0001";
 	String username1 = "alexander";
 	String username2 = "selena";
@@ -165,8 +204,9 @@ class UsersystemApplicationTests {
 	@Test
 	void addAndDeleteChallengeTest(){
 		Challenge challenge = new Challenge(challengeId, username1, username2, score1, score2, finished, game);
-		assertEquals(addChallenge(challenge) == true, "The challenge has not been added successfully.");
-		assertEquals(deleteChallenge("0001") == true, "The challenge has not been deleted successfully.");
+		ChallengeService challengeService = new ChallengeService(chRepo, userRepo);
+		assertTrue(challengeService.addChallenge(challenge), "The challenge has not been added successfully.");
+		assertTrue(challengeService.deleteChallenge("0001"), "The challenge has not been deleted successfully.");
 	}
 
 
