@@ -105,7 +105,7 @@ export default class PlayingGame extends Component {
             return (
 
                 <>
-                    <h1>You are currently playing: <span className='story-name'>{this.props.storyName}</span></h1>
+                    <h1>{this.props.storyName}</h1>
                     <h2>Written by: <span className='story-author'>{this.props.author}</span></h2>
                     <h1 className='node-title'>{node.nodeName}</h1>
                     <p className='node-body'>{node.body}</p>
