@@ -184,7 +184,7 @@ function ScoreBoard(){
                         <div className ='labels'>
                             <ul>
                                 <li><h3>Rank</h3></li>
-                                <li><h3>Story Name</h3></li>
+                                <li><h3>Username</h3></li>
                                 <li><h3>Rating</h3></li>
                             </ul>
                             {tbaRankings.map(function(tbaRanking){

@@ -1,5 +1,4 @@
 package com.txthub.usersystem;
-import lombok.Data;
 import org.bson.types.ObjectId;
 
 import org.bson.types.ObjectId;
@@ -15,7 +14,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import com.txthub.usersystem.matchmaking.Challenge;
 import com.txthub.usersystem.matchmaking.ChallengeService;
 import com.txthub.usersystem.matchmaking.ChallengeRepository;
-import com.txthub.usersystem.matchmaking.QueueMember;
 import com.txthub.usersystem.user.User;
 import com.txthub.usersystem.user.UserPair;
 import com.txthub.usersystem.user.UserRepository;
@@ -176,14 +174,6 @@ class UsersystemApplicationTests {
 		assertTrue(challenge != null, "The challenge constructor didn't get built.");
 	}
 
-	@Test
-	void QueueMemeberConstructor(){
-		String id = "001";
-		double rating = 10;
-		QueueMember queueMember = new QueueMember(id, rating);
-
-		assertTrue(queueMember != null, "The queue member constructor was not created.");
-	}
 
 
 //-------------------------------End of the Challenge---------------------------------------------------------------//
