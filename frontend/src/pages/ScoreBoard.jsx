@@ -189,14 +189,26 @@ function ScoreBoard(){
                             </ul>
                             {tbaRankings.map(function(tbaRanking){
                                     return <div>
-                                        <ul className = 'user-score'>
+                                        <ul className = {userTbaRank.username === tbaRanking.username ? 'user-score bold' : 'user-score'}>
                                             <li>{tbaRanking.rank}</li>
                                             <li>{tbaRanking.username}</li>
                                             <li>{parseInt(tbaRanking.rating)}</li>
                                         </ul>
                                         <hr/>
                                     </div>
-                                })}
+                            })}
+
+                            { userTbaRank !== null && userTbaRank.rank > 10 && <div><ul className = 'user-score bold'>
+                                <li>:</li>
+                                <li>:</li>
+                                <li>:</li>
+                            </ul><hr/></div>}
+    
+                            { userTbaRank !== null && userTbaRank.rank > 10 && <ul className = 'user-score bold'>
+                                <li>{userAnagramRank.rank}</li>
+                                <li>{userAnagramRank.username}</li>
+                                <li>{parseInt(userAnagramRank.rating)}</li>
+                            </ul>}
                            
                         </div>
                         
