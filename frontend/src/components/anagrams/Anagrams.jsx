@@ -368,7 +368,7 @@ function Anagrams(){
                 <div id = 'anagram-menu'>
                     {playingGame && <p className='timer'>{timer}</p>}
                     {playingGame && <p className='display-score'>Score: {currentScore}</p>}
-                    {playingGame && <button className = 'stateB' id = 'skipButton' onClick={skipPressed}>Skip (-25)</button>}
+                    {playingGame && <button className = 'stateC' id = 'skipButton' onClick={skipPressed}>Skip (-25)</button>}
                 </div>
 
             </div>

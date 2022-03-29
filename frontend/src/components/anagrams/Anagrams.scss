@@ -16,11 +16,29 @@
   width: 10vw;
 }
 
+.stateC{
+  height: 1.1cm;
+  font-family: var(--main-font);
+  border : 1px solid var(--nav-background);
+  border-radius: 25px;
+  font-size: 120%;
+  background: white;
+  margin: 0 auto 2vh auto;
+  width: 10vw;
+}
+
 .stateB:hover{
   border: 1px solid white;
   color: var(--navbar-link-color);
   background: var(--nav-background);
 }
+
+.stateC:hover{
+  border: 1px solid white;
+  color: var(--navbar-link-color);
+  background: var(--nav-background);
+}
+
 .start-anagrams{
   font-family: var(--main-font);
   width: 25vw;
