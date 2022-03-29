@@ -15,7 +15,7 @@ public class WordleService {
     private int fileLength;
 
     @Autowired
-    WordleService(){
+    public WordleService(){
         try {
             this.wordleFile = new File("wordleWords.txt");
             System.out.println(wordleFile.getAbsolutePath());
@@ -29,7 +29,7 @@ public class WordleService {
         }
     }
 
-    private int getLineCount(){
+    public int getLineCount(){
         int count = 0;
         try {
             Scanner scanner = new Scanner(this.wordleFile);

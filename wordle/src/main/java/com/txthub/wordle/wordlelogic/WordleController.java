@@ -13,7 +13,7 @@ public class WordleController {
     private final WordleService wordleService;
 
     @Autowired
-    WordleController(WordleService wordleService){
+    public WordleController(WordleService wordleService){
         this.wordleService = wordleService;
     }
 
