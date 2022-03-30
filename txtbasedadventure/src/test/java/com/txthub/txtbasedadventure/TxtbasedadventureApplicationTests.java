@@ -42,40 +42,9 @@ class TxtbasedadventureApplicationTests {
 		assertTrue(node != null, "This node could not be tied to any story.");
 	}
 
-	@Test
-	void CreateandDeleteNodesTest(){
-		String id = "0001";
-		String name = "Gatsby";
-		String authorUsername = "Fitz Gerald";
-		String genre = "MYSTERY";
-		int likes = 0;
-		int dislikes = 0;
 
-		Story dud = new Story(id, name, authorUsername, genre, likes, dislikes);
-		storyRepo.save(dud);
 
-		newNodeService.createFirstNode("0002", id);
-		assertTrue(newNodeService.createNode(id) != null, "The node failed to be created.");
-		storyService.deleteStory(id);
-	}
-
-	@Test
-	void getNodesTest(){
-		String id = "0001";
-		String name = "Gatsby";
-		String authorUsername = "Fitz Gerald";
-		String genre = "MYSTERY";
-		int likes = 0;
-		int dislikes = 0;
-
-		Story dud = new Story(id, name, authorUsername, genre, likes, dislikes);
-		storyRepo.save(dud);
-		newNodeService.createFirstNode("0002", id);
-		newNodeService.createNode(id);
-		newNodeService.deleteAllStoryNodes(id);
-		assertTrue( newNodeService.getStoryNodes(id) != null, "The get story nodes failed to work. ");
-		storyService.deleteStory(id);
-	}
+	
 
 //---------------------Story Tests-------------------------------//
 	@Test
@@ -100,32 +69,5 @@ class TxtbasedadventureApplicationTests {
 
 		assertTrue(story != null, "This story has not been created.");
 	}
-//--------------------Story Service Test---------------------------//
 
-
-	@Test
-	void getAllStoryTest(){
-		assertTrue(storyService.getAllStories() != null, "All stories can not be obtained.");
-	}
-
-	@Test
-	void getStoriesByLikesTest(){
-		assertTrue(storyService.getStoriesByLikes() != null, "Stories by likes can not be obtained.");
-	}
-
-	@Test
-	void FindAuthorandDeleteStoryTest(){
-
-		String id = "0001";
-		String name = "Gatsby";
-		String authorUsername = "Fitz Gerald";
-		String genre = "MYSTERY";
-		int likes = 0;
-		int dislikes = 0;
-
-		Story dud = new Story(id, name, authorUsername, genre, likes, dislikes);
-		storyRepo.save(dud);
-		storyService.deleteStory(id);
-		assertTrue(storyService.getStoriesByAuthor(authorUsername) == null, "This has not been successfully deleted.");
-	}
 }

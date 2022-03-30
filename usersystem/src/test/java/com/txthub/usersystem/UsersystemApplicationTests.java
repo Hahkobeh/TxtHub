@@ -18,6 +18,7 @@ import com.txthub.usersystem.user.User;
 import com.txthub.usersystem.user.UserPair;
 import com.txthub.usersystem.user.UserRepository;
 import com.txthub.usersystem.user.UserService;
+import com.txthub.usersystem.*;
 
 @SpringBootTest
 class UsersystemApplicationTests {
@@ -70,63 +71,7 @@ class UsersystemApplicationTests {
 	String username = "alexander";
 	String password = "password";
 
-	@Test
-	void UserServiceCreateUserTest(){
-		assertEquals(userService.createUser(username, password) == true, "The user can not be created in user service.");
-	}
-
-	@Test
-	void UserServiceDeleteUserTest(){
-		assertEquals(userService.deleteAccount(username)== true, "The user can not be created in user service");
-	}
-
-	@Test
-	void UserServiceLoginTest(){
-		userService.createUser(username, password);
-		assertTrue(userService.login(username, password) != null, "This user can not be logged into in user service.");
-		userService.deleteAccount(username);
-	}
-
-	@Test
-	void UserServiceChangePassword(){
-		ObjectId id = new ObjectId();
-
-		String username = "matthew";
-		String password = "password";
-		double anagramRating = 400;
-		double wordleRating = 500;
-		double tbaRating = 200;
-
-
-		User user = new User(id, username, password, anagramRating, wordleRating, tbaRating);
-		String idNumb = id.toString();
-		
-		assertTrue(userService.changePassword(idNumb, "newPassword") != null, "The password can not be changed.");
-		userService.deleteAccount(username);
-	}
-
-	@Test
-	void UserServiceChangeUsername(){
-		ObjectId id = new ObjectId();
-		String username = "matthew";
-		String password = "password";
-		double anagramRating = 400;
-		double wordleRating = 500;
-		double tbaRating = 200;
-
-		User user = new User(id, username, password, anagramRating, wordleRating, tbaRating);
-		String idNumb = id.toString();
-
-		assertTrue(userService.changeUsername(idNumb, "alexander") != null, "The username can not be changed.");
-	}
-
-	@Test
-	void UserServiceUpdateRating(){
-		String game = "wordle";
-		userService.createUser(username, password);
-		userService.createUser("selena", "password2");
-		assertTrue(userService.updateRating(game, username, "selena"), "The updated rating can not be changed.");
-	}
+	
 
 //-------------------------------End of the testing UserService-----------------------------------------------//
 
@@ -178,28 +123,5 @@ class UsersystemApplicationTests {
 
 //-------------------------------End of the Challenge---------------------------------------------------------------//
 
-//-------------------------------Testing ChallengeService------------------------------------------------------------//
-	//Same problem here, I don't know here theese repositories should equal to???????
-	ChallengeRepository chRepo;
-	UserRepository userRepo;
-
-	String challengeId = "0001";
-	String username1 = "alexander";
-	String username2 = "selena";
-	double score1 = 0;
-	double score2 = 1;
-	boolean finished = false;
-	String game = "wordle";
-	
-	@Test
-	void addAndDeleteChallengeTest(){
-		Challenge challenge = new Challenge(challengeId, username1, username2, score1, score2, finished, game);
-		ChallengeService challengeService = new ChallengeService(chRepo, userRepo);
-		assertTrue(challengeService.addChallenge(challenge), "The challenge has not been added successfully.");
-		assertTrue(challengeService.deleteChallenge("0001"), "The challenge has not been deleted successfully.");
-	}
-
-
-//-------------------------------End of Service---------------------------------------------------------------------//
 
 }
