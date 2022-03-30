@@ -1,0 +1,10 @@
+Using the Selenium IDE extention for your web browser, open the "TxtHub.side" file. 
+
+Before running these tests with the application active, ensure the base url is correct.
+
+Once the tests are executing, the application will require you to log out between uses. 
+  Simply press the "log out" button in the header at the begining of each test case to continue the test. 
+  
+The "Sign Up" test can only be executed once in the current state, this is because the success of the test creates an account, 
+  and any following tests will fail, because there is already an account with the username provided. To re-run this test, edit the 
+  value of command 5 to hold a new username. 
